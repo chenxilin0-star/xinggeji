@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="logo">
+      <text class="logo-emoji">🔮</text>
+      <text class="logo-text">型格记</text>
+    </view>
+    <view class="subtitle">探索内心，发现真实的自己</view>
+  </view>
+
+  <!-- 测试列表 -->
+  <view class="test-list">
+    <view class="test-card" wx:for="{{tests}}" wx:key="test_id" bindtap="startTest" data-id="{{item.test_id}}">
+      <view class="test-emoji">{{item.emoji}}</view>
+      <view class="test-info">
+        <view class="test-title">{{item.title}}</view>
+        <view class="test-desc">{{item.description}}</view>
+        <view class="test-meta">
+          <text class="question-count">{{item.question_count}}题</text>
+        </view>
+      </view>
+      <view class="test-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="footer-tip">
+    <text>每个测试免费5次</text>
+  </view>
+</view>

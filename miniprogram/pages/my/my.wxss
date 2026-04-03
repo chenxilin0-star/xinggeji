@@ -1,0 +1,132 @@
+.container {
+  padding: 30rpx;
+  min-height: 100vh;
+}
+
+.user-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 50rpx 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(108, 92, 231, 0.15);
+  margin-bottom: 30rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20rpx;
+}
+
+.avatar-emoji {
+  font-size: 60rpx;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.user-id {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.times-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(108, 92, 231, 0.15);
+  margin-bottom: 30rpx;
+}
+
+.times-item {
+  text-align: center;
+}
+
+.times-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #6C5CE7;
+  margin-bottom: 10rpx;
+}
+
+.times-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.times-divider {
+  width: 2rpx;
+  height: 60rpx;
+  background: #eee;
+}
+
+.menu-list {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(108, 92, 231, 0.15);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 35rpx 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item button {
+  background: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item button::after {
+  border: none;
+}
+
+.menu-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.menu-arrow {
+  font-size: 36rpx;
+  color: #ccc;
+}
+
+.footer {
+  text-align: center;
+  padding: 60rpx 0 30rpx;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 22rpx;
+}
+
+.footer text {
+  display: block;
+  margin-bottom: 10rpx;
+}

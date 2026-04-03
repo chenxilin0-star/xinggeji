@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="test-title">{{testEmojis[testId]}} {{testTitles[testId]}}</text>
+  </view>
+
+  <!-- 结果卡片 -->
+  <view class="result-card">
+    <view class="result-emoji">{{resultData.result.emoji}}</view>
+    <view class="result-type">{{resultData.result.type_name}}</view>
+    <view class="result-desc">{{resultData.result.description}}</view>
+  </view>
+
+  <!-- 雷达图区域 -->
+  <view class="radar-card" wx:if="{{testId !== 'mbti' || true}}">
+    <view class="radar-title">维度分析</view>
+    <view class="radar-placeholder">
+      <canvas canvas-id="radarCanvas" id="radarCanvas" class="radar-canvas"></canvas>
+    </view>
+    <view class="dimensions-list">
+      <view class="dimension-item" wx:for="{{dimensions}}" wx:key="name">
+        <view class="dimension-name">{{item.name}}</view>
+        <view class="dimension-bar">
+          <view class="dimension-value" style="width: {{item.value}}%; background: {{radarColor}}"></view>
+        </view>
+        <view class="dimension-score">{{item.value}}分</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button class="btn-share" open-type="share">分享结果</button>
+    <button class="btn-retake" bindtap="retakeTest">再做一次</button>
+    <button class="btn-home" bindtap="backToHome">返回首页</button>
+  </view>
+</view>

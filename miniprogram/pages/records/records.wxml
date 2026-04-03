@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="header">
+    <view class="title">测试记录</view>
+    <view class="free-times">剩余 {{free_times}} 次</view>
+  </view>
+
+  <view class="records-list" wx:if="{{!loading && records.length > 0}}">
+    <view class="record-item" wx:for="{{records}}" wx:key="_id" bindtap="viewRecord" data-id="{{item._id}}">
+      <view class="record-emoji">{{item.test_emoji || '📝'}}</view>
+      <view class="record-info">
+        <view class="record-title">{{item.test_title}}</view>
+        <view class="record-result">
+          <text>{{item.result.emoji}}</text>
+          <text>{{item.result.type_name}}</text>
+        </view>
+        <view class="record-time">{{item.completed_at}}</view>
+      </view>
+      <view class="record-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && records.length === 0}}">
+    <text class="empty-emoji">📋</text>
+    <text class="empty-text">暂无测试记录</text>
+    <text class="empty-hint">开始你的第一次心理测试吧</text>
+  </view>
+
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

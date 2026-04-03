@@ -1,0 +1,48 @@
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar">
+      <text class="avatar-emoji">🔮</text>
+    </view>
+    <view class="user-name">型格记用户</view>
+    <view class="user-id">ID: {{openid || '未登录'}}</view>
+  </view>
+
+  <!-- 剩余次数 -->
+  <view class="times-card">
+    <view class="times-item">
+      <view class="times-value">{{free_times}}</view>
+      <view class="times-label">剩余次数</view>
+    </view>
+    <view class="times-divider"></view>
+    <view class="times-item">
+      <view class="times-value">{{total_times}}</view>
+      <view class="times-label">总次数</view>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="showAbout">
+      <text class="menu-icon">ℹ️</text>
+      <text class="menu-text">关于我们</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="showHelp">
+      <text class="menu-icon">❓</text>
+      <text class="menu-text">帮助与反馈</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <button class="menu-item" open-type="share">
+      <text class="menu-icon">📤</text>
+      <text class="menu-text">分享给好友</text>
+      <text class="menu-arrow">›</text>
+    </button>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="footer">
+    <text>型格记 v1.0</text>
+    <text>探索内心，发现真实的自己</text>
+  </view>
+</view>

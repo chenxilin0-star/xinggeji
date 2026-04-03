@@ -1,0 +1,100 @@
+.container {
+  padding: 30rpx;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.logo-emoji {
+  font-size: 60rpx;
+  margin-right: 15rpx;
+}
+
+.logo-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.test-list {
+  margin-top: 20rpx;
+}
+
+.test-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(108, 92, 231, 0.15);
+  transition: transform 0.2s;
+}
+
+.test-card:active {
+  transform: scale(0.98);
+}
+
+.test-emoji {
+  font-size: 60rpx;
+  margin-right: 25rpx;
+}
+
+.test-info {
+  flex: 1;
+}
+
+.test-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.test-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 10rpx;
+}
+
+.test-meta {
+  display: flex;
+  align-items: center;
+}
+
+.question-count {
+  font-size: 24rpx;
+  color: #6C5CE7;
+  background: rgba(108, 92, 231, 0.1);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.test-arrow {
+  font-size: 48rpx;
+  color: #ccc;
+  margin-left: 15rpx;
+}
+
+.footer-tip {
+  text-align: center;
+  padding: 40rpx 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24rpx;
+}

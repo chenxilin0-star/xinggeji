@@ -1,0 +1,29 @@
+<view class="container">
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <view class="progress-inner" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+  </view>
+  <view class="progress-text">{{currentIndex + 1}} / {{questions.length}}</view>
+
+  <!-- 题目 -->
+  <view class="question-card" wx:if="{{!loading && questions.length > 0}}">
+    <view class="question-text">{{questions[currentIndex].q_text}}</view>
+    
+    <radio-group class="options-group" bindchange="selectOption" data-index="{{currentIndex}}">
+      <label class="option-item {{answers[currentIndex] && answers[currentIndex].selected === idx ? 'selected' : ''}}" wx:for="{{questions[currentIndex].options}}" wx:key="o_no" wx:for-index="idx">
+        <radio value="{{idx}}" checked="{{answers[currentIndex] && answers[currentIndex].selected === idx}}" />
+        <view class="option-content">
+          <text class="option-no">{{item.o_no}}</text>
+          <text class="option-text">{{item.o_text}}</text>
+        </view>
+      </label>
+    </radio-group>
+  </view>
+
+  <!-- 导航按钮 -->
+  <view class="nav-buttons">
+    <button class="btn-prev" bindtap="prevQuestion" wx:if="{{currentIndex > 0}}">上一题</button>
+    <button class="btn-next" bindtap="nextQuestion" wx:if="{{currentIndex < questions.length - 1}}">下一题</button>
+    <button class="btn-submit" bindtap="submitTest" wx:if="{{currentIndex === questions.length - 1}}">提交测试</button>
+  </view>
+</view>
