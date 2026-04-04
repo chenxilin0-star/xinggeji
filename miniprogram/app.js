@@ -3,7 +3,7 @@ App({
     openid: '',
     free_times: 5,
     total_times: 5,
-    env: 'your-env-id' // 需要替换为实际的云开发环境ID
+    env: 'cloudbase-0gfz6a1mf0af3d53'
   },
 
   onLaunch: function () {
