@@ -1,0 +1,133 @@
+<view class="container">
+  <!-- 顶部品牌区 -->
+  <view class="header">
+    <view class="logo-area">
+      <text class="logo-icon">🔮</text>
+      <text class="logo-text">型格记</text>
+    </view>
+    <text class="slogan">探索内心，发现真实的自己</text>
+  </view>
+
+  <!-- 测试列表入口 -->
+  <view class="test-grid">
+    <!-- MBTI测试 -->
+    <view class="test-card" bindtap="goToTest" data-id="mbti">
+      <view class="card-icon">🎭</view>
+      <view class="card-content">
+        <text class="card-title">MBTI人格测试</text>
+        <text class="card-desc">探索你的性格密码，了解真实的自己</text>
+        <view class="card-tags">
+          <text class="tag">十六型人格</text>
+          <text class="tag">性格分析</text>
+          <text class="tag">职业规划</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
+    <!-- 恋爱脑测试 -->
+    <view class="test-card" bindtap="goToTest" data-id="love_brain">
+      <view class="card-icon">💕</view>
+      <view class="card-content">
+        <text class="card-title">恋爱脑测试</text>
+        <text class="card-desc">测试你在恋爱中的理性程度</text>
+        <view class="card-tags">
+          <text class="tag">爱情心理</text>
+          <text class="tag">恋爱分析</text>
+          <text class="tag">情感测试</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
+    <!-- 性格动物测试 -->
+    <view class="test-card" bindtap="goToTest" data-id="animal_persona">
+      <view class="card-icon">🦁</view>
+      <view class="card-content">
+        <text class="card-title">性格动物测试</text>
+        <text class="card-desc">你是哪种动物性格？</text>
+        <view class="card-tags">
+          <text class="tag">狮子型</text>
+          <text class="tag">孔雀型</text>
+          <text class="tag">考拉型</text>
+          <text class="tag">猫头鹰型</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
+    <!-- 恋爱依恋类型 -->
+    <view class="test-card" bindtap="goToTest" data-id="attachment_style">
+      <view class="card-icon">💞</view>
+      <view class="card-content">
+        <text class="card-title">恋爱依恋类型</text>
+        <text class="card-desc">了解你的依恋风格和情感模式</text>
+        <view class="card-tags">
+          <text class="tag">安全型</text>
+          <text class="tag">焦虑型</text>
+          <text class="tag">回避型</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
+    <!-- 情绪压力自评 -->
+    <view class="test-card" bindtap="goToTest" data-id="emotion_stress">
+      <view class="card-icon">🌊</view>
+      <view class="card-content">
+        <text class="card-title">情绪压力自评</text>
+        <text class="card-desc">评估你的心理健康状态</text>
+        <view class="card-tags">
+          <text class="tag">心理健康</text>
+          <text class="tag">焦虑测试</text>
+          <text class="tag">抑郁自评</text>
+          <text class="tag">压力指数</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- SEO关键词区域 -->
+  <view class="keywords-section">
+    <view class="section-title">相关搜索</view>
+    <view class="keywords-cloud">
+      <text class="keyword" bindtap="goToTest" data-id="mbti">MBTI测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">性格测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">十六型人格</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">人格测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">INFJ</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">INTJ</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">ENFP</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">ENTP</text>
+      <text class="keyword" bindtap="goToTest" data-id="love_brain">恋爱脑测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="love_brain">爱情心理测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="love_brain">恋爱智商</text>
+      <text class="keyword" bindtap="goToTest" data-id="animal_persona">性格动物测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="animal_persona">动物人格</text>
+      <text class="keyword" bindtap="goToTest" data-id="animal_persona">狮子型性格</text>
+      <text class="keyword" bindtap="goToTest" data-id="animal_persona">孔雀型性格</text>
+      <text class="keyword" bindtap="goToTest" data-id="attachment_style">依恋类型测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="attachment_style">安全型依恋</text>
+      <text class="keyword" bindtap="goToTest" data-id="attachment_style">焦虑型依恋</text>
+      <text class="keyword" bindtap="goToTest" data-id="emotion_stress">心理压力测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="emotion_stress">焦虑测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="emotion_stress">抑郁自评</text>
+      <text class="keyword" bindtap="goToTest" data-id="emotion_stress">情绪管理</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">职业性格测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">免费MBTI测试</text>
+      <text class="keyword" bindtap="goToTest" data-id="emotion_stress">心理健康自评</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">自我认知</text>
+      <text class="keyword" bindtap="goToTest" data-id="mbti">性格分析</text>
+      <text class="keyword">心理测试免费</text>
+      <text class="keyword">在线心理测评</text>
+      <text class="keyword">了解自己</text>
+    </view>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="footer">
+    <text class="footer-text">型格记 - 专业的在线心理测试平台</text>
+    <text class="footer-desc">探索内心，发现真实的自己</text>
+  </view>
+</view>

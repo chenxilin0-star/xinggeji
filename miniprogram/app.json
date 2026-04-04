@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/seo/seo",
     "pages/index/index",
     "pages/test/test",
     "pages/result/result",
