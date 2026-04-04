@@ -12,18 +12,61 @@
   </view>
 
   <!-- 雷达图区域 -->
-  <view class="radar-card" wx:if="{{testId !== 'mbti' || true}}">
+  <view class="radar-card" wx:if="{{dimensions.length > 0}}">
     <view class="radar-title">维度分析</view>
-    <view class="radar-placeholder">
+    <view class="radar-container">
       <canvas canvas-id="radarCanvas" id="radarCanvas" class="radar-canvas"></canvas>
     </view>
+    
+    <!-- 维度详情列表 -->
     <view class="dimensions-list">
       <view class="dimension-item" wx:for="{{dimensions}}" wx:key="name">
-        <view class="dimension-name">{{item.name}}</view>
-        <view class="dimension-bar">
-          <view class="dimension-value" style="width: {{item.value}}%; background: {{radarColor}}"></view>
+        <view class="dimension-header">
+          <view class="dimension-name">{{item.name}}</view>
+          <view class="dimension-score">{{item.value}}分</view>
         </view>
-        <view class="dimension-score">{{item.value}}分</view>
+        <view class="dimension-bar">
+          <view class="dimension-value" style="width: {{item.value}}%; background: linear-gradient(90deg, #6C5CE7, #a29bfe);"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- MBTI专属展示 -->
+  <view class="mbti-detail" wx-if="{{testId === 'mbti'}}">
+    <view class="mbti-title">MBTI四宫格</view>
+    <view class="mbti-grid">
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(0) === 'E' ? 'active' : ''}}">
+        <text class="cell-letter">E</text>
+        <text class="cell-label">外向</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(0) === 'I' ? 'active' : ''}}">
+        <text class="cell-letter">I</text>
+        <text class="cell-label">内向</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(1) === 'S' ? 'active' : ''}}">
+        <text class="cell-letter">S</text>
+        <text class="cell-label">实感</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(1) === 'N' ? 'active' : ''}}">
+        <text class="cell-letter">N</text>
+        <text class="cell-label">直觉</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(2) === 'T' ? 'active' : ''}}">
+        <text class="cell-letter">T</text>
+        <text class="cell-label">理性</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(2) === 'F' ? 'active' : ''}}">
+        <text class="cell-letter">F</text>
+        <text class="cell-label">情感</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(3) === 'J' ? 'active' : ''}}">
+        <text class="cell-letter">J</text>
+        <text class="cell-label">判断</text>
+      </view>
+      <view class="mbti-cell {{resultData.result.resultCode.charAt(3) === 'P' ? 'active' : ''}}">
+        <text class="cell-letter">P</text>
+        <text class="cell-label">感知</text>
       </view>
     </view>
   </view>

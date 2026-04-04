@@ -1,11 +1,12 @@
 .container {
   padding: 30rpx;
   min-height: 100vh;
+  padding-bottom: 120rpx;
 }
 
 .header {
   text-align: center;
-  padding: 40rpx 0;
+  padding: 50rpx 0 40rpx;
 }
 
 .logo {
@@ -16,43 +17,63 @@
 }
 
 .logo-emoji {
-  font-size: 60rpx;
-  margin-right: 15rpx;
+  font-size: 72rpx;
+  margin-right: 16rpx;
 }
 
 .logo-text {
-  font-size: 48rpx;
+  font-size: 56rpx;
   font-weight: bold;
   color: #fff;
+  letter-spacing: 4rpx;
 }
 
 .subtitle {
   font-size: 28rpx;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 2rpx;
 }
 
 .test-list {
-  margin-top: 20rpx;
+  margin-top: 24rpx;
 }
 
 .test-card {
   background: #fff;
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
+  border-radius: 24rpx;
+  padding: 36rpx 32rpx;
+  margin-bottom: 22rpx;
   display: flex;
   align-items: center;
-  box-shadow: 0 4rpx 20rpx rgba(108, 92, 231, 0.15);
-  transition: transform 0.2s;
+  box-shadow: 0 6rpx 24rpx rgba(108, 92, 231, 0.18);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.test-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8rpx;
+  height: 100%;
+  background: linear-gradient(180deg, #6C5CE7, #a29bfe);
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .test-card:active {
   transform: scale(0.98);
 }
 
+.test-card:active::before {
+  opacity: 1;
+}
+
 .test-emoji {
-  font-size: 60rpx;
-  margin-right: 25rpx;
+  font-size: 64rpx;
+  margin-right: 28rpx;
 }
 
 .test-info {
@@ -60,17 +81,17 @@
 }
 
 .test-title {
-  font-size: 32rpx;
+  font-size: 34rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
 }
 
 .test-desc {
   font-size: 26rpx;
-  color: #666;
-  line-height: 1.4;
-  margin-bottom: 10rpx;
+  color: #888;
+  line-height: 1.5;
+  margin-bottom: 14rpx;
 }
 
 .test-meta {
@@ -79,22 +100,31 @@
 }
 
 .question-count {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #6C5CE7;
   background: rgba(108, 92, 231, 0.1);
-  padding: 4rpx 16rpx;
+  padding: 6rpx 18rpx;
   border-radius: 20rpx;
+  font-weight: 500;
 }
 
 .test-arrow {
-  font-size: 48rpx;
-  color: #ccc;
-  margin-left: 15rpx;
+  font-size: 52rpx;
+  color: #d4d0e8;
+  margin-left: 16rpx;
+  font-weight: 300;
 }
 
 .footer-tip {
   text-align: center;
-  padding: 40rpx 0;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 50rpx 0 30rpx;
+  color: rgba(255, 255, 255, 0.55);
   font-size: 24rpx;
+}
+
+.footer-tip text {
+  display: inline-block;
+  padding: 12rpx 28rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30rpx;
 }
