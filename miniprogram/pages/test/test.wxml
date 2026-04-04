@@ -17,7 +17,7 @@
         wx:key="idx"
         bindtap="selectOption"
         data-index="{{currentIndex}}"
-        data-option-index="{{idx}}"
+        data-optionidx="{{idx}}"
       >
         <view class="option-radio">
           <view class="radio-inner" wx:if="{{answers[currentIndex] && answers[currentIndex].selected === idx}}"></view>

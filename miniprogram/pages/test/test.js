@@ -172,7 +172,7 @@ Page({
 
   selectOption: function (e) {
     const index = parseInt(e.currentTarget.dataset.index);
-    const optionIndex = parseInt(e.currentTarget.dataset.optionIndex);
+    const optionIndex = parseInt(e.currentTarget.dataset.optionidx);
     const question = this.data.questions[index];
     
     // 防御性检查
