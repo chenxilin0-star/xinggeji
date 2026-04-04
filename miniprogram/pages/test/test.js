@@ -171,10 +171,16 @@ Page({
   },
 
   selectOption: function (e) {
-    const { index } = e.currentTarget.dataset;
-    const { optionIndex } = e.detail.value;
+    const index = e.currentTarget.dataset.index;
+    const optionIndex = e.detail.value;  // 直接是索引值
     const question = this.data.questions[index];
     const option = question.options[optionIndex];
+    
+    // 防御性检查
+    if (!option) {
+      console.error('Option not found:', { index, optionIndex, question });
+      return;
+    }
     
     let answers = this.data.answers;
     let score = 0;
