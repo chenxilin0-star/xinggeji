@@ -10,11 +10,16 @@
     <view class="question-text">{{questions[currentIndex].q_text}}</view>
     
     <radio-group class="options-group" bindchange="selectOption" data-index="{{currentIndex}}">
-      <label class="option-item {{answers[currentIndex] && answers[currentIndex].selected === idx ? 'selected' : ''}}" wx:for="{{questions[currentIndex].options}}" wx:key="o_no" wx:for-index="idx">
-        <radio value="{{idx}}" checked="{{answers[currentIndex] && answers[currentIndex].selected === idx}}" />
+      <label 
+        class="option-item {{answers[currentIndex] && answers[currentIndex].selected === index ? 'selected' : ''}}" 
+        wx:for="{{questions[currentIndex].options}}" 
+        wx:key="o_no"
+        wx:for-item="option"
+      >
+        <radio value="{{index}}" />
         <view class="option-content">
-          <text class="option-no">{{item.o_no}}</text>
-          <text class="option-text">{{item.o_text}}</text>
+          <text class="option-no">{{option.o_no}}</text>
+          <text class="option-text">{{option.o_text}}</text>
         </view>
       </label>
     </radio-group>

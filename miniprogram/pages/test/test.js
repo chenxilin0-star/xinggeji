@@ -172,44 +172,45 @@ Page({
 
   selectOption: function (e) {
     const index = e.currentTarget.dataset.index;
-    const optionIndex = e.detail.value;  // 直接是索引值
+    const optionIndex = parseInt(e.detail.value);  // 确保是数字
     const question = this.data.questions[index];
-    const option = question.options[optionIndex];
     
     // 防御性检查
-    if (!option) {
+    if (!question || !question.options || !question.options[optionIndex]) {
       console.error('Option not found:', { index, optionIndex, question });
       return;
     }
     
-    let answers = this.data.answers;
+    const option = question.options[optionIndex];
     let score = 0;
     
     // 计算分数
     if (this.data.testId === 'love_brain') {
-      // B选项+1分
       score = option.o_no === 'B' ? 1 : 0;
     } else if (this.data.testId === 'attachment_style' || this.data.testId === 'emotion_stress' || this.data.testId === 'animal_persona') {
-      // ABCD对应1234分
       score = optionIndex + 1;
     } else {
-      // AB测试：选项索引对应分数
       score = optionIndex;
     }
     
-    answers[index] = {
+    // 创建新的answers数组确保setData能检测到变化
+    const newAnswers = [...this.data.answers];
+    newAnswers[index] = {
       selected: optionIndex,
       o_no: option.o_no,
       score: score
     };
     
-    this.setData({ answers });
+    this.setData({ 
+      answers: newAnswers,
+      currentIndex: index  // 先保持在当前题，确保UI更新
+    });
     
     // 自动跳转到下一题
     if (index < this.data.questions.length - 1) {
       setTimeout(() => {
         this.setData({ currentIndex: index + 1 });
-      }, 300); // 延迟300ms让用户看到选中效果
+      }, 300);
     }
   },
 
