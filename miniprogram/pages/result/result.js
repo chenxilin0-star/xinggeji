@@ -5,6 +5,7 @@ Page({
     testId: '',
     resultData: {},
     dimensions: [],
+    mbtiScores: {},
     radarColor: '#6C5CE7',
     testTitles: {
       mbti: 'MBTI人格测试',
@@ -28,15 +29,14 @@ Page({
       try {
         const resultData = JSON.parse(decodeURIComponent(result_data));
         const dimensions = this.calculateDimensions(test_id, resultData.scores);
+        const mbtiScores = this.calculateMbtiScores(result_data, resultData.scores);
+        
         this.setData({
           testId: test_id,
           resultData,
-          dimensions
+          dimensions,
+          mbtiScores
         });
-        // 等页面渲染完成后绘制雷达图
-        setTimeout(() => {
-          this.drawRadar();
-        }, 300);
       } catch (e) {
         console.error('Parse result data failed:', e);
         wx.showToast({ title: '数据解析失败', icon: 'none' });
@@ -47,21 +47,13 @@ Page({
     }
   },
 
-  // 计算维度数据用于雷达图和列表展示
+  // 计算维度数据
   calculateDimensions: function (testId, scores) {
-    const dimensions = [];
-    const maxScore = 100;
+    if (!scores) return [];
     
     switch (testId) {
       case 'mbti':
-        // MBTI 四个维度
-        const mbtiDims = [
-          { name: '外向 E', value: Math.round((scores.E / (scores.E + scores.I)) * 100) || 50 },
-          { name: '实感 S', value: Math.round((scores.S / (scores.S + scores.N)) * 100) || 50 },
-          { name: '理性 T', value: Math.round((scores.T / (scores.F + scores.T)) * 100) || 50 },
-          { name: '判断 J', value: Math.round((scores.J / (scores.P + scores.J)) * 100) || 50 }
-        ];
-        return mbtiDims;
+        return [];
         
       case 'love_brain':
         return [
@@ -72,12 +64,12 @@ Page({
         ];
         
       case 'animal_persona':
-        const animalTotal = scores.lion + scores.peacock + scores.koala + scores.owl;
+        const animalTotal = (scores.lion || 0) + (scores.peacock || 0) + (scores.koala || 0) + (scores.owl || 0);
         return [
-          { name: '狮子型', value: Math.round((scores.lion / animalTotal) * 100) || 25 },
-          { name: '孔雀型', value: Math.round((scores.peacock / animalTotal) * 100) || 25 },
-          { name: '考拉型', value: Math.round((scores.koala / animalTotal) * 100) || 25 },
-          { name: '猫头鹰型', value: Math.round((scores.owl / animalTotal) * 100) || 25 }
+          { name: '狮子型', value: animalTotal > 0 ? Math.round((scores.lion / animalTotal) * 100) : 25 },
+          { name: '孔雀型', value: animalTotal > 0 ? Math.round((scores.peacock / animalTotal) * 100) : 25 },
+          { name: '考拉型', value: animalTotal > 0 ? Math.round((scores.koala / animalTotal) * 100) : 25 },
+          { name: '猫头鹰型', value: animalTotal > 0 ? Math.round((scores.owl / animalTotal) * 100) : 25 }
         ];
         
       case 'attachment_style':
@@ -98,98 +90,34 @@ Page({
     }
   },
 
-  // 绘制雷达图
-  drawRadar: function () {
-    const { dimensions } = this.data;
-    if (!dimensions || dimensions.length < 3) return;
-
-    const ctx = wx.createCanvasContext('radarCanvas', this);
-    const canvasWidth = 300;
-    const canvasHeight = 300;
-    const centerX = canvasWidth / 2;
-    const centerY = canvasHeight / 2;
-    const radius = Math.min(canvasWidth, canvasHeight) / 2 - 40;
-    const sides = dimensions.length;
-    const angle = (2 * Math.PI) / sides;
-
-    // 绘制背景网格
-    ctx.setStrokeStyle('#f0f0f0');
-    ctx.setLineWidth(1);
+  // 计算MBTI四个维度的百分比
+  calculateMbtiScores: function (testId, scores) {
+    if (testId !== 'mbti' || !scores) return {};
     
-    // 绘制多个正多边形背景
-    for (let level = 1; level <= 5; level++) {
-      const levelRadius = (radius / 5) * level;
-      ctx.beginPath();
-      for (let i = 0; i <= sides; i++) {
-        const x = centerX + levelRadius * Math.cos(angle * i - Math.PI / 2);
-        const y = centerY + levelRadius * Math.sin(angle * i - Math.PI / 2);
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.closePath();
-      ctx.stroke();
-    }
-
-    // 绘制数据区域
-    ctx.beginPath();
-    ctx.setFillStyle('rgba(108, 92, 231, 0.3)');
-    ctx.setStrokeStyle('#6C5CE7');
-    ctx.setLineWidth(2);
+    const E = scores.E || 0;
+    const I = scores.I || 0;
+    const S = scores.S || 0;
+    const N = scores.N || 0;
+    const T = scores.T || 0;
+    const F = scores.F || 0;
+    const J = scores.J || 0;
+    const P = scores.P || 0;
     
-    dimensions.forEach((dim, i) => {
-      const value = Math.min(dim.value, 100) / 100;
-      const x = centerX + radius * value * Math.cos(angle * i - Math.PI / 2);
-      const y = centerY + radius * value * Math.sin(angle * i - Math.PI / 2);
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // 绘制数据点
-    dimensions.forEach((dim, i) => {
-      const value = Math.min(dim.value, 100) / 100;
-      const x = centerX + radius * value * Math.cos(angle * i - Math.PI / 2);
-      const y = centerY + radius * value * Math.sin(angle * i - Math.PI / 2);
-      
-      ctx.beginPath();
-      ctx.setFillStyle('#6C5CE7');
-      ctx.arc(x, y, 6, 0, 2 * Math.PI);
-      ctx.fill();
-      
-      ctx.beginPath();
-      ctx.setFillStyle('#fff');
-      ctx.arc(x, y, 3, 0, 2 * Math.PI);
-      ctx.fill();
-    });
-
-    // 绘制标签
-    ctx.setFillStyle('#666');
-    ctx.setFontSize(12);
-    ctx.setTextAlign('center');
+    const ETotal = E + I;
+    const STotal = S + N;
+    const TTotal = T + F;
+    const JTotal = J + P;
     
-    dimensions.forEach((dim, i) => {
-      const labelRadius = radius + 25;
-      const x = centerX + labelRadius * Math.cos(angle * i - Math.PI / 2);
-      const y = centerY + labelRadius * Math.sin(angle * i - Math.PI / 2);
-      
-      // 调整标签位置避免重叠
-      let offsetY = 0;
-      if (i === 0) offsetY = -8;
-      else if (i === sides - 1) offsetY = -8;
-      else if (i === sides / 2) offsetY = 12;
-      
-      ctx.fillText(dim.name, x, y + offsetY);
-    });
-
-    ctx.draw();
+    return {
+      EP: ETotal > 0 ? Math.round((E / ETotal) * 100) : 50,
+      IP: ETotal > 0 ? Math.round((I / ETotal) * 100) : 50,
+      SP: STotal > 0 ? Math.round((S / STotal) * 100) : 50,
+      NP: STotal > 0 ? Math.round((N / STotal) * 100) : 50,
+      TP: TTotal > 0 ? Math.round((T / TTotal) * 100) : 50,
+      FP: TTotal > 0 ? Math.round((F / TTotal) * 100) : 50,
+      JP: JTotal > 0 ? Math.round((J / JTotal) * 100) : 50,
+      PP: JTotal > 0 ? Math.round((P / JTotal) * 100) : 50
+    };
   },
 
   shareResult: function () {
