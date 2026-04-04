@@ -22,7 +22,7 @@
 
   <!-- 导航按钮 -->
   <view class="nav-buttons">
-    <button class="btn-prev" bindtap="prevQuestion" wx:if="{{currentIndex > 0}}">上一题</button>
+    <button class="btn-prev {{currentIndex === 0 ? 'disabled' : ''}}" bindtap="prevQuestion">上一题</button>
     <button class="btn-next" bindtap="nextQuestion" wx:if="{{currentIndex < questions.length - 1}}">下一题</button>
     <button class="btn-submit" bindtap="submitTest" wx:if="{{currentIndex === questions.length - 1}}">提交测试</button>
   </view>

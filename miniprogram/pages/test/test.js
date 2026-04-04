@@ -198,17 +198,19 @@ Page({
     };
     
     this.setData({ answers });
+    
+    // 自动跳转到下一题
+    if (index < this.data.questions.length - 1) {
+      setTimeout(() => {
+        this.setData({ currentIndex: index + 1 });
+      }, 300); // 延迟300ms让用户看到选中效果
+    }
   },
 
   nextQuestion: function () {
-    const { currentIndex, answers } = this.data;
+    const { currentIndex, answers, questions } = this.data;
     
-    if (answers[currentIndex] === null) {
-      wx.showToast({ title: '请先选择答案', icon: 'none' });
-      return;
-    }
-    
-    if (currentIndex < this.data.questions.length - 1) {
+    if (currentIndex < questions.length - 1) {
       this.setData({ currentIndex: currentIndex + 1 });
     }
   },

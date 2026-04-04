@@ -138,6 +138,12 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+.btn-prev.disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 .btn-next {
   background: #fff;
   color: #6C5CE7;
