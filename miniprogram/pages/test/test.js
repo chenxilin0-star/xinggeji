@@ -7,7 +7,14 @@ Page({
     questions: [],
     currentIndex: 0,
     answers: [],
-    loading: true
+    loading: true,
+    testTitles: {
+      mbti: 'MBTI人格测试',
+      love_brain: '恋爱脑测试',
+      animal_persona: '性格动物测试',
+      attachment_style: '恋爱依恋类型',
+      emotion_stress: '情绪压力自评'
+    }
   },
 
   onLoad: function (options) {
@@ -176,11 +183,11 @@ Page({
     if (this.data.testId === 'love_brain') {
       // B选项+1分
       score = option.o_no === 'B' ? 1 : 0;
-    } else if (this.data.testId === 'attachment_style' || this.data.testId === 'emotion_stress') {
-      // 4选项测试：ABCD对应123分
+    } else if (this.data.testId === 'attachment_style' || this.data.testId === 'emotion_stress' || this.data.testId === 'animal_persona') {
+      // ABCD对应1234分
       score = optionIndex + 1;
     } else {
-      // 其他测试：选项顺序对应分数
+      // AB测试：选项索引对应分数
       score = optionIndex;
     }
     
@@ -241,14 +248,38 @@ Page({
   doSubmit: function () {
     wx.showLoading({ title: '提交中...' });
     
-    // 本地计算结果
-    const result = this.calculateLocalResult();
-    
-    wx.hideLoading();
-    
-    // 跳转到结果页
-    wx.navigateTo({
-      url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+    // 先尝试提交到云端
+    wx.cloud.callFunction({
+      name: 'submitTest',
+      data: {
+        test_id: this.data.testId,
+        answers: this.data.answers
+      },
+      success: res => {
+        wx.hideLoading();
+        if (res.result && res.result.success) {
+          // 云端保存成功，使用云端结果
+          const result = res.result;
+          wx.navigateTo({
+            url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
+          });
+        } else {
+          // 云端失败，使用本地计算结果
+          const result = this.calculateLocalResult();
+          wx.navigateTo({
+            url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+          });
+        }
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error('Submit failed:', err);
+        // 使用本地计算结果
+        const result = this.calculateLocalResult();
+        wx.navigateTo({
+          url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+        });
+      }
     });
   },
 
@@ -291,7 +322,7 @@ Page({
         result.scores = { sunk_cost, idealization, emotional_dependency, irrational };
         const total = sunk_cost + idealization + emotional_dependency + irrational;
         let level = '正常', emoji = '🧠', desc = '你能够在恋爱中保持理性';
-        if (total >= 10) { level = '重度恋爱脑'; emoji = '💔'; desc = '你很容易在恋爱中失去理性，需要重新找回自我'; }
+        if (total >= 10) { level = '        if (total >= 10) { level = '重度恋爱脑'; emoji = '💔'; desc = '你很容易在恋爱中失去理性，需要重新找回自我'; }
         else if (total >= 5) { level = '中度恋爱脑'; emoji = '💕'; desc = '你在恋爱中比较容易上头，需要学会更多关注自己'; }
         else if (total >= 2) { level = '轻度恋爱脑'; emoji = '💭'; desc = '你偶尔会有些恋爱脑倾向，但总体可控'; }
         result.result = { resultCode: level, type_name: level, emoji, description: desc };
@@ -309,7 +340,7 @@ Page({
         result.scores = { lion, peacock, koala, owl };
         const max = Math.max(lion, peacock, koala, owl);
         let animal = 'lion', animalInfo = { name: '狮子型', emoji: '🦁', desc: '你是一个天生的领导者，自信、勇敢、有魄力' };
-        if (max === peacock) { animal =        peacock = { name: '孔雀型', emoji: '🦚', desc: '你魅力四射，善于社交' }; animalInfo = peacock; }
+        if (max === peacock) { animal = 'peacock'; animalInfo = { name: '孔雀型', emoji: '🦚', desc: '你魅力四射，善于社交' }; }
         else if (max === koala) { animal = 'koala'; animalInfo = { name: '考拉型', emoji: '🐨', desc: '你温柔善良，是很好的倾听者' }; }
         else if (max === owl) { animal = 'owl'; animalInfo = { name: '猫头鹰型', emoji: '🦉', desc: '你聪明谨慎，注重细节和分析' }; }
         result.result = { resultCode: animal, ...animalInfo, description: animalInfo.desc };
@@ -334,7 +365,7 @@ Page({
       }
       case 'emotion_stress': {
         let depression = 0, anxiety = 0, stress = 0;
-        const reverseQuestions = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18];
+        const reverseQuestions = [5, 7, 8, 10, 12, 14, 16, 18, 20];
         answers.forEach((answer, index) => {
           let score = answer.score || 0;
           if (reverseQuestions.includes(index)) {

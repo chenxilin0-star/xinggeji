@@ -4,7 +4,8 @@
     "pages/test/test",
     "pages/result/result",
     "pages/records/records",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/share/share"
   ],
   "window": {
     "backgroundTextStyle": "light",

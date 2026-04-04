@@ -4,90 +4,107 @@ Page({
   data: {
     records: [],
     loading: true,
-    page: 1,
-    pageSize: 10,
-    hasMore: true,
-    free_times: 5
-  },
-
-  onLoad: function () {
-    this.loadRecords();
-  },
-
-  onShow: function () {
-    this.refreshRecords();
-  },
-
-  onReachBottom: function () {
-    if (this.data.hasMore) {
-      this.loadMoreRecords();
+    free_times: 5,
+    testEmojis: {
+      mbti: '🎭',
+      love_brain: '💕',
+      animal_persona: '🦁',
+      attachment_style: '💞',
+      emotion_stress: '🌊'
+    },
+    testTitles: {
+      mbti: 'MBTI人格测试',
+      love_brain: '恋爱脑测试',
+      animal_persona: '性格动物测试',
+      attachment_style: '恋爱依恋类型',
+      emotion_stress: '情绪压力自评'
     }
   },
 
-  loadRecords: function () {
-    wx.showLoading({ title: '加载中...' });
-    
-    wx.cloud.callFunction({
-      name: 'getMyRecords',
-      data: { page: this.data.page, pageSize: this.data.pageSize },
-      success: res => {
-        wx.hideLoading();
-        if (res.result.success) {
-          this.setData({
-            records: res.result.records,
-            hasMore: this.data.page * this.data.pageSize < res.result.total,
-            free_times: res.result.free_times,
-            loading: false
-          });
-        } else {
-          this.loadLocalRecords();
-        }
-      },
-      fail: err => {
-        wx.hideLoading();
-        console.error('Load records failed:', err);
-        this.loadLocalRecords();
-      }
-    });
+  onLoad: function () {
+    this.setData({ free_times: app.globalData.free_times || 5 });
   },
 
-  loadMoreRecords: function () {
-    const page = this.data.page + 1;
-    wx.cloud.callFunction({
-      name: 'getMyRecords',
-      data: { page, pageSize: this.data.pageSize },
-      success: res => {
-        if (res.result.success) {
-          this.setData({
-            records: [...this.data.records, ...res.result.records],
-            page,
-            hasMore: page * this.data.pageSize < res.result.total
-          });
-        }
-      }
-    });
-  },
-
-  refreshRecords: function () {
-    this.setData({ page: 1, records: [] });
+  onShow: function () {
     this.loadRecords();
   },
 
-  loadLocalRecords: function () {
-    // 本地记录（示例数据）
-    const localRecords = [
-      { _id: '1', test_id: 'mbti', test_title: 'MBTI人格测试', test_emoji: '🎭', result: { type_name: 'INTJ', emoji: '🏗️' }, completed_at: new Date() },
-      { _id: '2', test_id: 'love_brain', test_title: '恋爱脑测试', test_emoji: '💕', result: { type_name: '轻度恋爱脑', emoji: '💭' }, completed_at: new Date() }
-    ];
-    this.setData({
-      records: localRecords,
-      hasMore: false,
-      loading: false
+  loadRecords: function () {
+    this.setData({ loading: true });
+    
+    wx.cloud.callFunction({
+      name: 'getMyRecords',
+      success: res => {
+        if (res.result && res.result.success) {
+          this.setData({
+            records: res.result.records || [],
+            loading: false
+          });
+        } else {
+          // 使用本地记录
+          this.setData({
+            records: this.getLocalRecords(),
+            loading: false
+          });
+        }
+      },
+      fail: err => {
+        console.error('Load records failed:', err);
+        this.setData({
+          records: this.getLocalRecords(),
+          loading: false
+        });
+      }
     });
+  },
+
+  // 获取本地记录（当云端不可用时）
+  getLocalRecords: function () {
+    try {
+      const localRecords = wx.getStorageSync('local_records') || [];
+      return localRecords.map(r => ({
+        ...r,
+        completed_at: r.completed_at || '刚刚'
+      }));
+    } catch (e) {
+      return [];
+    }
   },
 
   viewRecord: function (e) {
     const { id } = e.currentTarget.dataset;
-    wx.showToast({ title: '查看报告功能开发中', icon: 'none' });
+    const record = this.data.records.find(r => r._id === id);
+    
+    if (record) {
+      wx.navigateTo({
+        url: `/pages/result/result?test_id=${record.test_id}&result_data=${encodeURIComponent(JSON.stringify(record))}&from_record=true`
+      });
+    }
+  },
+
+  // 删除记录
+  deleteRecord: function (e) {
+    const { id } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这条记录吗？',
+      success: res => {
+        if (res.confirm) {
+          this.doDeleteRecord(id);
+        }
+      }
+    });
+  },
+
+  doDeleteRecord: function (id) {
+    // 如果是本地记录，从本地存储删除
+    const records = this.data.records.filter(r => r._id !== id);
+    this.setData({ records });
+    
+    try {
+      wx.setStorageSync('local_records', records);
+    } catch (e) {}
+    
+    wx.showToast({ title: '已删除', icon: 'success' });
   }
 });

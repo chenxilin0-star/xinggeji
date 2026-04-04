@@ -2,44 +2,47 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: null,
+    openid: '',
     free_times: 5,
-    total_times: 5
+    total_times: 5,
+    version: '1.0.0'
   },
 
   onLoad: function () {
     this.setData({
-      userInfo: app.globalData.userInfo,
-      free_times: app.globalData.free_times || 5,
-      total_times: app.globalData.total_times || 5
+      openid: app.globalData.openid || '',
+      free_times: app.globalData.free_times || 5
     });
   },
 
   onShow: function () {
-    // 每次显示页面时刷新用户信息
-    this.refreshUserInfo();
+    this.setData({
+      openid: app.globalData.openid || '',
+      free_times: app.globalData.free_times || 5
+    });
   },
 
-  refreshUserInfo: function () {
-    const that = this;
-    wx.cloud.callFunction({
-      name: 'login',
-      success: res => {
-        if (res.result.success) {
-          app.globalData.openid = res.result.openid;
-          app.globalData.free_times = res.result.free_times;
-          that.setData({
-            free_times: res.result.free_times,
-            total_times: res.result.total_times
-          });
-        }
-      }
+  showAbout: function () {
+    wx.showModal({
+      title: '关于型格记',
+      content: '型格记是一款专业的心理测试小程序，帮助你探索内心，发现真实的自己。\n\n支持MBTI人格测试、恋爱脑测试、性格动物测试、恋爱依恋类型、情绪压力自评等多种心理测试。',
+      showCancel: false,
+      confirmText: '我知道了'
+    });
+  },
+
+  showHelp: function () {
+    wx.showModal({
+      title: '帮助与反馈',
+      content: '1. 每个测试免费5次\n2. 测试完成后可以分享给好友\n3. 分享可获得额外测试次数\n4. 如有问题请联系客服',
+      showCancel: false,
+      confirmText: '我知道了'
     });
   },
 
   onShareAppMessage: function () {
     return {
-      title: '型格记 - 发现真实的自己',
+      title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index',
       imageUrl: ''
     };
