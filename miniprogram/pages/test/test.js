@@ -322,7 +322,7 @@ Page({
         result.scores = { sunk_cost, idealization, emotional_dependency, irrational };
         const total = sunk_cost + idealization + emotional_dependency + irrational;
         let level = '正常', emoji = '🧠', desc = '你能够在恋爱中保持理性';
-        if (total >= 10) { level = '        if (total >= 10) { level = '重度恋爱脑'; emoji = '💔'; desc = '你很容易在恋爱中失去理性，需要重新找回自我'; }
+        if (total >= 10) { level = '重度恋爱脑'; emoji = '💔'; desc = '你很容易在恋爱中失去理性，需要重新找回自我'; }
         else if (total >= 5) { level = '中度恋爱脑'; emoji = '💕'; desc = '你在恋爱中比较容易上头，需要学会更多关注自己'; }
         else if (total >= 2) { level = '轻度恋爱脑'; emoji = '💭'; desc = '你偶尔会有些恋爱脑倾向，但总体可控'; }
         result.result = { resultCode: level, type_name: level, emoji, description: desc };
