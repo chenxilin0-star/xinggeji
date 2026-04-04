@@ -9,20 +9,25 @@
   <view class="question-card" wx:if="{{!loading && questions.length > 0}}">
     <view class="question-text">{{questions[currentIndex].q_text}}</view>
     
-    <radio-group class="options-group" bindchange="selectOption" data-index="{{currentIndex}}">
-      <label 
-        class="option-item {{answers[currentIndex] && answers[currentIndex].selected === index ? 'selected' : ''}}" 
+    <!-- 选项列表 - 用view+点击事件代替radio -->
+    <view class="options-group">
+      <view 
+        class="option-item {{answers[currentIndex] && answers[currentIndex].selected === idx ? 'selected' : ''}}" 
         wx:for="{{questions[currentIndex].options}}" 
-        wx:key="o_no"
-        wx:for-item="option"
+        wx:key="idx"
+        bindtap="selectOption"
+        data-index="{{currentIndex}}"
+        data-option-index="{{idx}}"
       >
-        <radio value="{{index}}" />
-        <view class="option-content">
-          <text class="option-no">{{option.o_no}}</text>
-          <text class="option-text">{{option.o_text}}</text>
+        <view class="option-radio">
+          <view class="radio-inner" wx:if="{{answers[currentIndex] && answers[currentIndex].selected === idx}}"></view>
         </view>
-      </label>
-    </radio-group>
+        <view class="option-content">
+          <text class="option-no">{{item.o_no}}</text>
+          <text class="option-text">{{item.o_text}}</text>
+        </view>
+      </view>
+    </view>
   </view>
 
   <!-- 导航按钮 -->

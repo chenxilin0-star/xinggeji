@@ -76,17 +76,35 @@
   font-weight: 500;
 }
 
-.option-item radio {
-  margin-right: 0;
+.option-radio {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #d4d0e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
   margin-top: 4rpx;
-  transform: scale(0.9);
+  transition: all 0.2s ease;
+}
+
+.option-item.selected .option-radio {
+  border-color: #6C5CE7;
+  background: #6C5CE7;
+}
+
+.radio-inner {
+  width: 20rpx;
+  height: 20rpx;
+  background: #fff;
+  border-radius: 50%;
 }
 
 .option-content {
   display: flex;
   align-items: flex-start;
   flex: 1;
-  margin-left: 16rpx;
 }
 
 .option-no {

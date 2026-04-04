@@ -171,8 +171,8 @@ Page({
   },
 
   selectOption: function (e) {
-    const index = e.currentTarget.dataset.index;
-    const optionIndex = parseInt(e.detail.value);  // 确保是数字
+    const index = parseInt(e.currentTarget.dataset.index);
+    const optionIndex = parseInt(e.currentTarget.dataset.optionIndex);
     const question = this.data.questions[index];
     
     // 防御性检查
@@ -193,7 +193,7 @@ Page({
       score = optionIndex;
     }
     
-    // 创建新的answers数组确保setData能检测到变化
+    // 创建新的answers数组
     const newAnswers = [...this.data.answers];
     newAnswers[index] = {
       selected: optionIndex,
@@ -201,10 +201,7 @@ Page({
       score: score
     };
     
-    this.setData({ 
-      answers: newAnswers,
-      currentIndex: index  // 先保持在当前题，确保UI更新
-    });
+    this.setData({ answers: newAnswers });
     
     // 自动跳转到下一题
     if (index < this.data.questions.length - 1) {
