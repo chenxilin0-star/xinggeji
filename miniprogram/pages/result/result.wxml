@@ -11,98 +11,72 @@
     <view class="result-desc">{{resultData.result.description}}</view>
   </view>
 
-  <!-- 维度分析区域 - 改用进度条展示 -->
-  <view class="analysis-card" wx:if="{{dimensions.length > 0}}">
+  <!-- 雷达图区域 -->
+  <view class="radar-card" wx:if="{{dimensions.length >= 3}}">
     <view class="card-title">维度分析</view>
-    
-    <!-- MBTI四宫格展示 -->
-    <view class="mbti-grid" wx:if="{{testId === 'mbti'}}">
-      <view class="dimension-pair">
-        <view class="dim-row">
-          <view class="dim-cell {{resultData.result.resultCode.charAt(0) === 'E' ? 'active' : ''}}">
-            <text class="dim-letter">E</text>
-            <text class="dim-label">外向</text>
-          </view>
-          <view class="dim-cell {{resultData.result.resultCode.charAt(0) === 'I' ? 'active' : ''}}">
-            <text class="dim-letter">I</text>
-            <text class="dim-label">内向</text>
-          </view>
+    <view class="radar-wrapper">
+      <canvas type="2d" canvas-id="radarCanvas" class="radar-canvas" bindtouchstart="onCanvasTouch"></canvas>
+    </view>
+  </view>
+
+  <!-- MBTI四宫格 -->
+  <view class="mbti-card" wx:if="{{testId === 'mbti'}}">
+    <view class="card-title">MBTI四宫格</view>
+    <view class="mbti-grid">
+      <view class="mbti-row">
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(0) === 'E' ? 'active' : ''}}">
+          <text class="cell-letter">E</text>
+          <text class="cell-name">外向型</text>
         </view>
-        <view class="dim-progress">
-          <view class="progress-bar-horizontal">
-            <view class="progress-fill E" style="width: {{mbtiScores.EP}}%"></view>
-            <view class="progress-fill I" style="width: {{mbtiScores.IP}}%"></view>
-          </view>
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(0) === 'I' ? 'active' : ''}}">
+          <text class="cell-letter">I</text>
+          <text class="cell-name">内向型</text>
         </view>
       </view>
-      
-      <view class="dimension-pair">
-        <view class="dim-row">
-          <view class="dim-cell {{resultData.result.resultCode.charAt(1) === 'S' ? 'active' : ''}}">
-            <text class="dim-letter">S</text>
-            <text class="dim-label">实感</text>
-          </view>
-          <view class="dim-cell {{resultData.result.resultCode.charAt(1) === 'N' ? 'active' : ''}}">
-            <text class="dim-letter">N</text>
-            <text class="dim-label">直觉</text>
-          </view>
+      <view class="mbti-row">
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(1) === 'S' ? 'active' : ''}}">
+          <text class="cell-letter">S</text>
+          <text class="cell-name">实感型</text>
         </view>
-        <view class="dim-progress">
-          <view class="progress-bar-horizontal">
-            <view class="progress-fill S" style="width: {{mbtiScores.SP}}%"></view>
-            <view class="progress-fill N" style="width: {{mbtiScores.NP}}%"></view>
-          </view>
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(1) === 'N' ? 'active' : ''}}">
+          <text class="cell-letter">N</text>
+          <text class="cell-name">直觉型</text>
         </view>
       </view>
-      
-      <view class="dimension-pair">
-        <view class="dim-row">
-          <view class="dim-cell {{resultData.result.resultCode.charAt(2) === 'T' ? 'active' : ''}}">
-            <text class="dim-letter">T</text>
-            <text class="dim-label">理性</text>
-          </view>
-          <view class="dim-cell {{resultData.result.resultCode.charAt(2) === 'F' ? 'active' : ''}}">
-            <text class="dim-letter">F</text>
-            <text class="dim-label">情感</text>
-          </view>
+      <view class="mbti-row">
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(2) === 'T' ? 'active' : ''}}">
+          <text class="cell-letter">T</text>
+          <text class="cell-name">理性型</text>
         </view>
-        <view class="dim-progress">
-          <view class="progress-bar-horizontal">
-            <view class="progress-fill T" style="width: {{mbtiScores.TP}}%"></view>
-            <view class="progress-fill F" style="width: {{mbtiScores.FP}}%"></view>
-          </view>
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(2) === 'F' ? 'active' : ''}}">
+          <text class="cell-letter">F</text>
+          <text class="cell-name">情感型</text>
         </view>
       </view>
-      
-      <view class="dimension-pair">
-        <view class="dim-row">
-          <view class="dim-cell {{resultData.result.resultCode.charAt(3) === 'J' ? 'active' : ''}}">
-            <text class="dim-letter">J</text>
-            <text class="dim-label">判断</text>
-          </view>
-          <view class="dim-cell {{resultData.result.resultCode.charAt(3) === 'P' ? 'active' : ''}}">
-            <text class="dim-letter">P</text>
-            <text class="dim-label">感知</text>
-          </view>
+      <view class="mbti-row">
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(3) === 'J' ? 'active' : ''}}">
+          <text class="cell-letter">J</text>
+          <text class="cell-name">判断型</text>
         </view>
-        <view class="dim-progress">
-          <view class="progress-bar-horizontal">
-            <view class="progress-fill J" style="width: {{mbtiScores.JP}}%"></view>
-            <view class="progress-fill P" style="width: {{mbtiScores.PP}}%"></view>
-          </view>
+        <view class="mbti-cell {{resultData.result.resultCode.charAt(3) === 'P' ? 'active' : ''}}">
+          <text class="cell-letter">P</text>
+          <text class="cell-name">感知型</text>
         </view>
       </view>
     </view>
+  </view>
 
-    <!-- 非MBTI测试的维度展示 -->
-    <view class="dimensions-list" wx:if="{{testId !== 'mbti'}}">
-      <view class="dimension-item" wx:for="{{dimensions}}" wx:key="name">
-        <view class="dimension-header">
-          <view class="dimension-name">{{item.name}}</view>
-          <view class="dimension-score">{{item.value}}分</view>
+  <!-- 维度详情列表 -->
+  <view class="detail-card" wx:if="{{dimensions.length > 0 && testId !== 'mbti'}}">
+    <view class="card-title">详细分析</view>
+    <view class="detail-list">
+      <view class="detail-item" wx:for="{{dimensions}}" wx:key="name">
+        <view class="detail-header">
+          <text class="detail-name">{{item.name}}</text>
+          <text class="detail-value">{{item.value}}分</text>
         </view>
-        <view class="dimension-bar">
-          <view class="dimension-value" style="width: {{item.value}}%;"></view>
+        <view class="detail-bar">
+          <view class="detail-fill" style="width: {{item.value}}%"></view>
         </view>
       </view>
     </view>

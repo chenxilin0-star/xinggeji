@@ -5,7 +5,6 @@ Page({
     testId: '',
     resultData: {},
     dimensions: [],
-    mbtiScores: {},
     radarColor: '#6C5CE7',
     testTitles: {
       mbti: 'MBTI人格测试',
@@ -29,14 +28,17 @@ Page({
       try {
         const resultData = JSON.parse(decodeURIComponent(result_data));
         const dimensions = this.calculateDimensions(test_id, resultData.scores);
-        const mbtiScores = this.calculateMbtiScores(result_data, resultData.scores);
         
         this.setData({
           testId: test_id,
           resultData,
-          dimensions,
-          mbtiScores
+          dimensions
         });
+        
+        // 等待页面渲染完成后绘制雷达图
+        setTimeout(() => {
+          this.drawRadar();
+        }, 100);
       } catch (e) {
         console.error('Parse result data failed:', e);
         wx.showToast({ title: '数据解析失败', icon: 'none' });
@@ -53,36 +55,54 @@ Page({
     
     switch (testId) {
       case 'mbti':
-        return [];
+        // MBTI 四个维度转雷达图
+        const E = scores.E || 0;
+        const I = scores.I || 0;
+        const S = scores.S || 0;
+        const N = scores.N || 0;
+        const T = scores.T || 0;
+        const F = scores.F || 0;
+        const J = scores.J || 0;
+        const P = scores.P || 0;
+        
+        return [
+          { name: '外向 E', value: Math.min(100, Math.round((E / (E + I || 1)) * 100)) || 50 },
+          { name: '实感 S', value: Math.min(100, Math.round((S / (S + N || 1)) * 100)) || 50 },
+          { name: '理性 T', value: Math.min(100, Math.round((T / (T + F || 1)) * 100)) || 50 },
+          { name: '判断 J', value: Math.min(100, Math.round((J / (J + P || 1)) * 100)) || 50 }
+        ];
         
       case 'love_brain':
         return [
-          { name: '沉没成本', value: Math.round((scores.sunk_cost / 4) * 100) || 0 },
-          { name: '理想化', value: Math.round((scores.idealization / 4) * 100) || 0 },
-          { name: '情绪依赖', value: Math.round((scores.emotional_dependency / 4) * 100) || 0 },
-          { name: '失去理性', value: Math.round((scores.irrational / 3) * 100) || 0 }
+          { name: '沉没成本', value: Math.min(100, Math.round((scores.sunk_cost / 4) * 100)) || 0 },
+          { name: '理想化', value: Math.min(100, Math.round((scores.idealization / 4) * 100)) || 0 },
+          { name: '情绪依赖', value: Math.min(100, Math.round((scores.emotional_dependency / 4) * 100)) || 0 },
+          { name: '失去理性', value: Math.min(100, Math.round((scores.irrational / 3) * 100)) || 0 }
         ];
         
       case 'animal_persona':
-        const animalTotal = (scores.lion || 0) + (scores.peacock || 0) + (scores.koala || 0) + (scores.owl || 0);
+        const animalTotal = Math.max(1, (scores.lion || 0) + (scores.peacock || 0) + (scores.koala || 0) + (scores.owl || 0));
         return [
-          { name: '狮子型', value: animalTotal > 0 ? Math.round((scores.lion / animalTotal) * 100) : 25 },
-          { name: '孔雀型', value: animalTotal > 0 ? Math.round((scores.peacock / animalTotal) * 100) : 25 },
-          { name: '考拉型', value: animalTotal > 0 ? Math.round((scores.koala / animalTotal) * 100) : 25 },
-          { name: '猫头鹰型', value: animalTotal > 0 ? Math.round((scores.owl / animalTotal) * 100) : 25 }
+          { name: '狮子型', value: Math.round((scores.lion / animalTotal) * 100) || 25 },
+          { name: '孔雀型', value: Math.round((scores.peacock / animalTotal) * 100) || 25 },
+          { name: '考拉型', value: Math.round((scores.koala / animalTotal) * 100) || 25 },
+          { name: '猫头鹰型', value: Math.round((scores.owl / animalTotal) * 100) || 25 }
         ];
         
       case 'attachment_style':
         return [
-          { name: '焦虑程度', value: Math.round((scores.anxiety / 27) * 100) || 50 },
-          { name: '回避程度', value: Math.round((scores.avoidance / 27) * 100) || 50 }
+          { name: '焦虑程度', value: Math.min(100, Math.round((scores.anxiety / 27) * 100)) || 50 },
+          { name: '回避程度', value: Math.min(100, Math.round((scores.avoidance / 27) * 100)) || 50 },
+          { name: '安全程度', value: Math.max(0, 100 - Math.min(100, Math.round(((scores.anxiety + scores.avoidance) / 54) * 100))) || 50 },
+          { name: '信任程度', value: Math.max(0, 100 - Math.round((scores.avoidance / 27) * 100)) || 50 }
         ];
         
       case 'emotion_stress':
         return [
-          { name: '抑郁指数', value: Math.round((scores.depression / 21) * 100) || 30 },
-          { name: '焦虑指数', value: Math.round((scores.anxiety / 21) * 100) || 30 },
-          { name: '压力指数', value: Math.round((scores.stress / 21) * 100) || 30 }
+          { name: '抑郁指数', value: Math.min(100, Math.round((scores.depression / 21) * 100)) || 30 },
+          { name: '焦虑指数', value: Math.min(100, Math.round((scores.anxiety / 21) * 100)) || 30 },
+          { name: '压力指数', value: Math.min(100, Math.round((scores.stress / 21) * 100)) || 30 },
+          { name: '心理健康', value: Math.max(0, 100 - Math.min(100, Math.round(((scores.depression + scores.anxiety + scores.stress) / 63) * 100))) || 70 }
         ];
         
       default:
@@ -90,41 +110,135 @@ Page({
     }
   },
 
-  // 计算MBTI四个维度的百分比
-  calculateMbtiScores: function (testId, scores) {
-    if (testId !== 'mbti' || !scores) return {};
-    
-    const E = scores.E || 0;
-    const I = scores.I || 0;
-    const S = scores.S || 0;
-    const N = scores.N || 0;
-    const T = scores.T || 0;
-    const F = scores.F || 0;
-    const J = scores.J || 0;
-    const P = scores.P || 0;
-    
-    const ETotal = E + I;
-    const STotal = S + N;
-    const TTotal = T + F;
-    const JTotal = J + P;
-    
-    return {
-      EP: ETotal > 0 ? Math.round((E / ETotal) * 100) : 50,
-      IP: ETotal > 0 ? Math.round((I / ETotal) * 100) : 50,
-      SP: STotal > 0 ? Math.round((S / STotal) * 100) : 50,
-      NP: STotal > 0 ? Math.round((N / STotal) * 100) : 50,
-      TP: TTotal > 0 ? Math.round((T / TTotal) * 100) : 50,
-      FP: TTotal > 0 ? Math.round((F / TTotal) * 100) : 50,
-      JP: JTotal > 0 ? Math.round((J / JTotal) * 100) : 50,
-      PP: JTotal > 0 ? Math.round((P / JTotal) * 100) : 50
-    };
+  // 绘制雷达图
+  drawRadar: function () {
+    const { dimensions } = this.data;
+    if (!dimensions || dimensions.length < 3) return;
+
+    const query = wx.createSelectorQuery();
+    query.select('#radarCanvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        if (!res[0] || !res[0].node) return;
+        
+        const canvas = res[0].node;
+        const ctx = canvas.getContext('2d');
+        const dpr = wx.getSystemInfoSync().pixelRatio;
+        
+        const width = res[0].width;
+        const height = res[0].height;
+        
+        // 设置canvas尺寸
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
+        
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = Math.min(width, height) / 2 - 40;
+        const sides = dimensions.length;
+        const angle = (2 * Math.PI) / sides;
+        const levels = 5;
+
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+
+        // 绘制背景网格
+        ctx.strokeStyle = '#e8e6f5';
+        ctx.lineWidth = 1;
+
+        for (let level = 1; level <= levels; level++) {
+          const levelRadius = (radius / levels) * level;
+          ctx.beginPath();
+          for (let i = 0; i <= sides; i++) {
+            const x = centerX + levelRadius * Math.cos(angle * i - Math.PI / 2);
+            const y = centerY + levelRadius * Math.sin(angle * i - Math.PI / 2);
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+
+        // 绘制轴线
+        ctx.strokeStyle = '#e8e6f5';
+        for (let i = 0; i < sides; i++) {
+          const x = centerX + radius * Math.cos(angle * i - Math.PI / 2);
+          const y = centerY + radius * Math.sin(angle * i - Math.PI / 2);
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+
+        // 绘制数据区域
+        ctx.beginPath();
+        ctx.setFillStyle('rgba(108, 92, 231, 0.25)');
+        ctx.setStrokeStyle('#6C5CE7');
+        ctx.lineWidth = 2;
+
+        dimensions.forEach((dim, i) => {
+          const value = Math.min(100, Math.max(0, dim.value)) / 100;
+          const x = centerX + radius * value * Math.cos(angle * i - Math.PI / 2);
+          const y = centerY + radius * value * Math.sin(angle * i - Math.PI / 2);
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 绘制数据点
+        dimensions.forEach((dim, i) => {
+          const value = Math.min(100, Math.max(0, dim.value)) / 100;
+          const x = centerX + radius * value * Math.cos(angle * i - Math.PI / 2);
+          const y = centerY + radius * value * Math.sin(angle * i - Math.PI / 2);
+          
+          ctx.beginPath();
+          ctx.setFillStyle('#6C5CE7');
+          ctx.arc(x, y, 6, 0, 2 * Math.PI);
+          ctx.fill();
+          
+          ctx.beginPath();
+          ctx.setFillStyle('#fff');
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+        });
+
+        // 绘制标签
+        ctx.setFillStyle('#666');
+        ctx.setFontSize = 12;
+        ctx.setTextAlign('center');
+        ctx.setTextBaseline('middle');
+        
+        dimensions.forEach((dim, i) => {
+          const labelRadius = radius + 25;
+          const x = centerX + labelRadius * Math.cos(angle * i - Math.PI / 2);
+          const y = centerY + labelRadius * Math.sin(angle * i - Math.PI / 2);
+          
+          // 调整标签位置
+          let offsetX = 0;
+          let offsetY = 0;
+          if (i === 0) offsetY = -5;
+          else if (i === sides - 1) offsetY = -5;
+          else if (i === Math.floor(sides / 2)) offsetY = 12;
+          
+          ctx.fillText(dim.name, x + offsetX, y + offsetY);
+        });
+      });
+  },
+
+  onCanvasTouch: function(e) {
+    // 防止触摸穿透
   },
 
   shareResult: function () {
-    const { testId, resultData } = this.data;
-    const title = this.data.testTitles[testId] || '心理测试';
-    const result = resultData.result;
-    
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']

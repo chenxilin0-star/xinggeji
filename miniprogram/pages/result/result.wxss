@@ -17,173 +17,163 @@
 .result-card {
   background: #fff;
   border-radius: 24rpx;
-  padding: 60rpx 40rpx;
+  padding: 50rpx 40rpx;
   text-align: center;
-  box-shadow: 0 8rpx 30rpx rgba(108, 92, 231, 0.25);
+  box-shadow: 0 8rpx 30rpx rgba(108, 92, 231, 0.2);
   margin-bottom: 30rpx;
 }
 
 .result-emoji {
-  font-size: 100rpx;
-  margin-bottom: 20rpx;
+  font-size: 90rpx;
+  margin-bottom: 16rpx;
 }
 
 .result-type {
-  font-size: 56rpx;
+  font-size: 48rpx;
   font-weight: bold;
   color: #6C5CE7;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
 }
 
 .result-desc {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #666;
   line-height: 1.6;
 }
 
-.analysis-card {
+.radar-card {
   background: #fff;
   border-radius: 24rpx;
-  padding: 40rpx 30rpx;
+  padding: 30rpx;
   margin-bottom: 30rpx;
   box-shadow: 0 8rpx 30rpx rgba(108, 92, 231, 0.15);
 }
 
 .card-title {
-  font-size: 34rpx;
+  font-size: 30rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx;
   text-align: center;
 }
 
-/* MBTI四宫格 */
-.mbti-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24rpx;
-}
-
-.dimension-pair {
-  background: #f8f7ff;
-  border-radius: 16rpx;
-  padding: 20rpx;
-}
-
-.dim-row {
-  display: flex;
-  gap: 16rpx;
-  margin-bottom: 12rpx;
-}
-
-.dim-cell {
-  flex: 1;
+.radar-wrapper {
+  width: 100%;
+  height: 400rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16rpx;
-  border-radius: 12rpx;
+}
+
+.radar-canvas {
+  width: 350rpx;
+  height: 350rpx;
+}
+
+/* MBTI四宫格 */
+.mbti-card {
   background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(108, 92, 231, 0.15);
+}
+
+.mbti-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.mbti-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.mbti-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 16rpx;
+  background: #f8f7ff;
+  border-radius: 16rpx;
   border: 2rpx solid #e8e6f5;
   transition: all 0.3s ease;
 }
 
-.dim-cell.active {
+.mbti-cell.active {
   background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
   border-color: #6C5CE7;
 }
 
-.dim-cell.active .dim-letter,
-.dim-cell.active .dim-label {
+.mbti-cell.active .cell-letter,
+.mbti-cell.active .cell-name {
   color: #fff;
 }
 
-.dim-letter {
-  font-size: 32rpx;
+.cell-letter {
+  font-size: 40rpx;
   font-weight: bold;
   color: #6C5CE7;
-  margin-right: 8rpx;
+  margin-bottom: 6rpx;
 }
 
-.dim-label {
-  font-size: 24rpx;
-  color: #666;
+.cell-name {
+  font-size: 22rpx;
+  color: #888;
 }
 
-.dim-progress {
-  margin-top: 8rpx;
+/* 维度详情列表 */
+.detail-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(108, 92, 231, 0.15);
 }
 
-.progress-bar-horizontal {
-  height: 12rpx;
-  background: #e8e6f5;
-  border-radius: 6rpx;
-  display: flex;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  transition: width 0.5s ease;
-}
-
-.progress-fill.E,
-.progress-fill.T,
-.progress-fill.S,
-.progress-fill.J {
-  background: linear-gradient(90deg, #6C5CE7, #a29bfe);
-}
-
-.progress-fill.I,
-.progress-fill.F,
-.progress-fill.N,
-.progress-fill.P {
-  background: #e8e6f5;
-}
-
-/* 非MBTI维度列表 */
-.dimensions-list {
+.detail-list {
   display: flex;
   flex-direction: column;
   gap: 24rpx;
 }
 
-.dimension-item {
+.detail-item {
   display: flex;
   flex-direction: column;
 }
 
-.dimension-header {
+.detail-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10rpx;
 }
 
-.dimension-name {
+.detail-name {
   font-size: 28rpx;
   color: #333;
-  font-weight: 500;
 }
 
-.dimension-score {
+.detail-value {
   font-size: 26rpx;
   color: #6C5CE7;
   font-weight: bold;
 }
 
-.dimension-bar {
-  height: 16rpx;
+.detail-bar {
+  height: 14rpx;
   background: #f0f0f0;
-  border-radius: 8rpx;
+  border-radius: 7rpx;
   overflow: hidden;
 }
 
-.dimension-value {
+.detail-fill {
   height: 100%;
   background: linear-gradient(90deg, #6C5CE7, #a29bfe);
-  border-radius: 8rpx;
-  transition: width 0.8s ease;
+  border-radius: 7rpx;
+  transition: width 0.5s ease;
 }
 
 /* 操作按钮 */
@@ -191,7 +181,7 @@
   display: flex;
   flex-direction: column;
   gap: 20rpx;
-  margin-top: 30rpx;
+  margin-top: 20rpx;
 }
 
 .btn-share, .btn-retake, .btn-home {
@@ -205,7 +195,7 @@
 .btn-share {
   background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
   color: #fff;
-  box-shadow: 0 6rpx 20rpx rgba(108, 92, 231, 0.4);
+  box-shadow: 0 6rpx 20rpx rgba(108, 92, 231, 0.35);
   border: none;
 }
 
