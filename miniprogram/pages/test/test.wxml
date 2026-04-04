@@ -12,12 +12,13 @@
     <!-- 选项列表 - 用view+点击事件代替radio -->
     <view class="options-group">
       <view 
-        class="option-item {{answers[currentIndex] && answers[currentIndex].selected === idx ? 'selected' : ''}}" 
+        class="option-item {{answers[currentIndex] && answers[currentIndex].selected === index ? 'selected' : ''}}" 
         wx:for="{{questions[currentIndex].options}}" 
-        wx:key="idx"
+        wx:key="index"
+        wx:for-index="index"
         bindtap="selectOption"
-        data-index="{{currentIndex}}"
-        data-optionidx="{{idx}}"
+        data-qindex="{{currentIndex}}"
+        data-optionindex="{{index}}"
       >
         <view class="option-radio">
           <view class="radio-inner" wx:if="{{answers[currentIndex] && answers[currentIndex].selected === idx}}"></view>

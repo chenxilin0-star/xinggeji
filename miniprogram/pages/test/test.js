@@ -171,32 +171,32 @@ Page({
   },
 
   selectOption: function (e) {
-    const index = parseInt(e.currentTarget.dataset.index);
-    const optionIndex = parseInt(e.currentTarget.dataset.optionidx);
-    const question = this.data.questions[index];
+    const qIndex = parseInt(e.currentTarget.dataset.qindex);
+    const optIdx = parseInt(e.currentTarget.dataset.optionindex);
+    const question = this.data.questions[qIndex];
     
     // 防御性检查
-    if (!question || !question.options || !question.options[optionIndex]) {
-      console.error('Option not found:', { index, optionIndex, question });
+    if (!question || !question.options || !question.options[optIdx]) {
+      console.error('Option not found:', { qIndex, optIdx, question });
       return;
     }
     
-    const option = question.options[optionIndex];
+    const option = question.options[optIdx];
     let score = 0;
     
     // 计算分数
     if (this.data.testId === 'love_brain') {
       score = option.o_no === 'B' ? 1 : 0;
     } else if (this.data.testId === 'attachment_style' || this.data.testId === 'emotion_stress' || this.data.testId === 'animal_persona') {
-      score = optionIndex + 1;
+      score = optIdx + 1;
     } else {
-      score = optionIndex;
+      score = optIdx;
     }
     
     // 创建新的answers数组
     const newAnswers = [...this.data.answers];
-    newAnswers[index] = {
-      selected: optionIndex,
+    newAnswers[qIndex] = {
+      selected: optIdx,
       o_no: option.o_no,
       score: score
     };
@@ -204,9 +204,9 @@ Page({
     this.setData({ answers: newAnswers });
     
     // 自动跳转到下一题
-    if (index < this.data.questions.length - 1) {
+    if (qIndex < this.data.questions.length - 1) {
       setTimeout(() => {
-        this.setData({ currentIndex: index + 1 });
+        this.setData({ currentIndex: qIndex + 1 });
       }, 300);
     }
   },
