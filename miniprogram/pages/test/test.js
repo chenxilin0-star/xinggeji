@@ -262,6 +262,9 @@ Page({
       this.setData({ currentIndex: firstUnanswered });
       return;
     }
+    
+    // 全部答完，提交
+    this.doSubmit();
   },
 
   doSubmit: function () {
