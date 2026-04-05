@@ -1,5 +1,12 @@
+/* 首页样式 - 注意：app.wxss 中有全局 .container，这里必须覆盖 */
+
+page {
+  background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
+  min-height: 100vh;
+}
+
 .container {
-  padding: 30rpx;
+  padding: 30rpx !important;
   min-height: 100vh;
   padding-bottom: 120rpx;
 }
@@ -46,7 +53,7 @@
   display: flex;
   align-items: center;
   box-shadow: 0 6rpx 24rpx rgba(108, 92, 231, 0.18);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2,1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
@@ -74,10 +81,12 @@
 .test-emoji {
   font-size: 64rpx;
   margin-right: 28rpx;
+  flex-shrink: 0;
 }
 
 .test-info {
   flex: 1;
+  min-width: 0;
 }
 
 .test-title {
@@ -98,6 +107,7 @@
   display: flex;
   align-items: center;
   gap: 8rpx;
+  flex-wrap: wrap;
 }
 
 .question-count {
@@ -121,6 +131,7 @@
   color: #d4d0e8;
   margin-left: 16rpx;
   font-weight: 300;
+  flex-shrink: 0;
 }
 
 .footer-tip {

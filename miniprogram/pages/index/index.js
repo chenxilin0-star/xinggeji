@@ -4,6 +4,7 @@ Page({
   data: {
     tests: [],
     loading: true,
+    free_times: 5,
     testColors: {
       mbti: '#F5A623',
       love_brain: '#FF6B9D',
@@ -14,33 +15,37 @@ Page({
   },
 
   onLoad: function () {
-    this.loginAndLoadTests();
+    // 立即用本地数据渲染，避免空白
+    const localTests = this.getLocalTests();
+    this.setData({ tests: localTests, loading: false });
+    this.setData({ free_times: app.globalData.free_times || 5 });
+    
+    // 后台静默登录+加载云端数据（不阻塞渲染）
+    this.silentLogin();
   },
 
   onShow: function () {
-    // 只刷新次数，不重新加载测试列表
-    this.setData({ free_times: app.globalData.free_times || 5 });
+    // 只刷新次数
+    const times = app.globalData.free_times;
+    if (times !== undefined) {
+      this.setData({ free_times: times });
+    }
   },
 
-  loginAndLoadTests: function () {
-    // 先用本地数据渲染，再尝试云端
-    this.setData({
-      tests: this.getLocalTests(),
-      loading: false
-    });
-
+  silentLogin: function () {
     wx.cloud.callFunction({
       name: 'login',
       success: res => {
-        if (res.result.success) {
+        if (res.result && res.result.success) {
           app.globalData.openid = res.result.openid;
           app.globalData.free_times = res.result.free_times;
           this.setData({ free_times: res.result.free_times });
         }
+        // 登录成功后再尝试拉云端测试列表
         this.loadTestsFromCloud();
       },
-      fail: err => {
-        console.error('Login failed:', err);
+      fail: () => {
+        // 登录失败没关系，本地数据已经显示了
       }
     });
   },
@@ -49,13 +54,17 @@ Page({
     wx.cloud.callFunction({
       name: 'getTestList',
       success: res => {
-        if (res.result.success && res.result.tests && res.result.tests.length > 0) {
-          this.setData({ tests: res.result.tests });
+        // 只在云端返回了有效数据时才更新（避免空白覆盖本地数据）
+        if (res.result && res.result.success && res.result.tests && res.result.tests.length > 0) {
+          // 检查数据是否和本地一样，一样就不更新（避免闪烁）
+          const localIds = this.data.tests.map(t => t.test_id).join(',');
+          const cloudIds = res.result.tests.map(t => t.test_id).join(',');
+          if (localIds !== cloudIds || !this.data.tests[0].tag) {
+            this.setData({ tests: res.result.tests });
+          }
         }
       },
-      fail: err => {
-        console.error('Load tests failed:', err);
-      }
+      fail: () => {}
     });
   },
 
