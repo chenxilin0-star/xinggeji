@@ -123,6 +123,7 @@
     <!-- 操作按钮 -->
     <view class="actions">
       <button class="btn-share" open-type="share">📊 分享结果</button>
+      <button class="btn-retake" bindtap="generatePoster">🖼️ 生成海报</button>
       <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
       <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
     </view>

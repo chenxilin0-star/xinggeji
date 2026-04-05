@@ -80,5 +80,15 @@ Page({
   },
 
   retakeTest: function () { wx.redirectTo({ url: '/pages/test/test?test_id=emotion_stress' }); },
-  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); }
+  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); },
+
+  generatePoster: function () {
+    const resultData = {
+      test_id: 'emotion_stress',
+      result: { type_name: this.data.overallLevel, emoji: this.data.overallEmoji, description: '综合指数' + this.data.totalScore + '/63' }
+    };
+    wx.navigateTo({
+      url: `/pages/share/share?test_id=emotion_stress&result_data=${encodeURIComponent(JSON.stringify(resultData))}`
+    });
+  }
 });

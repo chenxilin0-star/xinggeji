@@ -1,35 +1,21 @@
 <view class="container">
-  <!-- 海报预览区 -->
-  <view class="poster-card">
-    <view class="poster-content">
-      <!-- 顶部logo -->
-      <view class="poster-header">
-        <text class="poster-logo">🔮</text>
-        <text class="poster-brand">型格记</text>
-      </view>
-      
-      <!-- 测试结果 -->
-      <view class="poster-result">
-        <text class="poster-emoji">{{resultData.result.emoji}}</text>
-        <text class="poster-type">{{resultData.result.type_name}}</text>
-      </view>
-      
-      <!-- 二维码区域 -->
-      <view class="poster-qrcode">
-        <canvas canvas-id="qrcodeCanvas" class="qrcode-canvas"></canvas>
-        <text class="qrcode-tip">长按识别二维码</text>
-      </view>
-      
-      <!-- 底部信息 -->
-      <view class="poster-footer">
-        <text class="poster-slogan">探索内心，发现真实的自己</text>
-      </view>
-    </view>
+  <!-- 海报 Canvas -->
+  <view class="poster-wrap">
+    <canvas type="2d" canvas-id="posterCanvas" class="poster-canvas" id="posterCanvas"></canvas>
+  </view>
+
+  <!-- 结果预览 -->
+  <view class="preview-card" wx:if="{{resultData.result}}">
+    <view class="preview-emoji">{{resultData.result.emoji || '🔮'}}</view>
+    <view class="preview-title">{{resultData.result.type_name || resultData.result.resultCode || '测试结果'}}</view>
+    <view class="preview-desc">{{resultData.result.description || ''}}</view>
+    <view class="preview-test">{{testTitles[test_id] || '心理测试'}}</view>
   </view>
 
   <!-- 操作按钮 -->
   <view class="actions">
-    <button class="btn-save" bindtap="savePoster">保存图片</button>
-    <button class="btn-share" open-type="share">分享给好友</button>
+    <button class="btn-save" bindtap="savePoster">{{posterSaved ? '✅ 已保存' : '📥 保存海报到相册'}}</button>
+    <button class="btn-share" open-type="share">🔗 分享给朋友</button>
+    <button class="btn-back" bindtap="backToResult">返回结果</button>
   </view>
 </view>

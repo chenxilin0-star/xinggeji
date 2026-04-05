@@ -187,5 +187,15 @@ Page({
   retakeTest: function () {
     wx.redirectTo({ url: '/pages/test/test?test_id=animal_persona' });
   },
-  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); }
+  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); },
+
+  generatePoster: function () {
+    const resultData = {
+      test_id: 'animal_persona',
+      result: { type_name: this.data.animalData.name, emoji: this.data.animalData.emoji, description: this.data.animalData.tagline }
+    };
+    wx.navigateTo({
+      url: `/pages/share/share?test_id=animal_persona&result_data=${encodeURIComponent(JSON.stringify(resultData))}`
+    });
+  }
 });

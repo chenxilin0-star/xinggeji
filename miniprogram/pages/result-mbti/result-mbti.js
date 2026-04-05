@@ -478,5 +478,20 @@ Page({
 
   backToHome: function () {
     wx.switchTab({ url: '/pages/index/index' });
+  },
+
+  generatePoster: function () {
+    const resultData = {
+      test_id: 'mbti',
+      result: this.data.typeData ? {
+        resultCode: this.data.resultCode,
+        type_name: this.data.typeData.name,
+        emoji: '🎭',
+        description: this.data.typeData.tagline
+      } : {}
+    };
+    wx.navigateTo({
+      url: `/pages/share/share?test_id=mbti&result_data=${encodeURIComponent(JSON.stringify(resultData))}`
+    });
   }
 });

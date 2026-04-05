@@ -110,5 +110,15 @@ Page({
   retakeTest: function () {
     wx.redirectTo({ url: '/pages/test/test?test_id=attachment_style' });
   },
-  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); }
+  backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); },
+
+  generatePoster: function () {
+    const resultData = {
+      test_id: 'attachment_style',
+      result: { type_name: this.data.attachData.name, emoji: this.data.attachData.emoji, description: this.data.attachData.tagline }
+    };
+    wx.navigateTo({
+      url: `/pages/share/share?test_id=attachment_style&result_data=${encodeURIComponent(JSON.stringify(resultData))}`
+    });
+  }
 });
