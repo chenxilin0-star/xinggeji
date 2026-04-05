@@ -292,15 +292,17 @@ Page({
       success: res => {
         wx.hideLoading();
         if (res.result && res.result.success) {
-          // 云端成功：更新次数，跳结果页
+          // 云端成功扣减次数：用云端返回的remaining_times，但结果用本地计算
           const remaining = res.result.remaining_times;
           app.updateFreeTimes(remaining);
           this.setData({ free_times: remaining });
           
-          const result = res.result;
+          // 使用本地计算的结果（云端不再返回scores/result）
+          const result = this.calculateLocalResult();
+          result.record_id = res.result.record_id || '';
           const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
           });
         } else {
           // 云端返回错误：本地扣减次数，使用本地计算结果
