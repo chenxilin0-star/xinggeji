@@ -1,3 +1,7 @@
+page {
+  background: #9B59B6;
+}
+
 .container {
   min-height: 100vh;
   background: linear-gradient(160deg, #9B59B6 0%, #C39BD3 40%, #E8D5F0 80%, #FAF0FF 100%);
