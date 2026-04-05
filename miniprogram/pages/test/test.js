@@ -292,7 +292,7 @@ Page({
       success: res => {
         wx.hideLoading();
         if (res.result && res.result.success) {
-          // 更新前端次数
+          // 云端成功：更新次数，跳结果页
           const remaining = res.result.remaining_times;
           app.updateFreeTimes(remaining);
           this.setData({ free_times: remaining });
@@ -303,12 +303,16 @@ Page({
             url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
           });
         } else {
-          // 云端返回失败（可能是次数不足）
-          const errorMsg = (res.result && res.result.error) || '提交失败';
-          wx.showModal({
-            title: '提示',
-            content: errorMsg,
-            showCancel: false
+          // 云端返回错误：本地扣减次数，使用本地计算结果
+          console.warn('Cloud submit error:', res.result);
+          const newTimes = Math.max(0, freeTimes - 1);
+          app.updateFreeTimes(newTimes);
+          this.setData({ free_times: newTimes });
+          
+          const result = this.calculateLocalResult();
+          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
+          wx.navigateTo({
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
           });
         }
       },
