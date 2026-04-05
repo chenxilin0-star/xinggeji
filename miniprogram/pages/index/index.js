@@ -37,10 +37,13 @@ Page({
       success: res => {
         if (res.result && res.result.success) {
           app.globalData.openid = res.result.openid;
-          app.updateFreeTimes(res.result.free_times);
+          // 如果login返回了daily_free说明是新版本云函数
+          const isNewLogic = res.result.daily_free !== undefined;
+          const freeTimes = isNewLogic ? res.result.free_times : 2; // 旧版云函数默认给2次
+          app.updateFreeTimes(freeTimes);
           if (res.result.daily_max) app.globalData.daily_max = res.result.daily_max;
           this.setData({ 
-            free_times: res.result.free_times,
+            free_times: freeTimes,
             daily_max: res.result.daily_max || 5
           });
         }
@@ -51,7 +54,8 @@ Page({
 
   startTest: function (e) {
     const testId = e.currentTarget.dataset.id;
-    const freeTimes = app.globalData.free_times || 0;
+    // 优先用页面data中的次数（login云函数返回的），其次用全局缓存，最后默认2
+    const freeTimes = this.data.free_times !== undefined ? this.data.free_times : (app.globalData.free_times || 2);
     
     if (freeTimes <= 0) {
       wx.showModal({
