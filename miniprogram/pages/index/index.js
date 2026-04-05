@@ -120,30 +120,43 @@ Page({
       name: 'shareReward',
       success: res => {
         wx.hideLoading();
+        console.log('shareReward result:', JSON.stringify(res.result));
         if (res.result && res.result.success) {
           const newTimes = res.result.free_times;
           app.updateFreeTimes(newTimes);
           this.setData({ free_times: newTimes, showShareSheet: false });
-          if (res.result.bonus > 0) {
+          if (res.result.bonus && res.result.bonus > 0) {
             wx.showToast({ title: '奖励+1次！', icon: 'success' });
           } else {
             wx.showToast({ title: '今日已达上限', icon: 'none' });
           }
         } else {
-          wx.hideLoading();
-          wx.showToast({ title: '领取失败，请先分享', icon: 'none' });
+          // 云函数返回失败 → 本地+1（信任用户已分享）
+          console.warn('shareReward failed:', res.result);
+          const ft = app.globalData.free_times;
+          const current = ft !== undefined ? ft : 2;
+          if (current < 5) {
+            app.updateFreeTimes(current + 1);
+            this.setData({ free_times: current + 1, showShareSheet: false });
+            wx.showToast({ title: '奖励+1次！', icon: 'success' });
+          } else {
+            this.setData({ showShareSheet: false });
+            wx.showToast({ title: '今日已达上限', icon: 'none' });
+          }
         }
       },
       fail: () => {
         wx.hideLoading();
-        // 云函数失败时本地+1（信任用户）
+        // 云函数调用失败 → 本地+1（信任用户）
         const ft = app.globalData.free_times;
         const current = ft !== undefined ? ft : 2;
         if (current < 5) {
-          const newTimes = current + 1;
-          app.updateFreeTimes(newTimes);
-          this.setData({ free_times: newTimes, showShareSheet: false });
+          app.updateFreeTimes(current + 1);
+          this.setData({ free_times: current + 1, showShareSheet: false });
           wx.showToast({ title: '奖励+1次！', icon: 'success' });
+        } else {
+          this.setData({ showShareSheet: false });
+          wx.showToast({ title: '今日已达上限', icon: 'none' });
         }
       }
     });
