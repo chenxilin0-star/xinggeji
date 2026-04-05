@@ -17,6 +17,7 @@ Page({
     currentIndex: 0,
     answers: [],
     loading: true,
+    free_times: 2,
     testTitles: {
       mbti: 'MBTI人格测试',
       love_brain: '恋爱脑测试',
@@ -33,7 +34,10 @@ Page({
       wx.navigateBack();
       return;
     }
-    this.setData({ testId: test_id });
+    this.setData({ 
+      testId: test_id,
+      free_times: app.globalData.free_times || 2
+    });
     this.loadTestDetail();
   },
 
@@ -261,6 +265,18 @@ Page({
   },
 
   doSubmit: function () {
+    const freeTimes = this.data.free_times !== undefined ? this.data.free_times : (app.globalData.free_times || 2);
+    
+    // 前端先检查次数
+    if (freeTimes <= 0) {
+      wx.showModal({
+        title: '次数不足',
+        content: '今日测试次数已用完，分享给好友可+1次',
+        showCancel: false
+      });
+      return;
+    }
+    
     wx.showLoading({ title: '提交中...' });
     
     // 先尝试提交到云端
@@ -273,24 +289,35 @@ Page({
       success: res => {
         wx.hideLoading();
         if (res.result && res.result.success) {
-          // 云端保存成功，使用云端结果
+          // 更新前端次数
+          const remaining = res.result.remaining_times;
+          app.updateFreeTimes(remaining);
+          this.setData({ free_times: remaining });
+          
           const result = res.result;
           const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
             url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
           });
         } else {
-          // 云端失败，使用本地计算结果
-          const result = this.calculateLocalResult();
-          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
-          wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+          // 云端返回失败（可能是次数不足）
+          const errorMsg = (res.result && res.result.error) || '提交失败';
+          wx.showModal({
+            title: '提示',
+            content: errorMsg,
+            showCancel: false
           });
         }
       },
       fail: err => {
         wx.hideLoading();
         console.error('Submit failed:', err);
+        
+        // 云函数调用失败，本地扣减次数
+        const newTimes = Math.max(0, freeTimes - 1);
+        app.updateFreeTimes(newTimes);
+        this.setData({ free_times: newTimes });
+        
         // 使用本地计算结果
         const result = this.calculateLocalResult();
         const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
