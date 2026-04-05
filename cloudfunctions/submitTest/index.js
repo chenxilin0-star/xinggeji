@@ -13,20 +13,19 @@ exports.main = async (event, context) => {
   const openid = wxContext.OPENID;
   
   try {
-    // 检查用户次数
+    // 1. 查用户
     const userRes = await db.collection('users').where({ openid }).get();
     
-    // 用户不存在则自动创建
     let user;
     if (userRes.data.length === 0) {
-      const today = new Date();
+      // 自动创建用户
+      const today = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
       const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
       await db.collection('users').add({
         data: {
           openid,
           free_times: 2,
           last_reset_date: todayStr,
-          share_count_today: 0,
           created_at: new Date(),
           updated_at: new Date()
         }
@@ -36,21 +35,13 @@ exports.main = async (event, context) => {
       user = userRes.data[0];
     }
     
-    if (user.free_times <= 0) {
+    const currentFree = user.free_times !== undefined && user.free_times !== null ? user.free_times : 2;
+    
+    if (currentFree <= 0) {
       return { success: false, error: '今日次数已用完，分享给好友可+1次' };
     }
     
-    // 保存记录（前端已计算好分数和结果，直接存储）
-    const record = {
-      openid,
-      test_id,
-      answers,
-      completed_at: new Date()
-    };
-    
-    await db.collection('user_records').add({ data: record });
-    
-    // 扣减次数
+    // 2. 先扣减次数（最重要，必须在保存记录之前）
     await db.collection('users').where({ openid }).update({
       data: {
         free_times: db.command.inc(-1),
@@ -58,9 +49,23 @@ exports.main = async (event, context) => {
       }
     });
     
+    // 3. 尝试保存记录（失败不影响次数扣减）
+    try {
+      await db.collection('user_records').add({
+        data: {
+          openid,
+          test_id,
+          answers,
+          completed_at: new Date()
+        }
+      });
+    } catch (recordErr) {
+      console.error('Save record failed:', recordErr);
+    }
+    
     return {
       success: true,
-      remaining_times: user.free_times - 1
+      remaining_times: currentFree - 1
     };
   } catch (e) {
     return { success: false, error: e.message };

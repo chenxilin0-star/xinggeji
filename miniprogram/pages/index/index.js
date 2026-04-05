@@ -26,10 +26,7 @@ Page({
   onLoad: function () {
     const ft = app.globalData.free_times;
     this.setData({ free_times: ft !== undefined && ft !== '' ? ft : 2 });
-    // 只在首次（没有openid时）调login，避免覆盖已扣减的次数
-    if (!app.globalData.openid) {
-      this.silentLogin();
-    }
+    this.silentLogin();
   },
 
   onShow: function () {

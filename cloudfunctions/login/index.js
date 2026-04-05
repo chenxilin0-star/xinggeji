@@ -1,24 +1,21 @@
 const cloud = require('wx-server-sdk');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
+const DAILY_FREE = 2;
+const DAILY_MAX = 5;
+
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const db = cloud.database();
-  const _ = db.command;
-  
   const openid = wxContext.OPENID;
-  const today = new Date(new Date().getTime() + 8 * 60 * 60 * 1000); // UTC+8
-  const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
   
-  const DAILY_FREE = 2;   // 每天免费次数
-  const DAILY_MAX = 5;    // 每天上限
-  const SHARE_BONUS = 1;  // 每次分享奖励
+  const today = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+  const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
   
   try {
     const userRes = await db.collection('users').where({ openid }).get();
     
     if (userRes.data.length === 0) {
-      // 新用户
       await db.collection('users').add({
         data: {
           openid,
@@ -40,12 +37,10 @@ exports.main = async (event, context) => {
     }
     
     const user = userRes.data[0];
-    let free_times = user.free_times || 0;
-    const last_reset = user.last_reset_date || '';
     
-    // 日期变更 → 重置每日次数
+    // 日期变更 → 重置
+    const last_reset = user.last_reset_date || '';
     if (last_reset !== todayStr) {
-      free_times = DAILY_FREE;
       await db.collection('users').where({ openid }).update({
         data: {
           free_times: DAILY_FREE,
@@ -54,20 +49,27 @@ exports.main = async (event, context) => {
           updated_at: new Date()
         }
       });
+      return {
+        success: true,
+        openid,
+        free_times: DAILY_FREE,
+        daily_max: DAILY_MAX,
+        daily_free: DAILY_FREE,
+        isNew: false
+      };
     }
     
+    // 同一天 → 返回当前值
+    const currentFree = user.free_times !== undefined && user.free_times !== null ? user.free_times : DAILY_FREE;
     return {
       success: true,
       openid,
-      free_times: free_times,
+      free_times: currentFree,
       daily_max: DAILY_MAX,
       daily_free: DAILY_FREE,
       isNew: false
     };
   } catch (e) {
-    return {
-      success: false,
-      error: e.message
-    };
+    return { success: false, error: e.message };
   }
 };
