@@ -1,0 +1,288 @@
+.container {
+  min-height: 100vh;
+  padding: 30rpx;
+  padding-bottom: 60rpx;
+}
+
+.loading {
+  text-align: center;
+  padding: 200rpx 0;
+  color: rgba(255,255,255,0.8);
+  font-size: 28rpx;
+}
+
+/* 顶部结果卡片 */
+.header-card {
+  text-align: center;
+  padding: 60rpx 30rpx 40rpx;
+}
+
+.type-code {
+  font-size: 80rpx;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 8rpx;
+  text-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+}
+
+.type-name {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10rpx;
+}
+
+.type-tagline {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.85);
+  margin-top: 12rpx;
+  font-style: italic;
+}
+
+.rarity-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20rpx;
+  padding: 8rpx 24rpx;
+  background: rgba(255,255,255,0.2);
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.rarity-icon {
+  margin-right: 8rpx;
+}
+
+/* 通用卡片 */
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 24rpx rgba(0,0,0,0.08);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+/* 四维度双向进度条 */
+.dimensions-card {
+  padding: 36rpx 30rpx;
+}
+
+.dimension-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+.dimension-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.dim-label {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #666;
+  width: 36rpx;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.dim-bar-bg {
+  display: flex;
+  height: 24rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.dim-bar-left {
+  height: 100%;
+  border-radius: 12rpx 0 0 12rpx;
+  transition: width 0.6s ease;
+}
+
+.dim-bar-right {
+  height: 100%;
+  border-radius: 0 12rpx 12rpx 0;
+  transition: width 0.6s ease;
+}
+
+.dim-bar-left.active {
+  opacity: 1;
+}
+
+.dim-bar-right.active {
+  opacity: 1;
+}
+
+.dim-percent {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  color: #999;
+}
+
+.dim-percent .p-active {
+  font-weight: bold;
+  color: #333;
+}
+
+.dim-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+  justify-content: center;
+}
+
+.legend-item {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 概述 */
+.desc-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* 关键词标签 */
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.keyword-tag {
+  padding: 10rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  border: 2rpx solid;
+}
+
+/* 优势/盲区列表 */
+.trait-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.trait-item {
+  padding: 16rpx 20rpx;
+  background: #fafafa;
+  border-radius: 16rpx;
+}
+
+.trait-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 6rpx;
+}
+
+.trait-name.blind {
+  color: #E74C3C;
+}
+
+.trait-desc {
+  font-size: 24rpx;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* 名人列表 */
+.famous-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.famous-tag {
+  padding: 12rpx 24rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  color: #555;
+  border: 2rpx solid;
+}
+
+/* 建议 */
+.advice-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.advice-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.advice-label {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.advice-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 操作按钮 */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+.btn-share, .btn-retake, .btn-home {
+  padding: 28rpx 0;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-share {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.1);
+  border: none;
+}
+
+.btn-retake {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border: 2rpx solid rgba(255,255,255,0.4);
+}
+
+.btn-home {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  border: none;
+}
+
+.btn-share::after, .btn-retake::after, .btn-home::after {
+  border: none;
+}

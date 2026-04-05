@@ -1,0 +1,119 @@
+<view class="container">
+  <view class="loading" wx:if="{{loading}}"><text>加载中...</text></view>
+
+  <block wx:if="{{!loading && attachData}}">
+    <!-- 结果卡片 -->
+    <view class="result-hero" style="background: linear-gradient(135deg, {{attachData.color}}, {{attachData.color}}99);">
+      <text class="hero-emoji">{{attachData.emoji}}</text>
+      <view class="hero-name">{{attachData.name}}</view>
+      <view class="hero-tagline">"{{attachData.tagline}}"</view>
+    </view>
+
+    <!-- 四象限图 -->
+    <view class="card">
+      <view class="card-title">四象限定位</view>
+      <view class="quadrant-wrap">
+        <view class="q-label q-top">高焦虑</view>
+        <view class="q-label q-left">低回避</view>
+        <view class="q-label q-right">高回避</view>
+        <view class="q-label q-bottom">低焦虑</view>
+        <view class="quadrant-grid">
+          <view class="q-cell {{resultCode === 'anxious' ? 'q-active' : ''}}" style="{{resultCode === 'anxious' ? 'background:' + attachData.color + '20;border-color:' + attachData.color : ''}}">
+            <text class="q-emoji">💛</text>
+            <text class="q-name">焦虑型</text>
+          </view>
+          <view class="q-cell {{resultCode === 'fearful' ? 'q-active' : ''}}" style="{{resultCode === 'fearful' ? 'background:' + attachData.color + '20;border-color:' + attachData.color : ''}}">
+            <text class="q-emoji">❤️</text>
+            <text class="q-name">恐惧型</text>
+          </view>
+          <view class="q-cell {{resultCode === 'secure' ? 'q-active' : ''}}" style="{{resultCode === 'secure' ? 'background:' + attachData.color + '20;border-color:' + attachData.color : ''}}">
+            <text class="q-emoji">💚</text>
+            <text class="q-name">安全型</text>
+          </view>
+          <view class="q-cell {{resultCode === 'avoidant' ? 'q-active' : ''}}" style="{{resultCode === 'avoidant' ? 'background:' + attachData.color + '20;border-color:' + attachData.color : ''}}">
+            <text class="q-emoji">💙</text>
+            <text class="q-name">回避型</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 维度得分 -->
+    <view class="card">
+      <view class="card-title">维度得分</view>
+      <view class="dim-section">
+        <view class="dim-row">
+          <text class="dim-label">焦虑程度</text>
+          <view class="dim-bar-bg">
+            <view class="dim-bar-fill" style="width: {{anxietyPercent}}%; background: {{anxietyPercent > 60 ? '#F39C12' : '#2ECC71'}};"></view>
+          </view>
+          <text class="dim-val">{{anxietyPercent}}%</text>
+        </view>
+        <view class="dim-row">
+          <text class="dim-label">回避程度</text>
+          <view class="dim-bar-bg">
+            <view class="dim-bar-fill" style="width: {{avoidancePercent}}%; background: {{avoidancePercent > 60 ? '#3498DB' : '#2ECC71'}};"></view>
+          </view>
+          <text class="dim-val">{{avoidancePercent}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 概述 -->
+    <view class="card">
+      <view class="card-title">类型概述</view>
+      <text class="desc-text">{{attachData.description}}</text>
+    </view>
+
+    <!-- 自我认知 -->
+    <view class="card">
+      <view class="card-title">💡 关于你</view>
+      <view class="insight-list">
+        <view class="insight-item" wx:for="{{attachData.advice.self}}" wx:key="*this">
+          <text class="insight-dot" style="background: {{attachData.color}};">✅</text>
+          <text class="insight-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 建议 -->
+    <view class="card">
+      <view class="card-title">📌 改善建议</view>
+      <view class="insight-list">
+        <view class="insight-item" wx:for="{{attachData.advice.tips}}" wx:key="*this">
+          <text class="insight-num" style="background: {{attachData.color}};">{{index + 1}}</text>
+          <text class="insight-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 与不同类型相处 -->
+    <view class="card">
+      <view class="card-title">🤝 与不同类型相处</view>
+      <view class="with-list">
+        <view class="with-item">
+          <view class="with-label">💚 遇到安全型</view>
+          <text class="with-text">{{attachData.withOthers.secure}}</text>
+        </view>
+        <view class="with-item">
+          <view class="with-label">💛 遇到焦虑型</view>
+          <text class="with-text">{{attachData.withOthers.anxious}}</text>
+        </view>
+        <view class="with-item">
+          <view class="with-label">💙 遇到回避型</view>
+          <text class="with-text">{{attachData.withOthers.avoidant}}</text>
+        </view>
+        <view class="with-item">
+          <view class="with-label">❤️ 遇到恐惧型</view>
+          <text class="with-text">{{attachData.withOthers.fearful}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="btn-share" open-type="share">{{attachData.emoji}} 分享结果</button>
+      <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+    </view>
+  </block>
+</view>

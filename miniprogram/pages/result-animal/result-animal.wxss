@@ -1,0 +1,188 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F2994A 0%, #F2C94C 60%, #FFF8E1 100%);
+  padding: 30rpx;
+  padding-bottom: 60rpx;
+}
+
+.loading { text-align: center; padding: 200rpx 0; color: #fff; }
+
+.animal-hero {
+  text-align: center;
+  padding: 60rpx 0 30rpx;
+}
+
+.animal-emoji {
+  font-size: 120rpx;
+  display: block;
+}
+
+.animal-name {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 16rpx;
+}
+
+.animal-tagline {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.85);
+  margin-top: 10rpx;
+  font-style: italic;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 24rpx rgba(242,153,74,0.12);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+/* 环形图 */
+.donut-wrapper {
+  width: 100%;
+  height: 280rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-canvas {
+  width: 280rpx;
+  height: 280rpx;
+}
+
+.percent-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  margin-top: 24rpx;
+  justify-content: center;
+}
+
+.percent-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: #555;
+}
+
+.pi-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.pi-emoji { font-size: 24rpx; }
+.pi-name { font-size: 24rpx; }
+.pi-val { font-size: 24rpx; font-weight: bold; }
+
+/* 关键词 */
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.kw-tag {
+  padding: 10rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  border: 2rpx solid;
+}
+
+/* 优势/盲区 */
+.trait-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.trait-item {
+  padding: 16rpx 20rpx;
+  background: #fafafa;
+  border-radius: 16rpx;
+}
+
+.trait-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 6rpx;
+}
+
+.trait-name.blind {
+  color: #E74C3C;
+}
+
+.trait-desc {
+  font-size: 24rpx;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* 建议 */
+.advice-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  margin-bottom: 20rpx;
+}
+
+.advice-item:last-child { margin-bottom: 0; }
+
+.advice-label {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.advice-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 按钮 */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.btn-share {
+  background: linear-gradient(135deg, #F2994A, #F2C94C);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6rpx 20rpx rgba(242,153,74,0.35);
+}
+.btn-retake {
+  background: #fff;
+  color: #F2994A;
+  border: 2rpx solid #F2994A;
+}
+.btn-home {
+  background: rgba(255,255,255,0.5);
+  color: #F2994A;
+  border: none;
+}
+
+.btn-share, .btn-retake, .btn-home {
+  padding: 28rpx 0;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-share::after, .btn-retake::after, .btn-home::after { border: none; }

@@ -68,8 +68,9 @@ const calculateScores = (test_id, answers, questions) => {
     }
     case 'love_brain': {
       let sunk_cost = 0, idealization = 0, emotional_dependency = 0, irrational = 0;
+      // 直接使用前端传来的 score，1=恋爱脑倾向，0=正常
       answers.forEach((answer, index) => {
-        if (answer.selected === 1) { // B选项
+        if (answer.score === 1) {
           const dimIndex = index % 4;
           if (dimIndex === 0) sunk_cost++;
           if (dimIndex === 1) idealization++;
@@ -108,12 +109,9 @@ const calculateScores = (test_id, answers, questions) => {
     }
     case 'emotion_stress': {
       let depression = 0, anxiety = 0, stress = 0;
-      const reverseQuestions = [5, 7, 8, 10, 12, 14, 16, 18, 20];
+      // 题目数据中反向题已内嵌正确分数(3,2,1,0)，无需额外反转
       answers.forEach((answer, index) => {
-        let score = answer.score || 0;
-        if (reverseQuestions.includes(index)) {
-          score = 3 - score;
-        }
+        const score = answer.score || 0;
         if (index < 7) depression += score;
         else if (index < 14) anxiety += score;
         else stress += score;

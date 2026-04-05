@@ -1,0 +1,83 @@
+<view class="container">
+  <view class="loading" wx:if="{{loading}}"><text>加载中...</text></view>
+
+  <block wx:if="{{!loading && animalData}}">
+    <!-- 动物形象 -->
+    <view class="animal-hero">
+      <text class="animal-emoji">{{animalData.emoji}}</text>
+      <view class="animal-name">{{animalData.name}}</view>
+      <view class="animal-tagline">"{{animalData.tagline}}"</view>
+    </view>
+
+    <!-- 环形图 -->
+    <view class="card">
+      <view class="card-title">性格占比</view>
+      <view class="donut-wrapper">
+        <canvas type="2d" canvas-id="donutCanvas" class="donut-canvas" id="donutCanvas"></canvas>
+      </view>
+      <view class="percent-list">
+        <view class="percent-item" wx:for="{{percentages}}" wx:key="key">
+          <view class="pi-dot" style="background: {{item.color}};"></view>
+          <text class="pi-emoji">{{item.emoji}}</text>
+          <text class="pi-name">{{item.name}}</text>
+          <text class="pi-val">{{item.percent}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关键词 -->
+    <view class="card">
+      <view class="card-title">🏷️ {{animalData.name}}特征</view>
+      <view class="keyword-list">
+        <view class="kw-tag" wx:for="{{animalData.keywords}}" wx:key="*this"
+              style="background: {{animalData.color}}15; color: {{animalData.color}}; border-color: {{animalData.color}}40;">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 优势/盲区 -->
+    <view class="card">
+      <view class="card-title">✅ 优势</view>
+      <view class="trait-list">
+        <view class="trait-item" wx:for="{{animalData.strengths}}" wx:key="name">
+          <view class="trait-name" style="color: {{animalData.color}};">{{item.name}}</view>
+          <view class="trait-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">⚠️ 盲区</view>
+      <view class="trait-list">
+        <view class="trait-item" wx:for="{{animalData.blindSpots}}" wx:key="name">
+          <view class="trait-name blind">{{item.name}}</view>
+          <view class="trait-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 场景建议 -->
+    <view class="card">
+      <view class="card-title">💡 场景建议</view>
+      <view class="advice-item">
+        <text class="advice-label">💼 职场</text>
+        <text class="advice-text">{{animalData.advice.career}}</text>
+      </view>
+      <view class="advice-item">
+        <text class="advice-label">🤝 社交</text>
+        <text class="advice-text">{{animalData.advice.social}}</text>
+      </view>
+      <view class="advice-item">
+        <text class="advice-label">💕 恋爱</text>
+        <text class="advice-text">{{animalData.advice.love}}</text>
+      </view>
+    </view>
+
+    <view class="actions">
+      <button class="btn-share" open-type="share">{{animalData.emoji}} 分享结果</button>
+      <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+    </view>
+  </block>
+</view>

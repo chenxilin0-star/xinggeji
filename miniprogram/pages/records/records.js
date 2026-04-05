@@ -76,8 +76,16 @@ Page({
     const record = this.data.records.find(r => r._id === id);
     
     if (record) {
+      const RESULT_ROUTES = {
+        mbti: '/pages/result-mbti/result-mbti',
+        love_brain: '/pages/result-love/result-love',
+        animal_persona: '/pages/result-animal/result-animal',
+        attachment_style: '/pages/result-attach/result-attach',
+        emotion_stress: '/pages/result-stress/result-stress'
+      };
+      const resultRoute = RESULT_ROUTES[record.test_id] || '/pages/result/result';
       wx.navigateTo({
-        url: `/pages/result/result?test_id=${record.test_id}&result_data=${encodeURIComponent(JSON.stringify(record))}&from_record=true`
+        url: `${resultRoute}?test_id=${record.test_id}&result_data=${encodeURIComponent(JSON.stringify(record))}&from_record=true`
       });
     }
   },

@@ -1,0 +1,200 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFC3D7 60%, #FFF0F5 100%);
+  padding: 30rpx;
+  padding-bottom: 60rpx;
+}
+
+.loading { text-align: center; padding: 200rpx 0; color: #fff; }
+
+/* 仪表盘区域 */
+.gauge-section {
+  text-align: center;
+  padding: 40rpx 0 20rpx;
+}
+
+.gauge-title {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.gauge-wrapper {
+  width: 100%;
+  height: 280rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-canvas {
+  width: 300rpx;
+  height: 280rpx;
+}
+
+.score-display {
+  margin-top: -40rpx;
+}
+
+.score-num {
+  font-size: 72rpx;
+  font-weight: 900;
+  color: #FF6B9D;
+}
+
+.score-total {
+  font-size: 28rpx;
+  color: #FF6B9Daa;
+}
+
+.level-badge {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 10rpx;
+}
+
+.love-tag {
+  display: inline-block;
+  margin-top: 12rpx;
+  padding: 8rpx 28rpx;
+  background: rgba(255,255,255,0.3);
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #fff;
+}
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 24rpx rgba(255,107,157,0.12);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+/* 四维度 */
+.dim-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+.dim-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.dim-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dim-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.dim-score {
+  font-size: 26rpx;
+  color: #FF6B9D;
+  font-weight: bold;
+}
+
+.dim-bar-bg {
+  height: 16rpx;
+  background: #FFF0F5;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.dim-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6B9D, #FFB3C6);
+  border-radius: 8rpx;
+  transition: width 0.5s ease;
+}
+
+.dim-desc {
+  font-size: 24rpx;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* 处方 */
+.prescription-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.rx-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.rx-num {
+  width: 44rpx;
+  height: 44rpx;
+  background: linear-gradient(135deg, #FF6B9D, #FFB3C6);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rx-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.6;
+  padding-top: 6rpx;
+}
+
+/* 按钮 */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.btn-share {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB3C6 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6rpx 20rpx rgba(255,107,157,0.35);
+}
+.btn-retake {
+  background: #fff;
+  color: #FF6B9D;
+  border: 2rpx solid #FF6B9D;
+}
+.btn-home {
+  background: rgba(255,255,255,0.5);
+  color: #FF6B9D;
+  border: none;
+}
+
+.btn-share, .btn-retake, .btn-home {
+  padding: 28rpx 0;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  text-align: center;
+  font-weight: 500;
+}
+
+.btn-share::after, .btn-retake::after, .btn-home::after { border: none; }

@@ -4,6 +4,11 @@
     "pages/index/index",
     "pages/test/test",
     "pages/result/result",
+    "pages/result-mbti/result-mbti",
+    "pages/result-love/result-love",
+    "pages/result-animal/result-animal",
+    "pages/result-attach/result-attach",
+    "pages/result-stress/result-stress",
     "pages/records/records",
     "pages/my/my",
     "pages/share/share"

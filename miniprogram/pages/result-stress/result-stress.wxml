@@ -1,0 +1,121 @@
+<view class="container">
+  <view class="loading" wx:if="{{loading}}"><text>加载中...</text></view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 综合评估 -->
+    <view class="overview-card" style="background: linear-gradient(135deg, {{overallColor}}, {{overallColor}}99);">
+      <text class="ov-emoji">{{overallEmoji}}</text>
+      <view class="ov-label">综合评估</view>
+      <view class="ov-level">{{overallLevel}}</view>
+      <view class="ov-score">总分 {{totalScore}} / 63</view>
+    </view>
+
+    <!-- 三维度柱状图 -->
+    <view class="card">
+      <view class="card-title">三维度分析</view>
+      <view class="chart-area">
+        <!-- 参考线 -->
+        <view class="chart-grid">
+          <view class="grid-line" style="bottom: 33%;">
+            <text class="grid-text">轻度 7</text>
+          </view>
+          <view class="grid-line" style="bottom: 66%;">
+            <text class="grid-text">中度 14</text>
+          </view>
+          <view class="grid-line" style="bottom: 100%;">
+            <text class="grid-text">重度 21</text>
+          </view>
+        </view>
+
+        <!-- 柱状图 -->
+        <view class="bar-chart">
+          <view class="bar-group" wx:for="{{bars}}" wx:key="name">
+            <view class="bar-wrapper">
+              <view class="bar-fill" style="height: {{item.percent}}%; background: {{item.color}};">
+                <text class="bar-score">{{item.score}}</text>
+              </view>
+            </view>
+            <text class="bar-name">{{item.name}}</text>
+            <text class="bar-level" style="color: {{item.color}};">{{item.emoji}} {{item.level}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 图例 -->
+      <view class="legend">
+        <view class="legend-item"><view class="legend-dot" style="background: #2ECC71;"></view><text>正常 (0-7)</text></view>
+        <view class="legend-item"><view class="legend-dot" style="background: #F39C12;"></view><text>轻度 (8-14)</text></view>
+        <view class="legend-item"><view class="legend-dot" style="background: #E67E22;"></view><text>中度 (15-21)</text></view>
+        <view class="legend-item"><view class="legend-dot" style="background: #E74C3C;"></view><text>重度 (>21)</text></view>
+      </view>
+    </view>
+
+    <!-- 需要关注 -->
+    <view class="card" wx:if="{{totalScore >= 14}}">
+      <view class="card-title">⚠️ 需要关注</view>
+      <view class="alert-list">
+        <view class="alert-item" wx:if="{{depression > 7}}">
+          <text class="alert-icon">🔴</text>
+          <text class="alert-text">抑郁指数{{depLevel}}（{{depression}}/21），建议关注情绪变化</text>
+        </view>
+        <view class="alert-item" wx:if="{{anxiety > 7}}">
+          <text class="alert-icon">🔴</text>
+          <text class="alert-text">焦虑指数{{anxLevel}}（{{anxiety}}/21），建议学习放松技巧</text>
+        </view>
+        <view class="alert-item" wx:if="{{stress > 7}}">
+          <text class="alert-icon">🔴</text>
+          <text class="alert-text">压力指数{{strLevel}}（{{stress}}/21），建议适当减轻负担</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 舒缓建议 -->
+    <view class="card">
+      <view class="card-title">💆 舒缓建议</view>
+      <view class="tips-list">
+        <view class="tip-item">
+          <text class="tip-num">1</text>
+          <text class="tip-text">每天保证7-8小时充足睡眠</text>
+        </view>
+        <view class="tip-item">
+          <text class="tip-num">2</text>
+          <text class="tip-text">尝试正念冥想，每天10分钟</text>
+        </view>
+        <view class="tip-item">
+          <text class="tip-num">3</text>
+          <text class="tip-text">每周运动3次以上，每次30分钟</text>
+        </view>
+        <view class="tip-item">
+          <text class="tip-num">4</text>
+          <text class="tip-text">与信任的家人朋友倾诉心事</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 心理援助 -->
+    <view class="card hotline-card">
+      <view class="card-title">📞 如需专业帮助</view>
+      <view class="hotline-list">
+        <view class="hotline-item">
+          <text class="hl-name">全国心理援助热线</text>
+          <text class="hl-num">400-161-9995</text>
+        </view>
+        <view class="hotline-item">
+          <text class="hl-name">希望24热线</text>
+          <text class="hl-num">400-161-9995</text>
+        </view>
+        <view class="hotline-item">
+          <text class="hl-name">北京心理危机研究与干预中心</text>
+          <text class="hl-num">010-82951332</text>
+        </view>
+      </view>
+      <text class="hotline-note">专业帮助是一种勇气的表现 ❤️</text>
+    </view>
+
+    <view class="actions">
+      <button class="btn-share" open-type="share">🧠 分享结果</button>
+      <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+    </view>
+  </block>
+</view>

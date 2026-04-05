@@ -21,7 +21,7 @@
         data-optionindex="{{index}}"
       >
         <view class="option-radio">
-          <view class="radio-inner" wx:if="{{answers[currentIndex] && answers[currentIndex].selected === idx}}"></view>
+          <view class="radio-inner" wx:if="{{answers[currentIndex] && answers[currentIndex].selected === index}}"></view>
         </view>
         <view class="option-content">
           <text class="option-no">{{item.o_no}}</text>

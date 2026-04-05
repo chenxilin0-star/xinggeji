@@ -1,5 +1,14 @@
 const app = getApp();
 
+// 结果页路由映射
+const RESULT_ROUTES = {
+  mbti: '/pages/result-mbti/result-mbti',
+  love_brain: '/pages/result-love/result-love',
+  animal_persona: '/pages/result-animal/result-animal',
+  attachment_style: '/pages/result-attach/result-attach',
+  emotion_stress: '/pages/result-stress/result-stress'
+};
+
 Page({
   data: {
     testId: '',
@@ -266,14 +275,16 @@ Page({
         if (res.result && res.result.success) {
           // 云端保存成功，使用云端结果
           const result = res.result;
+          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
-            url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}&record_id=${result.record_id || ''}`
           });
         } else {
           // 云端失败，使用本地计算结果
           const result = this.calculateLocalResult();
+          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
-            url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
           });
         }
       },
@@ -282,8 +293,9 @@ Page({
         console.error('Submit failed:', err);
         // 使用本地计算结果
         const result = this.calculateLocalResult();
+        const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
         wx.navigateTo({
-          url: `/pages/result/result?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+          url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
         });
       }
     });
@@ -371,12 +383,9 @@ Page({
       }
       case 'emotion_stress': {
         let depression = 0, anxiety = 0, stress = 0;
-        const reverseQuestions = [5, 7, 8, 10, 12, 14, 16, 18, 20];
+        // 题目数据中反向题已内嵌正确分数(3,2,1,0)，无需额外反转
         answers.forEach((answer, index) => {
-          let score = answer.score || 0;
-          if (reverseQuestions.includes(index)) {
-            score = 4 - score;
-          }
+          const score = answer.score || 0;
           if (index < 7) depression += score;
           else if (index < 14) anxiety += score;
           else stress += score;

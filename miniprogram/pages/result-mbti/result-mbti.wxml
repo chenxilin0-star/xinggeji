@@ -1,0 +1,125 @@
+<view class="container" style="background: linear-gradient(135deg, {{typeData.groupColor}} 0%, {{typeData.groupColor}}aa 100%);">
+  
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载结果中...</text>
+  </view>
+
+  <block wx:if="{{!loading && typeData}}">
+    <!-- 顶部结果卡片 -->
+    <view class="header-card">
+      <view class="type-code">{{resultCode}}</view>
+      <view class="type-name">{{typeData.name}}</view>
+      <view class="type-tagline">"{{typeData.tagline}}"</view>
+      <view class="rarity-badge">
+        <text class="rarity-icon">🌟</text>
+        <text>人群中占比 {{rarity}}</text>
+      </view>
+    </view>
+
+    <!-- 四维度双向进度条 -->
+    <view class="card dimensions-card">
+      <view class="card-title">维度分析</view>
+      <view class="dimension-list">
+        <view class="dimension-row" wx:for="{{dimensions}}" wx:key="left">
+          <view class="dim-label">{{item.left}}</view>
+          <view class="dim-bar-wrap">
+            <view class="dim-bar-bg">
+              <view class="dim-bar-left {{item.isLeft ? 'active' : ''}}" style="width: {{item.leftPercent}}%; background: {{item.isLeft ? typeData.groupColor : '#ddd'}};">
+              </view>
+              <view class="dim-bar-right {{!item.isLeft ? 'active' : ''}}" style="width: {{item.rightPercent}}%; background: {{!item.isLeft ? typeData.groupColor : '#ddd'}};">
+              </view>
+            </view>
+            <view class="dim-percent">
+              <text class="{{item.isLeft ? 'p-active' : ''}}">{{item.leftPercent}}%</text>
+              <text class="{{!item.isLeft ? 'p-active' : ''}}">{{item.rightPercent}}%</text>
+            </view>
+          </view>
+          <view class="dim-label">{{item.right}}</view>
+        </view>
+      </view>
+      <!-- 维度名称对照 -->
+      <view class="dim-legend">
+        <text wx:for="{{dimensions}}" wx:key="left" class="legend-item">
+          {{item.leftName}}({{item.left}}) / {{item.rightName}}({{item.right}})
+        </text>
+      </view>
+    </view>
+
+    <!-- 概述 -->
+    <view class="card">
+      <view class="card-title">人格概述</view>
+      <text class="desc-text">{{typeData.description}}</text>
+    </view>
+
+    <!-- 关键词标签 -->
+    <view class="card">
+      <view class="card-title">你的关键词</view>
+      <view class="keyword-list">
+        <view class="keyword-tag" wx:for="{{typeData.keywords}}" wx:key="*this"
+              style="background: {{typeData.groupColor}}15; color: {{typeData.groupColor}}; border-color: {{typeData.groupColor}}40;">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 优势 -->
+    <view class="card">
+      <view class="card-title">✅ 优势</view>
+      <view class="trait-list">
+        <view class="trait-item" wx:for="{{typeData.strengths}}" wx:key="name">
+          <view class="trait-name" style="color: {{typeData.groupColor}};">{{item.name}}</view>
+          <view class="trait-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 盲区 -->
+    <view class="card">
+      <view class="card-title">⚠️ 盲区</view>
+      <view class="trait-list">
+        <view class="trait-item" wx:for="{{typeData.blindSpots}}" wx:key="name">
+          <view class="trait-name blind">{{item.name}}</view>
+          <view class="trait-desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 同类型名人 -->
+    <view class="card">
+      <view class="card-title">🌟 同类型的名人</view>
+      <view class="famous-list">
+        <view class="famous-tag" wx:for="{{typeData.famousPeople}}" wx:key="*this"
+              style="background: {{typeData.groupColor}}10; border-color: {{typeData.groupColor}}30;">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 建议 -->
+    <view class="card">
+      <view class="card-title">💡 给你的建议</view>
+      <view class="advice-section">
+        <view class="advice-item">
+          <text class="advice-label">💕 恋爱</text>
+          <text class="advice-text">{{typeData.advice.love}}</text>
+        </view>
+        <view class="advice-item">
+          <text class="advice-label">💼 职场</text>
+          <text class="advice-text">{{typeData.advice.career}}</text>
+        </view>
+        <view class="advice-item">
+          <text class="advice-label">🤝 社交</text>
+          <text class="advice-text">{{typeData.advice.social}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="btn-share" open-type="share">📊 分享结果</button>
+      <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+    </view>
+  </block>
+</view>

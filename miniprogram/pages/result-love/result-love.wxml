@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="loading" wx:if="{{loading}}"><text>加载结果中...</text></view>
+
+  <block wx:if="{{!loading}}">
+    <!-- 仪表盘 -->
+    <view class="gauge-section">
+      <text class="gauge-title">💕 你的恋爱脑指数</text>
+      <view class="gauge-wrapper">
+        <canvas type="2d" canvas-id="gaugeCanvas" class="gauge-canvas" id="gaugeCanvas"></canvas>
+      </view>
+      <view class="score-display">
+        <text class="score-num">{{totalScore}}</text>
+        <text class="score-total">/ 15</text>
+      </view>
+      <view class="level-badge">{{levelEmoji}} {{level}}</view>
+      <view class="love-tag">🏷️ {{loveTag}}</view>
+    </view>
+
+    <!-- 四维度诊断 -->
+    <view class="card">
+      <view class="card-title">📋 四维度诊断</view>
+      <view class="dim-list">
+        <view class="dim-item" wx:for="{{dimensions}}" wx:key="name">
+          <view class="dim-header">
+            <text class="dim-name">{{item.name}}</text>
+            <text class="dim-score">{{item.score}}/{{item.max}}</text>
+          </view>
+          <view class="dim-bar-bg">
+            <view class="dim-bar-fill" style="width: {{item.percent}}%"></view>
+          </view>
+          <text class="dim-desc">▸ {{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 恋爱处方 -->
+    <view class="card">
+      <view class="card-title">💊 恋爱处方</view>
+      <view class="prescription-list">
+        <view class="rx-item" wx:if="{{percent >= 30}}">
+          <text class="rx-num">1</text>
+          <text class="rx-text">设立个人边界，学会说"不"</text>
+        </view>
+        <view class="rx-item">
+          <text class="rx-num">{{percent >= 30 ? 2 : 1}}</text>
+          <text class="rx-text">保持独立社交圈和兴趣爱好</text>
+        </view>
+        <view class="rx-item">
+          <text class="rx-num">{{percent >= 30 ? 3 : 2}}</text>
+          <text class="rx-text">做重大决定前给自己24小时冷静期</text>
+        </view>
+        <view class="rx-item">
+          <text class="rx-num">{{percent >= 30 ? 4 : 3}}</text>
+          <text class="rx-text">{{percent >= 50 ? '记住：恋爱不是生活的全部，先爱自己' : '理性看待对方的优缺点'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="btn-share" open-type="share">💕 分享结果</button>
+      <button class="btn-retake" bindtap="retakeTest">🔄 再做一次</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+    </view>
+  </block>
+</view>
