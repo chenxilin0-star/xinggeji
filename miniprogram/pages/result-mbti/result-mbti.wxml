@@ -1,5 +1,9 @@
-<view class="container" style="background: linear-gradient(135deg, {{typeData.groupColor}} 0%, {{typeData.groupColor}}aa 100%);">
+<view class="container" style="--theme-color: {{typeData.groupColor}}; background: linear-gradient(160deg, {{typeData.groupColor}} 0%, {{typeData.groupColor}}cc 40%, {{typeData.groupColor}}88 100%);">
   
+  <!-- 装饰背景 -->
+  <view class="deco-circle deco-1"></view>
+  <view class="deco-circle deco-2"></view>
+
   <!-- 加载中 -->
   <view class="loading" wx:if="{{loading}}">
     <text>加载结果中...</text>
@@ -8,11 +12,12 @@
   <block wx:if="{{!loading && typeData}}">
     <!-- 顶部结果卡片 -->
     <view class="header-card">
+      <view class="type-badge">{{typeData.group}}</view>
       <view class="type-code">{{resultCode}}</view>
       <view class="type-name">{{typeData.name}}</view>
       <view class="type-tagline">"{{typeData.tagline}}"</view>
       <view class="rarity-badge">
-        <text class="rarity-icon">🌟</text>
+        <text class="rarity-icon">✨</text>
         <text>人群中占比 {{rarity}}</text>
       </view>
     </view>

@@ -1,7 +1,26 @@
 .container {
   min-height: 100vh;
-  padding: 30rpx;
-  padding-bottom: 60rpx;
+  padding: 0 30rpx 60rpx;
+  padding-bottom: 80rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰圆形背景 */
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  background: #fff;
+  pointer-events: none;
+}
+.deco-1 {
+  width: 500rpx; height: 500rpx;
+  top: -100rpx; right: -150rpx;
+}
+.deco-2 {
+  width: 350rpx; height: 350rpx;
+  top: 400rpx; left: -100rpx;
 }
 
 .loading {
@@ -14,40 +33,54 @@
 /* 顶部结果卡片 */
 .header-card {
   text-align: center;
-  padding: 60rpx 30rpx 40rpx;
+  padding: 80rpx 30rpx 50rpx;
+  position: relative;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 6rpx 20rpx;
+  background: rgba(255,255,255,0.25);
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  color: #fff;
+  margin-bottom: 20rpx;
+  letter-spacing: 2rpx;
 }
 
 .type-code {
-  font-size: 80rpx;
+  font-size: 96rpx;
   font-weight: 900;
   color: #fff;
-  letter-spacing: 8rpx;
-  text-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+  letter-spacing: 12rpx;
+  text-shadow: 0 4rpx 20rpx rgba(0,0,0,0.15);
+  line-height: 1.1;
 }
 
 .type-name {
-  font-size: 44rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #fff;
-  margin-top: 10rpx;
+  margin-top: 12rpx;
 }
 
 .type-tagline {
-  font-size: 28rpx;
-  color: rgba(255,255,255,0.85);
-  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: rgba(255,255,255,0.8);
+  margin-top: 10rpx;
   font-style: italic;
 }
 
 .rarity-badge {
   display: inline-flex;
   align-items: center;
-  margin-top: 20rpx;
-  padding: 8rpx 24rpx;
+  margin-top: 24rpx;
+  padding: 10rpx 28rpx;
   background: rgba(255,255,255,0.2);
   border-radius: 30rpx;
-  font-size: 24rpx;
-  color: #fff;
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.9);
+  border: 1rpx solid rgba(255,255,255,0.15);
 }
 
 .rarity-icon {
@@ -57,144 +90,152 @@
 /* 通用卡片 */
 .card {
   background: #fff;
-  border-radius: 24rpx;
-  padding: 36rpx;
+  border-radius: 28rpx;
+  padding: 40rpx;
   margin-bottom: 24rpx;
-  box-shadow: 0 6rpx 24rpx rgba(0,0,0,0.08);
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.06);
 }
 
 .card-title {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 24rpx;
+  color: #1a1a1a;
+  margin-bottom: 28rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #f0f0f0;
 }
 
 /* 四维度双向进度条 */
 .dimensions-card {
-  padding: 36rpx 30rpx;
+  padding: 40rpx 30rpx;
 }
 
 .dimension-list {
   display: flex;
   flex-direction: column;
-  gap: 28rpx;
+  gap: 32rpx;
 }
 
 .dimension-row {
   display: flex;
   align-items: center;
-  gap: 12rpx;
+  gap: 16rpx;
 }
 
 .dim-label {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #666;
-  width: 36rpx;
+  font-size: 30rpx;
+  font-weight: 900;
+  color: #999;
+  width: 40rpx;
   text-align: center;
   flex-shrink: 0;
+}
+
+.dim-label.active-letter {
+  color: var(--theme-color);
 }
 
 .dim-bar-wrap {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4rpx;
+  gap: 6rpx;
 }
 
 .dim-bar-bg {
   display: flex;
-  height: 24rpx;
-  border-radius: 12rpx;
+  height: 28rpx;
+  border-radius: 14rpx;
   overflow: hidden;
-  background: #f5f5f5;
+  background: #f0f0f0;
 }
 
 .dim-bar-left {
   height: 100%;
-  border-radius: 12rpx 0 0 12rpx;
-  transition: width 0.6s ease;
+  border-radius: 14rpx 0 0 14rpx;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dim-bar-right {
   height: 100%;
-  border-radius: 0 12rpx 12rpx 0;
-  transition: width 0.6s ease;
-}
-
-.dim-bar-left.active {
-  opacity: 1;
-}
-
-.dim-bar-right.active {
-  opacity: 1;
+  border-radius: 0 14rpx 14rpx 0;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dim-percent {
   display: flex;
   justify-content: space-between;
   font-size: 20rpx;
-  color: #999;
+  color: #bbb;
+  padding: 0 4rpx;
 }
 
 .dim-percent .p-active {
   font-weight: bold;
   color: #333;
+  font-size: 22rpx;
 }
 
 .dim-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
-  margin-top: 16rpx;
+  gap: 16rpx;
+  margin-top: 20rpx;
   justify-content: center;
 }
 
 .legend-item {
   font-size: 20rpx;
-  color: #999;
+  color: #aaa;
 }
 
 /* 概述 */
 .desc-text {
   font-size: 28rpx;
   color: #555;
-  line-height: 1.8;
+  line-height: 1.9;
+  text-align: justify;
 }
 
 /* 关键词标签 */
 .keyword-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 16rpx;
+  gap: 14rpx;
+  justify-content: center;
 }
 
 .keyword-tag {
-  padding: 10rpx 24rpx;
+  padding: 12rpx 28rpx;
   border-radius: 30rpx;
   font-size: 26rpx;
-  font-weight: 500;
+  font-weight: 600;
   border: 2rpx solid;
+  letter-spacing: 1rpx;
 }
 
 /* 优势/盲区列表 */
 .trait-list {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .trait-item {
-  padding: 16rpx 20rpx;
+  padding: 20rpx 24rpx;
   background: #fafafa;
   border-radius: 16rpx;
+  border-left: 6rpx solid #eee;
+}
+
+.trait-item .trait-name {
+  border-left-color: var(--theme-color);
 }
 
 .trait-name {
   font-size: 28rpx;
   font-weight: bold;
-  margin-bottom: 6rpx;
+  margin-bottom: 8rpx;
 }
 
 .trait-name.blind {
@@ -204,83 +245,88 @@
 .trait-desc {
   font-size: 24rpx;
   color: #888;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* 名人列表 */
 .famous-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 16rpx;
+  gap: 14rpx;
+  justify-content: center;
 }
 
 .famous-tag {
-  padding: 12rpx 24rpx;
+  padding: 14rpx 28rpx;
   border-radius: 16rpx;
   font-size: 26rpx;
   color: #555;
   border: 2rpx solid;
+  background: #fafafa;
 }
 
 /* 建议 */
 .advice-section {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 28rpx;
 }
 
 .advice-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6rpx;
+  padding: 20rpx 24rpx;
+  background: #fafafa;
+  border-radius: 16rpx;
 }
 
 .advice-label {
   font-size: 26rpx;
   font-weight: bold;
   color: #333;
+  margin-bottom: 8rpx;
 }
 
 .advice-text {
   font-size: 26rpx;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* 操作按钮 */
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
-  margin-top: 20rpx;
+  gap: 16rpx;
+  margin-top: 30rpx;
   padding-bottom: 40rpx;
 }
 
 .btn-share, .btn-retake, .btn-home {
-  padding: 28rpx 0;
+  padding: 26rpx 0;
   border-radius: 50rpx;
-  font-size: 30rpx;
+  font-size: 28rpx;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .btn-share {
   background: #fff;
   color: #333;
-  box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.1);
+  box-shadow: 0 6rpx 24rpx rgba(0,0,0,0.1);
   border: none;
 }
 
 .btn-retake {
   background: rgba(255,255,255,0.2);
   color: #fff;
-  border: 2rpx solid rgba(255,255,255,0.4);
+  border: 2rpx solid rgba(255,255,255,0.35);
 }
 
 .btn-home {
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.7);
+  background: transparent;
+  color: rgba(255,255,255,0.6);
   border: none;
+  font-weight: 400;
+  font-size: 26rpx;
 }
 
 .btn-share::after, .btn-retake::after, .btn-home::after {

@@ -1,10 +1,12 @@
 <view class="container">
   <view class="loading" wx:if="{{loading}}"><text>加载中...</text></view>
 
-  <block wx:if="{{!loading && animalData}}">
-    <!-- 动物形象 -->
-    <view class="animal-hero">
-      <text class="animal-emoji">{{animalData.emoji}}</text>
+  <block wx:if="{{!loading}}">
+    <!-- 顶部结果卡片 -->
+    <view class="header-card">
+      <view class="animal-emoji-wrap">
+        <text class="animal-emoji">{{animalData.emoji}}</text>
+      </view>
       <view class="animal-name">{{animalData.name}}</view>
       <view class="animal-tagline">"{{animalData.tagline}}"</view>
     </view>
@@ -30,27 +32,35 @@
       <view class="card-title">🏷️ {{animalData.name}}特征</view>
       <view class="keyword-list">
         <view class="kw-tag" wx:for="{{animalData.keywords}}" wx:key="*this"
-              style="background: {{animalData.color}}15; color: {{animalData.color}}; border-color: {{animalData.color}}40;">
+              style="color: {{animalData.color}}; border-color: {{animalData.color}}40; background: {{animalData.color}}10;">
           {{item}}
         </view>
       </view>
     </view>
 
-    <!-- 优势/盲区 -->
+    <!-- 概述 -->
+    <view class="card">
+      <view class="card-title">人格概述</view>
+      <text class="desc-text">{{animalData.description}}</text>
+    </view>
+
+    <!-- 优势 -->
     <view class="card">
       <view class="card-title">✅ 优势</view>
       <view class="trait-list">
-        <view class="trait-item" wx:for="{{animalData.strengths}}" wx:key="name">
+        <view class="trait-item" wx:for="{{animalData.strengths}}" wx:key="name"
+              style="border-left-color: {{animalData.color}};">
           <view class="trait-name" style="color: {{animalData.color}};">{{item.name}}</view>
           <view class="trait-desc">{{item.desc}}</view>
         </view>
       </view>
     </view>
 
+    <!-- 盲区 -->
     <view class="card">
       <view class="card-title">⚠️ 盲区</view>
       <view class="trait-list">
-        <view class="trait-item" wx:for="{{animalData.blindSpots}}" wx:key="name">
+        <view class="trait-item blind-item" wx:for="{{animalData.blindSpots}}" wx:key="name">
           <view class="trait-name blind">{{item.name}}</view>
           <view class="trait-desc">{{item.desc}}</view>
         </view>
@@ -60,17 +70,19 @@
     <!-- 场景建议 -->
     <view class="card">
       <view class="card-title">💡 场景建议</view>
-      <view class="advice-item">
-        <text class="advice-label">💼 职场</text>
-        <text class="advice-text">{{animalData.advice.career}}</text>
-      </view>
-      <view class="advice-item">
-        <text class="advice-label">🤝 社交</text>
-        <text class="advice-text">{{animalData.advice.social}}</text>
-      </view>
-      <view class="advice-item">
-        <text class="advice-label">💕 恋爱</text>
-        <text class="advice-text">{{animalData.advice.love}}</text>
+      <view class="advice-section">
+        <view class="advice-item">
+          <text class="advice-label">💼 职场</text>
+          <text class="advice-text">{{animalData.advice.career}}</text>
+        </view>
+        <view class="advice-item">
+          <text class="advice-label">🤝 社交</text>
+          <text class="advice-text">{{animalData.advice.social}}</text>
+        </view>
+        <view class="advice-item">
+          <text class="advice-label">💕 恋爱</text>
+          <text class="advice-text">{{animalData.advice.love}}</text>
+        </view>
       </view>
     </view>
 
