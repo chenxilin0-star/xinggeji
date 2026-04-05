@@ -23,12 +23,14 @@ Page({
   },
 
   onLoad: function () {
-    this.setData({ free_times: app.globalData.free_times || 2 });
+    const ft = app.globalData.free_times;
+    this.setData({ free_times: ft !== undefined && ft !== '' ? ft : 2 });
     this.silentLogin();
   },
 
   onShow: function () {
-    this.setData({ free_times: app.globalData.free_times || 2 });
+    const ft = app.globalData.free_times;
+    this.setData({ free_times: ft !== undefined && ft !== '' ? ft : 2 });
   },
 
   silentLogin: function () {

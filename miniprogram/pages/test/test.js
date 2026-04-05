@@ -36,7 +36,7 @@ Page({
     }
     this.setData({ 
       testId: test_id,
-      free_times: app.globalData.free_times || 2
+      free_times: app.globalData.free_times !== undefined ? app.globalData.free_times : 2
     });
     this.loadTestDetail();
   },
@@ -268,7 +268,7 @@ Page({
   },
 
   doSubmit: function () {
-    const freeTimes = this.data.free_times !== undefined ? this.data.free_times : (app.globalData.free_times || 2);
+    const freeTimes = this.data.free_times !== undefined && this.data.free_times !== '' ? this.data.free_times : (app.globalData.free_times !== undefined ? app.globalData.free_times : 2);
     
     // 前端先检查次数
     if (freeTimes <= 0) {

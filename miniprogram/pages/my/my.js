@@ -9,17 +9,19 @@ Page({
   },
 
   onLoad: function () {
+    const ft = app.globalData.free_times;
     this.setData({
       openid: app.globalData.openid || '',
-      free_times: app.globalData.free_times || 2,
+      free_times: ft !== undefined && ft !== '' ? ft : 2,
       daily_max: app.globalData.daily_max || 5
     });
   },
 
   onShow: function () {
+    const ft = app.globalData.free_times;
     this.setData({
       openid: app.globalData.openid || '',
-      free_times: app.globalData.free_times || 2,
+      free_times: ft !== undefined && ft !== '' ? ft : 2,
       daily_max: app.globalData.daily_max || 5
     });
   },

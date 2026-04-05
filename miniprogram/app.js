@@ -18,7 +18,7 @@ App({
       const openid = wx.getStorageSync('openid');
       const free_times = wx.getStorageSync('free_times');
       if (openid) this.globalData.openid = openid;
-      if (free_times !== '' && free_times !== undefined) this.globalData.free_times = free_times;
+      if (free_times !== '' && free_times !== null && free_times !== undefined) this.globalData.free_times = free_times;
     } catch (e) {}
   },
 
