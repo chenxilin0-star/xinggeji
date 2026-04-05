@@ -12,11 +12,13 @@
     <!-- 四象限图 -->
     <view class="card">
       <view class="card-title">四象限定位</view>
+      <view class="axis-labels">
+        <text class="axis-left">← 低回避</text>
+        <text class="axis-right">高回避 →</text>
+      </view>
       <view class="quadrant-wrap">
-        <view class="q-label q-top">高焦虑</view>
-        <view class="q-label q-left">低回避</view>
-        <view class="q-label q-right">高回避</view>
-        <view class="q-label q-bottom">低焦虑</view>
+        <text class="q-label q-top">高焦虑 ↓</text>
+        <text class="q-label q-bottom">↑ 低焦虑</text>
         <view class="quadrant-grid">
           <view class="q-cell {{resultCode === 'anxious' ? 'q-active' : ''}}" style="{{resultCode === 'anxious' ? 'background:' + attachData.color + '20;border-color:' + attachData.color : ''}}">
             <text class="q-emoji">💛</text>
