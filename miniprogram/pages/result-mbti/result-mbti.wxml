@@ -30,9 +30,9 @@
           <view class="dim-label">{{item.left}}</view>
           <view class="dim-bar-wrap">
             <view class="dim-bar-bg">
-              <view class="dim-bar-left {{item.isLeft ? 'active' : ''}}" style="width: {{item.leftPercent}}%; background: {{item.isLeft ? typeData.groupColor : '#ddd'}};">
+              <view class="dim-bar-left {{item.isLeft ? 'active' : ''}}" style="width: {{item.leftPercent}}%; background: {{item.isLeft ? typeData.groupColor : typeData.groupColor}}30;">
               </view>
-              <view class="dim-bar-right {{!item.isLeft ? 'active' : ''}}" style="width: {{item.rightPercent}}%; background: {{!item.isLeft ? typeData.groupColor : '#ddd'}};">
+              <view class="dim-bar-right {{!item.isLeft ? 'active' : ''}}" style="width: {{item.rightPercent}}%; background: {{!item.isLeft ? typeData.groupColor : typeData.groupColor}}30;">
               </view>
             </view>
             <view class="dim-percent">

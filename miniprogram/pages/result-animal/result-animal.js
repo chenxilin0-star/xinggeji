@@ -177,6 +177,8 @@ Page({
     };
   },
 
-  retakeTest: function () { wx.navigateBack(); },
+  retakeTest: function () {
+    wx.redirectTo({ url: '/pages/test/test?test_id=animal_persona' });
+  },
   backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); }
 });

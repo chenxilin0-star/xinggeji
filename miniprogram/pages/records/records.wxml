@@ -6,12 +6,12 @@
 
   <view class="records-list" wx:if="{{!loading && records.length > 0}}">
     <view class="record-item" wx:for="{{records}}" wx:key="_id" bindtap="viewRecord" data-id="{{item._id}}">
-      <view class="record-emoji">{{item.test_emoji || '📝'}}</view>
+      <view class="record-emoji">{{testEmojis[item.test_id] || '📝'}}</view>
       <view class="record-info">
-        <view class="record-title">{{item.test_title}}</view>
+        <view class="record-title">{{testTitles[item.test_id] || item.test_title || '心理测试'}}</view>
         <view class="record-result">
-          <text>{{item.result.emoji}}</text>
-          <text>{{item.result.type_name}}</text>
+          <text>{{item.result.emoji || ''}}</text>
+          <text>{{item.result.type_name || ''}}</text>
         </view>
         <view class="record-time">{{item.completed_at}}</view>
       </view>
