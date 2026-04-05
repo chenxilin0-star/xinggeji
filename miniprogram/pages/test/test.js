@@ -223,6 +223,12 @@ Page({
   nextQuestion: function () {
     const { currentIndex, answers, questions } = this.data;
     
+    // 未选择答案不能跳下一题
+    if (answers[currentIndex] === null) {
+      wx.showToast({ title: '请先选择答案', icon: 'none' });
+      return;
+    }
+    
     if (currentIndex < questions.length - 1) {
       this.setData({ currentIndex: currentIndex + 1 });
     }
@@ -246,17 +252,11 @@ Page({
     // 检查是否所有题目都已作答
     const unanswered = answers.filter(a => a === null).length;
     if (unanswered > 0) {
-      wx.showModal({
-        title: '提示',
-        content: `还有${unanswered}道题目未作答，是否提交？`,
-        success: res => {
-          if (res.confirm) {
-            this.doSubmit();
-          }
-        }
-      });
-    } else {
-      this.doSubmit();
+      // 跳转到第一个未答题目
+      const firstUnanswered = answers.findIndex(a => a === null);
+      wx.showToast({ title: `还有${unanswered}题未作答`, icon: 'none' });
+      this.setData({ currentIndex: firstUnanswered });
+      return;
     }
   },
 
