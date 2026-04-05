@@ -47,6 +47,13 @@ Page({
       this.setData({
         resultData, scores, totalScore: total, percent, level, levelEmoji, loveTag, dimensions, loading: false
       });
+
+      // 设置导航栏颜色为粉色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#FF6B9D',
+        animation: { duration: 300, timingFunc: 'easeIn' }
+      });
     } catch (e) {
       console.error('Parse failed:', e);
       wx.showToast({ title: '数据解析失败', icon: 'none' });

@@ -111,6 +111,13 @@ Page({
       ];
 
       this.setData({ scores, mainAnimal: resultCode, animalData, percentages, loading: false });
+
+      // 设置导航栏颜色为橙色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#F2994A',
+        animation: { duration: 300, timingFunc: 'easeIn' }
+      });
     } catch (e) {
       console.error('Parse failed:', e);
       wx.navigateBack();

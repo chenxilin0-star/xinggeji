@@ -59,6 +59,13 @@ Page({
         overallLevel, overallEmoji, overallColor,
         bars, loading: false
       });
+
+      // 设置导航栏颜色为蓝色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#2D9CDB',
+        animation: { duration: 300, timingFunc: 'easeIn' }
+      });
     } catch (e) {
       console.error('Parse failed:', e);
       wx.navigateBack();

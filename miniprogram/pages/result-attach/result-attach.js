@@ -87,6 +87,13 @@ Page({
       this.setData({
         resultCode, attachData, anxietyPercent, avoidancePercent, loading: false
       });
+
+      // 设置导航栏颜色为紫色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#9B59B6',
+        animation: { duration: 300, timingFunc: 'easeIn' }
+      });
     } catch (e) {
       console.error('Parse failed:', e);
       wx.navigateBack();
