@@ -10,8 +10,7 @@
 
   <!-- 测试列表 -->
   <view class="test-list">
-    <view class="test-card" wx:for="{{tests}}" wx:key="test_id" bindtap="startTest" data-id="{{item.test_id}}">
-      <view class="test-card-bar" style="background: {{testColors[item.test_id] || '#6C5CE7'}};"></view>
+    <view class="test-card" wx:for="{{tests}}" wx:key="test_id" bindtap="startTest" data-id="{{item.test_id}}" style="--card-color: {{testColors[item.test_id] || '#6C5CE7'}};">
       <view class="test-emoji">{{item.emoji}}</view>
       <view class="test-info">
         <view class="test-title">{{item.title}}</view>

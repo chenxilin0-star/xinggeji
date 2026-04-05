@@ -58,6 +58,7 @@
   left: 0;
   width: 8rpx;
   height: 100%;
+  background: var(--card-color, #6C5CE7);
   opacity: 0;
   transition: opacity 0.25s ease;
 }
