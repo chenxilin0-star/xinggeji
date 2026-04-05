@@ -28,7 +28,7 @@ App({
     try { wx.setStorageSync('free_times', times); } catch (e) {}
   },
 
-  // 分享奖励：调用云函数+1次
+  // 分享奖励：由各页面手动调用（不再自动触发）
   claimShareReward: function () {
     wx.cloud.callFunction({
       name: 'shareReward',
@@ -36,25 +36,9 @@ App({
         if (res.result && res.result.success) {
           const newTimes = res.result.free_times;
           this.updateFreeTimes(newTimes);
-          
-          if (res.result.bonus > 0) {
-            wx.showToast({
-              title: '分享奖励+1次',
-              icon: 'success',
-              duration: 2000
-            });
-          } else {
-            wx.showToast({
-              title: '今日已达上限',
-              icon: 'none',
-              duration: 1500
-            });
-          }
         }
       },
-      fail: () => {
-        // 静默失败，不打扰用户
-      }
+      fail: () => {}
     });
   }
 });

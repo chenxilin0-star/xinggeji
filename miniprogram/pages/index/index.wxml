@@ -26,6 +26,15 @@
 
   <!-- 底部提示 -->
   <view class="footer-tip">
-    <text>今日剩余 {{free_times}}/{{daily_max}} 次 · 分享好友可+1次</text>
+    <text>今日剩余 {{free_times}}/{{daily_max}} 次</text>
+    <button class="share-btn" open-type="share" wx:if="{{free_times < daily_max}}">📤 分享+1次</button>
+  </view>
+
+  <!-- 分享后领取奖励浮层 -->
+  <view class="reward-overlay" wx:if="{{showShareSheet}}" bindtap="claimReward">
+    <view class="reward-card">
+      <text class="reward-emoji">🎁</text>
+      <text class="reward-text">已分享？点击领取+1次奖励</text>
+    </view>
   </view>
 </view>

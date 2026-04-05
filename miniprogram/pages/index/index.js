@@ -13,6 +13,7 @@ Page({
     tests: LOCAL_TESTS,
     free_times: 2,
     daily_max: 5,
+    showShareSheet: false,
     testColors: {
       mbti: '#F5A623',
       love_brain: '#FF6B9D',
@@ -82,11 +83,67 @@ Page({
   },
 
   onShareAppMessage: function () {
-    // 分享成功后奖励+1次
-    app.claimShareReward();
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index'
     };
+  },
+
+  // 主动分享赚次数
+  shareForTimes: function () {
+    const ft = app.globalData.free_times;
+    const freeTimes = ft !== undefined ? ft : 2;
+    if (freeTimes >= 5) {
+      wx.showToast({ title: '今日已达上限', icon: 'none' });
+      return;
+    }
+    wx.showModal({
+      title: '分享赚次数',
+      content: '分享给好友后，点击"已分享，领取奖励"按钮获得+1次测试机会',
+      confirmText: '去分享',
+      cancelText: '取消',
+      success: res => {
+        if (res.confirm) {
+          // 触发微信分享
+          this.setData({ showShareSheet: true });
+        }
+      }
+    });
+  },
+
+  // 分享完成后领取奖励
+  claimReward: function () {
+    wx.showLoading({ title: '领取中...' });
+    wx.cloud.callFunction({
+      name: 'shareReward',
+      success: res => {
+        wx.hideLoading();
+        if (res.result && res.result.success) {
+          const newTimes = res.result.free_times;
+          app.updateFreeTimes(newTimes);
+          this.setData({ free_times: newTimes, showShareSheet: false });
+          if (res.result.bonus > 0) {
+            wx.showToast({ title: '奖励+1次！', icon: 'success' });
+          } else {
+            wx.showToast({ title: '今日已达上限', icon: 'none' });
+          }
+        } else {
+          wx.hideLoading();
+          wx.showToast({ title: '领取失败，请先分享', icon: 'none' });
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        // 云函数失败时本地+1（信任用户）
+        const ft = app.globalData.free_times;
+        const current = ft !== undefined ? ft : 2;
+        if (current < 5) {
+          const newTimes = current + 1;
+          app.updateFreeTimes(newTimes);
+          this.setData({ free_times: newTimes, showShareSheet: false });
+          wx.showToast({ title: '奖励+1次！', icon: 'success' });
+        }
+      }
+    });
   }
 });

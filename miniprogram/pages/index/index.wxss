@@ -136,14 +136,58 @@ page {
 
 .footer-tip {
   text-align: center;
-  padding: 50rpx 0 30rpx;
+  padding: 30rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.footer-tip text {
   color: rgba(255, 255, 255, 0.55);
   font-size: 24rpx;
 }
 
-.footer-tip text {
+.share-btn {
   display: inline-block;
-  padding: 12rpx 28rpx;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 30rpx;
+  font-size: 24rpx !important;
+  padding: 12rpx 32rpx !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border: 2rpx solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 30rpx !important;
+  line-height: 1.4 !important;
+}
+
+.share-btn::after { border: none; }
+
+/* 领取奖励浮层 */
+.reward-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.reward-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 60rpx 50rpx;
+  text-align: center;
+  box-shadow: 0 16rpx 40rpx rgba(0,0,0,0.2);
+}
+
+.reward-emoji {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.reward-text {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
 }
