@@ -48,7 +48,7 @@
   top: 20rpx;
   left: 0;
   right: 0;
-  bottom: 130rpx;
+  bottom: 70rpx;
 }
 
 .grid-line {
@@ -70,8 +70,8 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  height: 320rpx;
-  padding-bottom: 130rpx;
+  height: 360rpx;
+  padding-bottom: 70rpx;
   position: relative;
 }
 
