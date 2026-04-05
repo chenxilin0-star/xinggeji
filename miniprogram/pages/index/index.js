@@ -1,6 +1,5 @@
 const app = getApp();
 
-// 首页测试列表数据（本地为主，不依赖云端）
 const LOCAL_TESTS = [
   { test_id: 'mbti', title: 'MBTI人格测试', emoji: '🎭', description: '发现你的性格密码，了解真实的自己', question_count: 20, tag: '十六型人格' },
   { test_id: 'love_brain', title: '恋爱脑测试', emoji: '💕', description: '测试你在恋爱中的理性程度', question_count: 15, tag: '爱情心理' },
@@ -12,7 +11,8 @@ const LOCAL_TESTS = [
 Page({
   data: {
     tests: LOCAL_TESTS,
-    free_times: 5,
+    free_times: 2,
+    daily_max: 5,
     testColors: {
       mbti: '#F5A623',
       love_brain: '#FF6B9D',
@@ -23,17 +23,12 @@ Page({
   },
 
   onLoad: function () {
-    // 静默登录，获取用户信息
-    this.setData({ free_times: app.globalData.free_times || 5 });
+    this.setData({ free_times: app.globalData.free_times || 2 });
     this.silentLogin();
   },
 
   onShow: function () {
-    // 只刷新次数
-    const times = app.globalData.free_times;
-    if (times !== undefined) {
-      this.setData({ free_times: times });
-    }
+    this.setData({ free_times: app.globalData.free_times || 2 });
   },
 
   silentLogin: function () {
@@ -42,20 +37,50 @@ Page({
       success: res => {
         if (res.result && res.result.success) {
           app.globalData.openid = res.result.openid;
-          app.globalData.free_times = res.result.free_times;
-          this.setData({ free_times: res.result.free_times });
+          app.updateFreeTimes(res.result.free_times);
+          if (res.result.daily_max) app.globalData.daily_max = res.result.daily_max;
+          this.setData({ 
+            free_times: res.result.free_times,
+            daily_max: res.result.daily_max || 5
+          });
         }
       },
-      fail: () => {
-        // 登录失败没关系，本地数据已经显示了
-      }
+      fail: () => {}
     });
   },
 
   startTest: function (e) {
     const testId = e.currentTarget.dataset.id;
+    const freeTimes = app.globalData.free_times || 0;
+    
+    if (freeTimes <= 0) {
+      wx.showModal({
+        title: '今日次数已用完',
+        content: '每天2次免费测试机会\n分享给好友可获得+1次\n每天最多5次',
+        confirmText: '去分享',
+        cancelText: '知道了',
+        success: res => {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/share/share?from=unlock'
+            });
+          }
+        }
+      });
+      return;
+    }
+    
     wx.navigateTo({
       url: `/pages/test/test?test_id=${testId}`
     });
+  },
+
+  onShareAppMessage: function () {
+    // 分享成功后奖励+1次
+    app.claimShareReward();
+    return {
+      title: '型格记 - 探索内心，发现真实的自己',
+      path: '/pages/index/index'
+    };
   }
 });

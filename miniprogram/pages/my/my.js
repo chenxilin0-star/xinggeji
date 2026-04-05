@@ -3,22 +3,24 @@ const app = getApp();
 Page({
   data: {
     openid: '',
-    free_times: 5,
-    total_times: 5,
+    free_times: 2,
+    daily_max: 5,
     version: '1.0.0'
   },
 
   onLoad: function () {
     this.setData({
       openid: app.globalData.openid || '',
-      free_times: app.globalData.free_times || 5
+      free_times: app.globalData.free_times || 2,
+      daily_max: app.globalData.daily_max || 5
     });
   },
 
   onShow: function () {
     this.setData({
       openid: app.globalData.openid || '',
-      free_times: app.globalData.free_times || 5
+      free_times: app.globalData.free_times || 2,
+      daily_max: app.globalData.daily_max || 5
     });
   },
 
@@ -33,18 +35,18 @@ Page({
 
   showHelp: function () {
     wx.showModal({
-      title: '帮助与反馈',
-      content: '1. 每个测试免费5次\n2. 测试完成后可以分享给好友\n3. 分享可获得额外测试次数\n4. 如有问题请联系客服',
+      title: '使用说明',
+      content: '✅ 每天免费2次测试机会\n📤 分享给好友/朋友圈 +1次\n📈 每天最多5次\n🔄 次数每天0点自动重置',
       showCancel: false,
       confirmText: '我知道了'
     });
   },
 
   onShareAppMessage: function () {
+    app.claimShareReward();
     return {
       title: '型格记 - 探索内心，发现真实的自己',
-      path: '/pages/index/index',
-      imageUrl: ''
+      path: '/pages/index/index'
     };
   }
 });

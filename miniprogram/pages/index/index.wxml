@@ -26,6 +26,6 @@
 
   <!-- 底部提示 -->
   <view class="footer-tip">
-    <text>每个测试免费5次</text>
+    <text>今日剩余 {{free_times}}/{{daily_max}} 次 · 分享好友可+1次</text>
   </view>
 </view>

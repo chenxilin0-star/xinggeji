@@ -1,0 +1,9 @@
+{
+  "name": "shareReward",
+  "version": "1.0.0",
+  "description": "分享奖励：分享后增加测试次数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

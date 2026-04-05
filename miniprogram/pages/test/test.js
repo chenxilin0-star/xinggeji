@@ -411,5 +411,13 @@ Page({
       }
     }
     return result;
+  },
+
+  onShareAppMessage: function () {
+    app.claimShareReward();
+    return {
+      title: '型格记 - 探索内心，发现真实的自己',
+      path: '/pages/index/index'
+    };
   }
 });

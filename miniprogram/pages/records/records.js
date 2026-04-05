@@ -105,14 +105,17 @@ Page({
   },
 
   doDeleteRecord: function (id) {
-    // 如果是本地记录，从本地存储删除
     const records = this.data.records.filter(r => r._id !== id);
     this.setData({ records });
-    
-    try {
-      wx.setStorageSync('local_records', records);
-    } catch (e) {}
-    
+    try { wx.setStorageSync('local_records', records); } catch (e) {}
     wx.showToast({ title: '已删除', icon: 'success' });
+  },
+
+  onShareAppMessage: function () {
+    app.claimShareReward();
+    return {
+      title: '型格记 - 探索内心，发现真实的自己',
+      path: '/pages/index/index'
+    };
   }
 });
