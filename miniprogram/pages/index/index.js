@@ -83,6 +83,8 @@ Page({
   },
 
   onShareAppMessage: function () {
+    // 分享后显示领取浮层
+    this.setData({ showShareSheet: true });
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index'

@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
     }
     
     const user = userRes.data[0];
-    const current_times = user.free_times || 0;
+    const current_times = user.free_times !== undefined && user.free_times !== null ? user.free_times : 0;
     
     // 检查是否已达上限
     if (current_times >= DAILY_MAX) {
