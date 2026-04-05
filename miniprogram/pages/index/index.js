@@ -58,7 +58,7 @@ Page({
   startTest: function (e) {
     const testId = e.currentTarget.dataset.id;
     // 优先用页面data中的次数（login云函数返回的），其次用全局缓存，最后默认2
-    const freeTimes = this.data.free_times !== undefined ? this.data.free_times : (app.globalData.free_times || 2);
+    const freeTimes = this.data.free_times !== undefined ? this.data.free_times : (app.globalData.free_times !== undefined ? app.globalData.free_times : 2);
     
     if (freeTimes <= 0) {
       wx.showModal({

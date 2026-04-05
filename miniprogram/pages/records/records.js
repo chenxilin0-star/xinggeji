@@ -22,7 +22,8 @@ Page({
   },
 
   onLoad: function () {
-    this.setData({ free_times: app.globalData.free_times || 5 });
+    const ft = app.globalData.free_times;
+    this.setData({ free_times: ft !== undefined ? ft : 2 });
   },
 
   onShow: function () {
