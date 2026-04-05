@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/seo/seo",
     "pages/index/index",
+    "pages/seo/seo",
     "pages/test/test",
     "pages/result/result",
     "pages/result-mbti/result-mbti",

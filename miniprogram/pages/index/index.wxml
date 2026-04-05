@@ -10,14 +10,15 @@
 
   <!-- 测试列表 -->
   <view class="test-list">
-    <view class="test-card test-card-{{item.test_id}}" wx:for="{{tests}}" wx:key="test_id" bindtap="startTest" data-id="{{item.test_id}}">
+    <view class="test-card" wx:for="{{tests}}" wx:key="test_id" bindtap="startTest" data-id="{{item.test_id}}">
+      <view class="test-card-bar" style="background: {{testColors[item.test_id] || '#6C5CE7'}};"></view>
       <view class="test-emoji">{{item.emoji}}</view>
       <view class="test-info">
         <view class="test-title">{{item.title}}</view>
         <view class="test-desc">{{item.description}}</view>
         <view class="test-meta">
           <text class="question-count">{{item.question_count}}题</text>
-          <text class="test-tag tag-{{item.test_id}}">{{item.test_id === 'mbti' ? '人格' : item.test_id === 'love_brain' ? '恋爱' : item.test_id === 'animal_persona' ? '性格' : item.test_id === 'attachment_style' ? '依恋' : '心理'}}</text>
+          <text class="test-tag" wx:if="{{item.tag}}" style="color: {{testColors[item.test_id]}}; background: {{testColors[item.test_id]}}12; border-color: {{testColors[item.test_id]}}30;">{{item.tag}}</text>
         </view>
       </view>
       <view class="test-arrow">›</view>
