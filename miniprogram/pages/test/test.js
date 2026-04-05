@@ -310,12 +310,13 @@ Page({
       case 'mbti': {
         let E = 0, I = 0, S = 0, N = 0, T = 0, F = 0, J = 0, P = 0;
         answers.forEach((answer, index) => {
-          const score = answer.score || 0;
+          if (!answer) return;
+          const isRight = answer.score === 1; // 选B=1表示右维度
           const dimIndex = index % 4;
-          if (dimIndex === 0) score <= 2 ? E += score : I += score;
-          if (dimIndex === 1) score <= 2 ? S += score : N += score;
-          if (dimIndex === 2) score <= 2 ? T += score : F += score;
-          if (dimIndex === 3) score <= 2 ? J += score : P += score;
+          if (dimIndex === 0) isRight ? I++ : E++;
+          if (dimIndex === 1) isRight ? N++ : S++;
+          if (dimIndex === 2) isRight ? F++ : T++;
+          if (dimIndex === 3) isRight ? P++ : J++;
         });
         result.scores = { E, I, S, N, T, F, J, P };
         let mbti = '';
@@ -349,11 +350,12 @@ Page({
       case 'animal_persona': {
         let lion = 0, peacock = 0, koala = 0, owl = 0;
         answers.forEach(answer => {
-          const score = answer.score || 0;
-          if (score <= 2) lion += score;
-          else if (score <= 4) peacock += score;
-          else if (score <= 6) koala += score;
-          else owl += score;
+          if (!answer) return;
+          // 直接根据选项字母分配：A=lion, B=peacock, C=koala, D=owl
+          if (answer.o_no === 'A') lion++;
+          else if (answer.o_no === 'B') peacock++;
+          else if (answer.o_no === 'C') koala++;
+          else if (answer.o_no === 'D') owl++;
         });
         result.scores = { lion, peacock, koala, owl };
         const max = Math.max(lion, peacock, koala, owl);
@@ -383,12 +385,20 @@ Page({
       }
       case 'emotion_stress': {
         let depression = 0, anxiety = 0, stress = 0;
-        // 题目数据中反向题已内嵌正确分数(3,2,1,0)，无需额外反转
+        // DASS-21 反向题索引(0-based)：积极情绪题需要反转
+        // 正向题(消极): 5,7,8,10,12,14,16,18,19,21 → 0-indexed: 4,6,7,9,11,13,15,17,18,20
+        // 反向题(积极): 1,2,3,4,6,9,11,13,15,17,20 → 0-indexed: 0,1,2,3,5,8,10,12,14,16,19
+        const reverseItems = [0,1,2,3,5,8,10,12,14,16,19];
         answers.forEach((answer, index) => {
-          const score = answer.score || 0;
-          if (index < 7) depression += score;
-          else if (index < 14) anxiety += score;
-          else stress += score;
+          if (!answer) return;
+          // score = optIdx + 1，范围 1-4
+          let rawScore = (answer.score || 1) - 1; // 转为 0-3
+          if (reverseItems.includes(index)) {
+            rawScore = 3 - rawScore; // 反向：0→3, 1→2, 2→1, 3→0
+          }
+          if (index < 7) depression += rawScore;
+          else if (index < 14) anxiety += rawScore;
+          else stress += rawScore;
         });
         result.scores = { depression, anxiety, stress };
         const total = depression + anxiety + stress;

@@ -81,8 +81,8 @@ Page({
       const resultCode = resultData.result?.resultCode || 'secure';
       const attachData = ATTACH_DATA[resultCode] || ATTACH_DATA.secure;
 
-      const anxietyPercent = Math.min(100, Math.round((scores.anxiety || 0) / 36 * 100));
-      const avoidancePercent = Math.min(100, Math.round((scores.avoidance || 0) / 36 * 100));
+      const anxietyPercent = Math.min(100, Math.round(Math.max(0, scores.anxiety - 9) / 27 * 100));
+      const avoidancePercent = Math.min(100, Math.round(Math.max(0, scores.avoidance - 9) / 27 * 100));
 
       this.setData({
         resultCode, attachData, anxietyPercent, avoidancePercent, loading: false
