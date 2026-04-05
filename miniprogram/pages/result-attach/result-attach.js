@@ -108,6 +108,19 @@ Page({
   },
 
   retakeTest: function () {
+    const app = getApp();
+    const ft = app.globalData.free_times;
+    const freeTimes = ft !== undefined ? ft : 2;
+    if (freeTimes <= 0) {
+      wx.showModal({
+        title: '今日次数已用完',
+        content: '每天2次免费测试机会\n分享给好友可获得+1次\n每天最多5次',
+        confirmText: '去分享',
+        cancelText: '知道了',
+        success: res => { if (res.confirm) wx.navigateTo({ url: '/pages/share/share?from=unlock' }); }
+      });
+      return;
+    }
     wx.redirectTo({ url: '/pages/test/test?test_id=attachment_style' });
   },
   backToHome: function () { wx.switchTab({ url: '/pages/index/index' }); },
