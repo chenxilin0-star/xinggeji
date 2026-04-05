@@ -471,7 +471,9 @@ Page({
   },
 
   retakeTest: function () {
-    wx.navigateBack();
+    wx.redirectTo({
+      url: '/pages/test/test?test_id=mbti'
+  });
   },
 
   backToHome: function () {

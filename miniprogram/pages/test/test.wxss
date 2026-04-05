@@ -4,6 +4,18 @@
   padding-bottom: 50rpx;
 }
 
+.test-header {
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+.test-header-title {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
 .progress-bar {
   height: 10rpx;
   background: rgba(255, 255, 255, 0.3);

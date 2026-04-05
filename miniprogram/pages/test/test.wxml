@@ -1,4 +1,9 @@
 <view class="container">
+  <!-- 测试标题 -->
+  <view class="test-header">
+    <text class="test-header-title">{{testTitles[testId]}}</text>
+  </view>
+
   <!-- 进度条 -->
   <view class="progress-bar">
     <view class="progress-inner" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
