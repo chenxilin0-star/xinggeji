@@ -4,7 +4,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const db = cloud.database();
-  const { test_id, answers } = event;
+  const { test_id, answers, scores, result } = event;
   
   if (!test_id || !answers || !Array.isArray(answers)) {
     return { success: false, error: '参数错误' };
@@ -51,14 +51,17 @@ exports.main = async (event, context) => {
     
     // 3. 尝试保存记录（失败不影响次数扣减）
     try {
-      await db.collection('user_records').add({
-        data: {
-          openid,
-          test_id,
-          answers,
-          completed_at: new Date()
-        }
-      });
+      const recordData = {
+        openid,
+        test_id,
+        answers,
+        completed_at: new Date()
+      };
+      // 如果前端传了 scores 和 result，一并保存
+      if (scores) recordData.scores = scores;
+      if (result) recordData.result = result;
+      
+      await db.collection('user_records').add({ data: recordData });
     } catch (recordErr) {
       console.error('Save record failed:', recordErr);
     }

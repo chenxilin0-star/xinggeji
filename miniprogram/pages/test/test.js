@@ -283,38 +283,38 @@ Page({
     wx.showLoading({ title: '提交中...' });
     
     // 先尝试提交到云端
+    const localResult = this.calculateLocalResult();
+    
     wx.cloud.callFunction({
       name: 'submitTest',
       data: {
         test_id: this.data.testId,
-        answers: this.data.answers
+        answers: this.data.answers,
+        scores: localResult.scores,
+        result: localResult.result
       },
       success: res => {
         wx.hideLoading();
         if (res.result && res.result.success) {
-          // 云端成功扣减次数：用云端返回的remaining_times，但结果用本地计算
+          // 云端成功扣减次数
           const remaining = res.result.remaining_times;
           app.updateFreeTimes(remaining);
           this.setData({ free_times: remaining });
           
-          // 使用本地计算的结果（云端不再返回scores/result）
-          const result = this.calculateLocalResult();
-          result.record_id = res.result.record_id || '';
+          localResult.record_id = res.result.record_id || '';
           const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
           });
         } else {
-          // 云端返回错误：本地扣减次数，使用本地计算结果
           console.warn('Cloud submit error:', res.result);
           const newTimes = Math.max(0, freeTimes - 1);
           app.updateFreeTimes(newTimes);
           this.setData({ free_times: newTimes });
           
-          const result = this.calculateLocalResult();
           const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
           wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
           });
         }
       },
@@ -322,16 +322,13 @@ Page({
         wx.hideLoading();
         console.error('Submit failed:', err);
         
-        // 云函数调用失败，本地扣减次数
         const newTimes = Math.max(0, freeTimes - 1);
         app.updateFreeTimes(newTimes);
         this.setData({ free_times: newTimes });
         
-        // 使用本地计算结果
-        const result = this.calculateLocalResult();
         const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
         wx.navigateTo({
-          url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(result))}`
+          url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
         });
       }
     });

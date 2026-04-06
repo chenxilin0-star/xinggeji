@@ -31,14 +31,14 @@ const questionsData = {
     { q_no: 4, q_text: '你会为了维系感情而委屈自己吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
     { q_no: 5, q_text: '吵架后，你会先低头认错吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
     { q_no: 6, q_text: '你会把对方理想化，觉得对方完美无缺吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
-    { q_no: 7, q_text: '恋爱后，你的朋友社交减少了吗？', options: [{ o_no: 'A', o_text: '没有', scores: [1, 0] }, { o_no: 'B', o_text: '减少了', scores: [0, 1] }] },
+    { q_no: 7, q_text: '恋爱后，你的朋友社交减少了吗？', options: [{ o_no: 'A', o_text: '没有', scores: [0, 1] }, { o_no: 'B', o_text: '减少了', scores: [1, 0] }] },
     { q_no: 8, q_text: '你会无条件原谅对方的错误吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
     { q_no: 9, q_text: '对方提出分手，你会纠缠吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
     { q_no: 10, q_text: '你会因为恋爱而影响工作/学习吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
-    { q_no: 11, q_text: '你会经常幻想和对方的未来吗？', options: [{ o_no: 'A', o_text: '偶尔', scores: [1, 0] }, { o_no: 'B', o_text: '经常', scores: [0, 1] }] },
+    { q_no: 11, q_text: '你会经常幻想和对方的未来吗？', options: [{ o_no: 'A', o_text: '偶尔', scores: [0, 1] }, { o_no: 'B', o_text: '经常', scores: [1, 0] }] },
     { q_no: 12, q_text: '恋爱中，你会失去自我吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
     { q_no: 13, q_text: '你会为了对方改变自己的原则吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] },
-    { q_no: 14, q_text: '对方的需求总是优先于自己的需求吗？', options: [{ o_no: 'A', o_text: '不是', scores: [1, 0] }, { o_no: 'B', o_text: '是的', scores: [0, 1] }] },
+    { q_no: 14, q_text: '对方的需求总是优先于自己的需求吗？', options: [{ o_no: 'A', o_text: '不是', scores: [0, 1] }, { o_no: 'B', o_text: '是的', scores: [1, 0] }] },
     { q_no: 15, q_text: '分手后，你会很长时间走不出来吗？', options: [{ o_no: 'A', o_text: '不会', scores: [0, 1] }, { o_no: 'B', o_text: '会的', scores: [1, 0] }] }
   ],
   animal_persona: [

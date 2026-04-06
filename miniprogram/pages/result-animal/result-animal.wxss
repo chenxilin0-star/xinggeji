@@ -1,5 +1,5 @@
 page {
-  background: #F2994A;
+  background: #F2994A !important;
 }
 
 .container {

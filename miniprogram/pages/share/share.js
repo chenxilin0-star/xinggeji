@@ -115,11 +115,11 @@ Page({
         });
       }
 
-      // 底部提示
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.font = '12px sans-serif';
-      ctx.fillText('扫码或搜索「型格记」开始测试', w / 2, h - 30);
-
+      // 底部提示（替代二维码）
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.font = '13px sans-serif';
+      ctx.fillText('长按识别小程序码 → 搜索「型格记」', w / 2, h - 50);
+      
       // 底部品牌
       ctx.fillStyle = 'rgba(255,255,255,0.3)';
       ctx.font = '11px sans-serif';
