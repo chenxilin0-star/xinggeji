@@ -230,6 +230,17 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    const { testId, resultData } = this.data;
+    const title = this.data.testTitles[testId] || '心理测试';
+    const result = resultData.result || {};
+    
+    return {
+      title: `我在${title}中测出了${result.type_name || '心理测试'}！`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     wx.navigateBack();
   },

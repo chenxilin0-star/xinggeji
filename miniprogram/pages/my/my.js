@@ -49,5 +49,12 @@ Page({
       title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index'
     };
+  },
+
+  onShareTimeline: function () {
+    return {
+      title: '型格记 - 探索内心，发现真实的自己',
+      query: ''
+    };
   }
 });

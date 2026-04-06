@@ -198,5 +198,13 @@ Page({
       title: `我在型格记测了${this.data.testTitles[test_id] || '心理测试'}，你也来试试吧！`,
       path: '/pages/index/index'
     };
+  },
+
+  onShareTimeline: function () {
+    const { resultData, test_id } = this.data;
+    return {
+      title: `我在型格记测了${this.data.testTitles[test_id] || '心理测试'}！`,
+      query: ''
+    };
   }
 });

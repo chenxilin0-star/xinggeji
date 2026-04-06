@@ -470,6 +470,14 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    const { resultCode, typeData } = this.data;
+    return {
+      title: `我的MBTI是${resultCode}-${typeData.name}，${typeData.tagline}！`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     const app = getApp();
     const ft = app.globalData.free_times;

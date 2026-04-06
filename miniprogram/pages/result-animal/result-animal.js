@@ -184,6 +184,13 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    return {
+      title: `我的灵魂动物是${this.data.animalData.emoji}${this.data.animalData.name}！`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     const app = getApp();
     const ft = app.globalData.free_times;

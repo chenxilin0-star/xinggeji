@@ -79,6 +79,13 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    return {
+      title: `我的心理健康评估：${this.data.overallLevel}`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     const app = getApp();
     const ft = app.globalData.free_times;

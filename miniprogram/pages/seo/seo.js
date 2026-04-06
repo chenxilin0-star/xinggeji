@@ -55,5 +55,12 @@ Page({
       path: '/pages/seo/seo',
       imageUrl: ''
     };
+  },
+
+  onShareTimeline: function () {
+    return {
+      title: '型格记 - 免费在线心理测试',
+      query: ''
+    };
   }
 });

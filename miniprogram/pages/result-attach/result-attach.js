@@ -107,6 +107,13 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    return {
+      title: `我的依恋类型是${this.data.attachData.emoji}${this.data.attachData.name}！`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     const app = getApp();
     const ft = app.globalData.free_times;

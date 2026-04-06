@@ -130,6 +130,13 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    return {
+      title: `我的恋爱脑指数是${this.data.percent}%，${this.data.loveTag}！`,
+      query: ''
+    };
+  },
+
   retakeTest: function () {
     const app = getApp();
     const ft = app.globalData.free_times;

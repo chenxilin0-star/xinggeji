@@ -91,6 +91,13 @@ Page({
     };
   },
 
+  onShareTimeline: function () {
+    return {
+      title: '型格记 - 探索内心，发现真实的自己',
+      query: ''
+    };
+  },
+
   // 主动分享赚次数
   shareForTimes: function () {
     const ft = app.globalData.free_times;
