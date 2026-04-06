@@ -83,8 +83,8 @@ Page({
   },
 
   onShareAppMessage: function () {
-    // 分享后显示领取浮层
-    this.setData({ showShareSheet: true });
+    // 延迟弹浮层，给分享面板弹出时间
+    setTimeout(() => { this.setData({ showShareSheet: true }); }, 500);
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index'
@@ -92,6 +92,8 @@ Page({
   },
 
   onShareTimeline: function () {
+    // 朋友圈分享后也弹出领取浮层
+    setTimeout(() => { this.setData({ showShareSheet: true }); }, 500);
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       query: ''

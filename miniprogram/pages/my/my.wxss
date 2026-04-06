@@ -54,7 +54,6 @@
   text-align: center;
 }
 
-/* 获取更多次数提示 */
 .bonus-tip {
   text-align: center;
   padding: 20rpx 0;
@@ -144,4 +143,35 @@
 .footer text {
   display: block;
   margin-bottom: 10rpx;
+}
+
+/* 领取奖励浮层 */
+.reward-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.reward-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 60rpx 50rpx;
+  text-align: center;
+  box-shadow: 0 16rpx 40rpx rgba(0,0,0,0.2);
+}
+
+.reward-emoji {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.reward-text {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
 }

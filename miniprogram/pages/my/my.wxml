@@ -50,4 +50,12 @@
     <text>型格记 v2.0</text>
     <text>探索内心，发现真实的自己</text>
   </view>
+
+  <!-- 分享后领取奖励浮层 -->
+  <view class="reward-overlay" wx:if="{{showRewardSheet}}" bindtap="claimReward">
+    <view class="reward-card">
+      <text class="reward-emoji">🎁</text>
+      <text class="reward-text">已分享？点击领取+1次奖励</text>
+    </view>
+  </view>
 </view>

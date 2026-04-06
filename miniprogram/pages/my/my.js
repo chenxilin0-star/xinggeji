@@ -5,7 +5,8 @@ Page({
     openid: '',
     free_times: 2,
     daily_max: 5,
-    version: '1.0.0'
+    version: '2.0.0',
+    showRewardSheet: false
   },
 
   onLoad: function () {
@@ -45,6 +46,7 @@ Page({
   },
 
   onShareAppMessage: function () {
+    setTimeout(() => { this.setData({ showRewardSheet: true }); }, 500);
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       path: '/pages/index/index'
@@ -52,9 +54,54 @@ Page({
   },
 
   onShareTimeline: function () {
+    setTimeout(() => { this.setData({ showRewardSheet: true }); }, 500);
     return {
       title: '型格记 - 探索内心，发现真实的自己',
       query: ''
     };
+  },
+
+  claimReward: function () {
+    wx.showLoading({ title: '领取中...' });
+    wx.cloud.callFunction({
+      name: 'shareReward',
+      success: res => {
+        wx.hideLoading();
+        if (res.result && res.result.success) {
+          const newTimes = res.result.free_times;
+          app.updateFreeTimes(newTimes);
+          this.setData({ free_times: newTimes, showRewardSheet: false });
+          if (res.result.bonus && res.result.bonus > 0) {
+            wx.showToast({ title: '奖励+1次！', icon: 'success' });
+          } else {
+            wx.showToast({ title: '今日已达上限', icon: 'none' });
+          }
+        } else {
+          const ft = app.globalData.free_times;
+          const current = ft !== undefined ? ft : 2;
+          if (current < 5) {
+            app.updateFreeTimes(current + 1);
+            this.setData({ free_times: current + 1, showRewardSheet: false });
+            wx.showToast({ title: '奖励+1次！', icon: 'success' });
+          } else {
+            this.setData({ showRewardSheet: false });
+            wx.showToast({ title: '今日已达上限', icon: 'none' });
+          }
+        }
+      },
+      fail: () => {
+        wx.hideLoading();
+        const ft = app.globalData.free_times;
+        const current = ft !== undefined ? ft : 2;
+        if (current < 5) {
+          app.updateFreeTimes(current + 1);
+          this.setData({ free_times: current + 1, showRewardSheet: false });
+          wx.showToast({ title: '奖励+1次！', icon: 'success' });
+        } else {
+          this.setData({ showRewardSheet: false });
+          wx.showToast({ title: '今日已达上限', icon: 'none' });
+        }
+      }
+    });
   }
 });
