@@ -22,6 +22,7 @@ Page({
   },
 
   onLoad: function () {
+    wx.setNavigationBarTitle({ title: '测试记录 - 型格记' });
     const ft = app.globalData.free_times;
     this.setData({ free_times: ft !== undefined ? ft : 2 });
   },
@@ -231,14 +232,14 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试免费做',
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试免费做',
       query: ''
     };
   }

@@ -60,6 +60,9 @@ Page({
         bars, loading: false
       });
 
+      // 设置带关键词的页面标题
+      wx.setNavigationBarTitle({ title: overallLevel + ' - 情绪压力自评结果' });
+
       // 设置导航栏颜色为蓝色
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
@@ -74,14 +77,14 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: `我的心理健康评估：${this.data.overallLevel}，你也来关注自己的心理健康吧！`,
+      title: `我的心理健康评估：${this.data.overallLevel}，免费测测你的情绪压力指数`,
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     return {
-      title: `我的心理健康评估：${this.data.overallLevel}`,
+      title: `我的心理健康评估：${this.data.overallLevel}，免费测测你的情绪压力指数`,
       query: ''
     };
   },

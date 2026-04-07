@@ -194,16 +194,30 @@ Page({
 
   onShareAppMessage: function () {
     const { resultData, test_id } = this.data;
+    const shareTitles = {
+      mbti: '免费MBTI人格测试 - 测测你的十六型人格',
+      love_brain: '恋爱脑测试免费测 - 你有多恋爱脑？',
+      animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰',
+      attachment_style: '恋爱依恋类型测试 - 免费测你的情感模式',
+      emotion_stress: '免费心理健康测试 - 情绪压力自评'
+    };
     return {
-      title: `我在型格记测了${this.data.testTitles[test_id] || '心理测试'}，你也来试试吧！`,
+      title: shareTitles[test_id] || '型格记心理测试 - 免费在线测评',
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     const { resultData, test_id } = this.data;
+    const shareTitles = {
+      mbti: '免费MBTI人格测试 - 测测你的十六型人格',
+      love_brain: '恋爱脑测试免费测 - 你有多恋爱脑？',
+      animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰',
+      attachment_style: '恋爱依恋类型测试 - 免费测你的情感模式',
+      emotion_stress: '免费心理健康测试 - 情绪压力自评'
+    };
     return {
-      title: `我在型格记测了${this.data.testTitles[test_id] || '心理测试'}！`,
+      title: shareTitles[test_id] || '型格记心理测试 - 免费在线测评',
       query: ''
     };
   }

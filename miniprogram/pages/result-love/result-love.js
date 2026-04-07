@@ -48,6 +48,9 @@ Page({
         resultData, scores, totalScore: total, percent, level, levelEmoji, loveTag, dimensions, loading: false
       });
 
+      // 设置带关键词的页面标题
+      wx.setNavigationBarTitle({ title: level + ' - 恋爱脑测试结果' });
+
       // 设置导航栏颜色为粉色
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
@@ -125,14 +128,14 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: `我的恋爱脑指数是${this.data.percent}%，${this.data.loveTag}，你也来测测吧！`,
+      title: `我的恋爱脑指数${this.data.percent}%，${this.data.loveTag}！测测你有多恋爱脑`,
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     return {
-      title: `我的恋爱脑指数是${this.data.percent}%，${this.data.loveTag}！`,
+      title: `我的恋爱脑指数${this.data.percent}%，${this.data.loveTag}！测测你有多恋爱脑`,
       query: ''
     };
   },

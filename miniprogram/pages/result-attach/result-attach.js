@@ -88,6 +88,9 @@ Page({
         resultCode, attachData, anxietyPercent, avoidancePercent, loading: false
       });
 
+      // 设置带关键词的页面标题
+      wx.setNavigationBarTitle({ title: attachData.name + ' - 恋爱依恋类型测试结果' });
+
       // 设置导航栏颜色为紫色
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
@@ -102,14 +105,14 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: `我的依恋类型是${this.data.attachData.emoji}${this.data.attachData.name}，你也来测测吧！`,
+      title: `我是${this.data.attachData.emoji}${this.data.attachData.name}依恋！测测你的恋爱依恋类型`,
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     return {
-      title: `我的依恋类型是${this.data.attachData.emoji}${this.data.attachData.name}！`,
+      title: `我是${this.data.attachData.emoji}${this.data.attachData.name}依恋！测测你的恋爱依恋类型`,
       query: ''
     };
   },

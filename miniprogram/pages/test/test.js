@@ -38,6 +38,17 @@ Page({
       testId: test_id,
       free_times: app.globalData.free_times !== undefined ? app.globalData.free_times : 2
     });
+    // 设置带关键词的页面标题
+    const titles = {
+      mbti: 'MBTI人格测试 - 十六型人格',
+      love_brain: '恋爱脑测试 - 你有多恋爱脑',
+      animal_persona: '性格动物测试 - 你是哪种动物',
+      attachment_style: '恋爱依恋类型测试',
+      emotion_stress: '情绪压力自评 - 心理健康测试'
+    };
+    if (titles[test_id]) {
+      wx.setNavigationBarTitle({ title: titles[test_id] });
+    }
     this.loadTestDetail();
   },
 
@@ -447,15 +458,29 @@ Page({
   },
 
   onShareAppMessage: function () {
+    const titles = {
+      mbti: 'MBTI人格测试免费测，20题测出你的十六型人格！',
+      love_brain: '恋爱脑测试 - 你有多恋爱脑？15题测出你的恋爱指数！',
+      animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰，你是哪种？',
+      attachment_style: '恋爱依恋类型测试 - 测测你的情感模式',
+      emotion_stress: '情绪压力自评 - 免费21题心理健康测试'
+    };
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: titles[this.data.testId] || '型格记心理测试 - 免费在线测评',
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
+    const titles = {
+      mbti: 'MBTI人格测试免费测，20题测出你的十六型人格！',
+      love_brain: '恋爱脑测试 - 你有多恋爱脑？15题测出你的恋爱指数！',
+      animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰，你是哪种？',
+      attachment_style: '恋爱依恋类型测试 - 测测你的情感模式',
+      emotion_stress: '情绪压力自评 - 免费21题心理健康测试'
+    };
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: titles[this.data.testId] || '型格记心理测试 - 免费在线测评',
       query: ''
     };
   }

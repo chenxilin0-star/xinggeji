@@ -34,8 +34,10 @@ Page({
     if (options.test_id) {
       const info = this.data.testInfo[options.test_id];
       if (info) {
-        wx.setNavigationBarTitle({ title: info.title });
+        wx.setNavigationBarTitle({ title: info.title + ' - 型格记心理测试' });
       }
+    } else {
+      wx.setNavigationBarTitle({ title: '型格记 - 免费心理测试平台' });
     }
   },
 
@@ -51,7 +53,7 @@ Page({
   // 分享
   onShareAppMessage: function () {
     return {
-      title: '型格记 - 免费在线心理测试',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试·依恋类型免费测',
       path: '/pages/seo/seo',
       imageUrl: ''
     };
@@ -59,7 +61,7 @@ Page({
 
   onShareTimeline: function () {
     return {
-      title: '型格记 - 免费在线心理测试',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试·依恋类型免费测',
       query: ''
     };
   }

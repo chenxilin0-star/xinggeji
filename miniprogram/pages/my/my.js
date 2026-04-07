@@ -10,6 +10,7 @@ Page({
   },
 
   onLoad: function () {
+    wx.setNavigationBarTitle({ title: '个人中心 - 型格记' });
     const ft = app.globalData.free_times;
     this.setData({
       openid: app.globalData.openid || '',
@@ -48,7 +49,7 @@ Page({
   onShareAppMessage: function () {
     setTimeout(() => { this.setData({ showRewardSheet: true }); }, 500);
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试免费做',
       path: '/pages/index/index'
     };
   },
@@ -56,7 +57,7 @@ Page({
   onShareTimeline: function () {
     setTimeout(() => { this.setData({ showRewardSheet: true }); }, 500);
     return {
-      title: '型格记 - 探索内心，发现真实的自己',
+      title: '型格记心理测试 - MBTI·恋爱脑·性格测试免费做',
       query: ''
     };
   },

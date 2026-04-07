@@ -112,6 +112,9 @@ Page({
 
       this.setData({ scores, mainAnimal: resultCode, animalData, percentages, loading: false });
 
+      // 设置带关键词的页面标题
+      wx.setNavigationBarTitle({ title: animalData.name + ' - 性格动物测试结果' });
+
       // 设置导航栏颜色为橙色
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
@@ -179,14 +182,14 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: `我的灵魂动物是${this.data.animalData.emoji}${this.data.animalData.name}，你也来测测吧！`,
+      title: `我的灵魂动物是${this.data.animalData.emoji}${this.data.animalData.name}！测测你像狮子·孔雀·考拉还是猫头鹰`,
       path: '/pages/index/index'
     };
   },
 
   onShareTimeline: function () {
     return {
-      title: `我的灵魂动物是${this.data.animalData.emoji}${this.data.animalData.name}！`,
+      title: `我的灵魂动物是${this.data.animalData.emoji}${this.data.animalData.name}！测测你像哪种动物`,
       query: ''
     };
   },

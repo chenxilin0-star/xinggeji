@@ -443,6 +443,9 @@ Page({
         loading: false
       });
 
+      // 设置带关键词的页面标题
+      wx.setNavigationBarTitle({ title: resultCode + ' - ' + typeData.name + ' | MBTI测试结果' });
+
       // 设置导航栏颜色
       wx.setNavigationBarColor({
         frontColor: '#ffffff',
@@ -465,7 +468,7 @@ Page({
   onShareAppMessage: function () {
     const { resultCode, typeData } = this.data;
     return {
-      title: `我的MBTI是${resultCode}-${typeData.name}，${typeData.tagline}，你也来测测吧！`,
+      title: `我是${resultCode}-${typeData.name}！免费MBTI十六型人格测试，测测你的人格`,
       path: '/pages/index/index'
     };
   },
@@ -473,7 +476,7 @@ Page({
   onShareTimeline: function () {
     const { resultCode, typeData } = this.data;
     return {
-      title: `我的MBTI是${resultCode}-${typeData.name}，${typeData.tagline}！`,
+      title: `我是${resultCode}-${typeData.name}！免费MBTI十六型人格测试`,
       query: ''
     };
   },
