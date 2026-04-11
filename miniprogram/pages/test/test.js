@@ -109,10 +109,10 @@ Page({
       });
       return;
     }
-    const questions = this.getLocalQuestions(testId);
+    const localQ = this.getLocalQuestions(testId);
     this.setData({
-      questions,
-      answers: new Array(questions.length).fill(null),
+      questions: localQ,
+      answers: new Array(localQ.length).fill(null),
       loading: false
     });
   },
