@@ -1,0 +1,64 @@
+<view class="container {{loading ? 'loading' : ''}}">
+  <block wx:if="{{!loading}}">
+    <!-- 顶部标签 -->
+    <view class="mode-kicker {{isDrunk ? 'drunk' : ''}}">{{modeLabel}}</view>
+
+    <!-- 人格卡片 -->
+    <view class="type-card">
+      <view class="type-name">{{typeData.code}}</view>
+      <view class="type-cn">{{typeData.cn}}</view>
+      <view class="match-badge" wx:if="{{matchInfo}}">
+        匹配度 {{matchInfo.similarity}}% · 精准命中 {{matchInfo.exact}}/15 维
+      </view>
+      <view class="type-intro">"{{typeData.intro}}"</view>
+    </view>
+
+    <!-- 人格图片区域 -->
+    <view class="poster-box" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
+      <view class="poster-code">{{typeData.code}}</view>
+      <view class="poster-cn">{{typeData.cn}}</view>
+      <view class="poster-intro">{{typeData.intro}}</view>
+    </view>
+
+    <!-- 人格描述 -->
+    <view class="desc-card">
+      <view class="desc-title">📝 人格解读</view>
+      <text class="desc-text">{{typeData.desc}}</text>
+    </view>
+
+    <!-- 十五维度评分 -->
+    <view class="dim-section">
+      <view class="dim-section-title">🔬 十五维度评分</view>
+      <view class="dim-list">
+        <view class="dim-item" wx:for="{{dimensions}}" wx:key="key">
+          <view class="dim-item-top">
+            <text class="dim-item-name">{{item.name}}</text>
+            <text class="dim-item-level level-{{item.level}}">{{item.level}} / {{item.score}}分</text>
+          </view>
+          <view class="dim-item-bar-bg">
+            <view class="dim-item-bar" style="width: {{item.score / 6 * 100}}%;"></view>
+          </view>
+          <text class="dim-item-explain">{{item.explanation}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 友情提示 -->
+    <view class="fun-note">
+      ⚠️ 本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。
+    </view>
+
+    <!-- 底部操作 -->
+    <view class="actions">
+      <button class="btn-retake" bindtap="retakeTest">🔄 重新测试</button>
+      <button class="btn-home" bindtap="backToHome">🏠 返回首页</button>
+      <button class="btn-share" open-type="share">📤 分享结果</button>
+    </view>
+
+    <view class="footer">型格记 · SBTI人格测试</view>
+  </block>
+
+  <view class="loading-box" wx:if="{{loading}}">
+    <view class="loading-text">正在生成你的人格画像...</view>
+  </view>
+</view>

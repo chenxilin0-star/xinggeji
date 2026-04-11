@@ -1,6 +1,7 @@
 const app = getApp();
 
 const LOCAL_TESTS = [
+  { test_id: 'sbti', title: 'SBTI人格测试', emoji: '🔥', description: 'MBTI已经过时了！30题测出你的隐藏人格', question_count: 32, tag: '🔥热门', is_new: true },
   { test_id: 'mbti', title: 'MBTI人格测试', emoji: '🎭', description: '发现你的性格密码，了解真实的自己', question_count: 20, tag: '十六型人格' },
   { test_id: 'love_brain', title: '恋爱脑测试', emoji: '💕', description: '测试你在恋爱中的理性程度', question_count: 15, tag: '爱情心理' },
   { test_id: 'animal_persona', title: '性格动物测试', emoji: '🦁', description: '你是哪种动物性格？狮子/孔雀/考拉/猫头鹰', question_count: 15, tag: '趣味性格' },
@@ -15,6 +16,7 @@ Page({
     daily_max: 5,
     showShareSheet: false,
     testColors: {
+      sbti: '#2ECC71',
       mbti: '#F5A623',
       love_brain: '#FF6B9D',
       animal_persona: '#F2994A',

@@ -1,7 +1,10 @@
 const app = getApp();
 
+var sbtiData = require('../../data/sbti-data.js');
+
 // 结果页路由映射
 const RESULT_ROUTES = {
+  sbti: '/pages/result-sbti/result-sbti',
   mbti: '/pages/result-mbti/result-mbti',
   love_brain: '/pages/result-love/result-love',
   animal_persona: '/pages/result-animal/result-animal',
@@ -19,6 +22,7 @@ Page({
     loading: true,
     free_times: 2,
     testTitles: {
+      sbti: 'SBTI人格测试',
       mbti: 'MBTI人格测试',
       love_brain: '恋爱脑测试',
       animal_persona: '性格动物测试',
@@ -40,6 +44,7 @@ Page({
     });
     // 设置带关键词的页面标题
     const titles = {
+      sbti: 'SBTI人格测试 - 比MBTI更有趣',
       mbti: 'MBTI人格测试 - 十六型人格',
       love_brain: '恋爱脑测试 - 你有多恋爱脑',
       animal_persona: '性格动物测试 - 你是哪种动物',
@@ -81,6 +86,29 @@ Page({
 
   loadLocalQuestions: function () {
     const testId = this.data.testId;
+    if (testId === 'sbti') {
+      // SBTI使用独立数据文件
+      var questionList = sbtiData.generateQuestionList();
+      // 转换为页面统一格式
+      var questions = questionList.map(function(q, idx) {
+        return {
+          q_no: idx + 1,
+          q_text: q.text,
+          special: q.special || false,
+          kind: q.kind || '',
+          dim: q.dim || '',
+          options: q.options.map(function(opt, oi) {
+            return { o_no: String.fromCharCode(65 + oi), o_text: opt.label, value: opt.value };
+          })
+        };
+      });
+      this.setData({
+        questions: questions,
+        answers: new Array(questions.length).fill(null),
+        loading: false
+      });
+      return;
+    }
     const questions = this.getLocalQuestions(testId);
     this.setData({
       questions,
@@ -209,7 +237,10 @@ Page({
     let score = 0;
     
     // 计算分数
-    if (this.data.testId === 'love_brain') {
+    if (this.data.testId === 'sbti') {
+      // SBTI: 直接使用选项的value值
+      score = option.value || (optIdx + 1);
+    } else if (this.data.testId === 'love_brain') {
       score = option.o_no === 'B' ? 1 : 0;
     } else if (this.data.testId === 'attachment_style' || this.data.testId === 'emotion_stress' || this.data.testId === 'animal_persona') {
       score = optIdx + 1;
@@ -313,9 +344,12 @@ Page({
           this.setData({ free_times: remaining });
           
           localResult.record_id = res.result.record_id || '';
-          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
+          var resultRoute = RESULT_ROUTES[this.data.testId] || '/pages/result/result';
+          var resultDataStr = this.data.testId === 'sbti' && localResult._sbtiFullResult
+            ? encodeURIComponent(JSON.stringify(localResult._sbtiFullResult))
+            : encodeURIComponent(JSON.stringify(localResult));
           wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
+            url: resultRoute + '?test_id=' + this.data.testId + '&result_data=' + resultDataStr
           });
         } else {
           console.warn('Cloud submit error:', res.result);
@@ -323,9 +357,12 @@ Page({
           app.updateFreeTimes(newTimes);
           this.setData({ free_times: newTimes });
           
-          const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
+          var resultRoute2 = RESULT_ROUTES[this.data.testId] || '/pages/result/result';
+          var resultDataStr2 = this.data.testId === 'sbti' && localResult._sbtiFullResult
+            ? encodeURIComponent(JSON.stringify(localResult._sbtiFullResult))
+            : encodeURIComponent(JSON.stringify(localResult));
           wx.navigateTo({
-            url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
+            url: resultRoute2 + '?test_id=' + this.data.testId + '&result_data=' + resultDataStr2
           });
         }
       },
@@ -337,18 +374,62 @@ Page({
         app.updateFreeTimes(newTimes);
         this.setData({ free_times: newTimes });
         
-        const resultRoute = RESULT_ROUTES[this.data.testId] || `/pages/result/result`;
+        var resultRoute3 = RESULT_ROUTES[this.data.testId] || '/pages/result/result';
+        var resultDataStr3 = this.data.testId === 'sbti' && localResult._sbtiFullResult
+          ? encodeURIComponent(JSON.stringify(localResult._sbtiFullResult))
+          : encodeURIComponent(JSON.stringify(localResult));
         wx.navigateTo({
-          url: `${resultRoute}?test_id=${this.data.testId}&result_data=${encodeURIComponent(JSON.stringify(localResult))}`
+          url: resultRoute3 + '?test_id=' + this.data.testId + '&result_data=' + resultDataStr3
         });
       }
     });
+  },
+
+  calculateSBTIResult: function () {
+    var that = this;
+    var questionList = sbtiData.generateQuestionList();
+    
+    // 重建questionList顺序与当前questions一致（已shuffle过）
+    // 直接用页面上的questions顺序
+    var questions = that.data.questions;
+    var answers = that.data.answers;
+    
+    // 构造sbti-data需要的answers格式
+    var sbtiAnswers = answers.map(function(a, idx) {
+      if (!a) return null;
+      return { value: a.score };
+    });
+    
+    // 重新构建questionList与页面一致
+    var pageQuestionList = questions.map(function(q) {
+      return {
+        id: 'q' + q.q_no,
+        dim: q.dim || '',
+        special: q.special || false,
+        kind: q.kind || '',
+        text: q.q_text
+      };
+    });
+    
+    var calcResult = sbtiData.calculateSBTIResult(sbtiAnswers, pageQuestionList);
+    
+    // 返回兼容现有提交逻辑的格式
+    return {
+      test_id: 'sbti',
+      scores: calcResult.dimensionScores,
+      result: calcResult.result,
+      _sbtiFullResult: calcResult
+    };
   },
 
   calculateLocalResult: function () {
     const { testId, answers } = this.data;
     
     let result = { test_id: testId, scores: {}, result: {} };
+    
+    if (testId === 'sbti') {
+      return this.calculateSBTIResult();
+    }
     
     switch (testId) {
       case 'mbti': {
@@ -459,6 +540,7 @@ Page({
 
   onShareAppMessage: function () {
     const titles = {
+      sbti: 'SBTI人格测试免费测！30题测出你的隐藏人格，比MBTI更有趣！',
       mbti: 'MBTI人格测试免费测，20题测出你的十六型人格！',
       love_brain: '恋爱脑测试 - 你有多恋爱脑？15题测出你的恋爱指数！',
       animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰，你是哪种？',
@@ -473,6 +555,7 @@ Page({
 
   onShareTimeline: function () {
     const titles = {
+      sbti: 'SBTI人格测试免费测！30题测出你的隐藏人格，比MBTI更有趣！',
       mbti: 'MBTI人格测试免费测，20题测出你的十六型人格！',
       love_brain: '恋爱脑测试 - 你有多恋爱脑？15题测出你的恋爱指数！',
       animal_persona: '性格动物测试 - 狮子·孔雀·考拉·猫头鹰，你是哪种？',
