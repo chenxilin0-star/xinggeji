@@ -10,6 +10,24 @@
 
   <!-- 测试列表入口 -->
   <view class="test-grid">
+    <!-- SBTI人格测试 🔥热门 -->
+    <view class="test-card" bindtap="goToTest" data-id="sbti">
+      <view class="card-icon">🔥</view>
+      <view class="card-content">
+        <text class="card-title">SBTI人格测试</text>
+        <view class="hot-badge">🔥 全网最火</view>
+        <text class="card-desc">30题测出你的隐藏人格，比MBTI更有趣！27种搞笑人格等你解锁</text>
+        <view class="card-tags">
+          <text class="tag hot-tag">热门</text>
+          <text class="tag">隐藏人格</text>
+          <text class="tag">拿捏者</text>
+          <text class="tag">酒鬼</text>
+          <text class="tag">傻乐者</text>
+        </view>
+      </view>
+      <text class="card-arrow">›</text>
+    </view>
+
     <!-- MBTI测试 -->
     <view class="test-card" bindtap="goToTest" data-id="mbti">
       <view class="card-icon">🎭</view>
@@ -92,6 +110,22 @@
   <view class="keywords-section">
     <view class="section-title">相关搜索</view>
     <view class="keywords-cloud">
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">SBTI测试</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">SBTI人格测试</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">SBTI测试免费</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">SBTI测试入口</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">SBTI官网</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">隐藏人格测试</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">拿捏者人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">酒鬼人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">送钱者人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">咸鱼人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">社恐人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">冲冲人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">卧槽人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">暴躁人格</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">30题人格测试</text>
+      <text class="keyword hot-kw" bindtap="goToTest" data-id="sbti">比MBTI更有趣</text>
       <text class="keyword" bindtap="goToTest" data-id="mbti">MBTI测试</text>
       <text class="keyword" bindtap="goToTest" data-id="mbti">性格测试</text>
       <text class="keyword" bindtap="goToTest" data-id="mbti">十六型人格</text>

@@ -1,7 +1,11 @@
 Page({
   data: {
     testInfo: {
-      mbti: {
+      sbti: {
+        title: 'SBTI人格测试',
+        keywords: ['SBTI测试', 'SBTI人格测试', 'SBTI', 'SBTI测试免费', 'SBTI人格', '隐藏人格测试', '酒鬼人格', '傻乐者人格', '拿捏者人格', 'SBTI测试入口', 'SBTI官网', 'SBTI在线测试', '30题人格测试', '比MBTI更有趣', 'SBTI结果查询', '送钱者人格', '咸鱼人格', '社恐人格', '冲冲人格', '卧槽人格', '暴躁人格', '独侠人格', '和尚人格', '废物人格', '影帝人格'],
+        description: 'SBTI人格测试是2026年最火的人格测试！30道趣味题目测出你的隐藏人格，比MBTI更有趣更准确。27种搞笑人格等你解锁：拿捏者、送钱者、酒鬼、傻乐者、咸鱼、社恐、冲冲、卧槽、暴躁、独侠等。快来测测你是哪种人格！'
+      },
         title: 'MBTI人格测试',
         keywords: ['MBTI测试', 'MBTI人格测试', '性格测试', '十六型人格', '人格测试', '职业性格测试', 'INFJ', 'INTJ', 'ENFP', 'ENTP', '免费MBTI测试', '在线MBTI测试', '性格分析', '自我认知'],
         description: 'MBTI是最受欢迎的性格测试之一，通过四个维度分析你的性格特征，帮助你了解真实的自己，适合职业规划和自我成长。'
@@ -53,7 +57,7 @@ Page({
   // 分享
   onShareAppMessage: function () {
     return {
-      title: '型格记心理测试 - MBTI·恋爱脑·性格测试·依恋类型免费测',
+      title: 'SBTI人格测试免费测！比MBTI更有趣，30题测出你的隐藏人格',
       path: '/pages/seo/seo',
       imageUrl: ''
     };
@@ -61,7 +65,7 @@ Page({
 
   onShareTimeline: function () {
     return {
-      title: '型格记心理测试 - MBTI·恋爱脑·性格测试·依恋类型免费测',
+      title: 'SBTI人格测试免费测！比MBTI更有趣，30题测出你的隐藏人格',
       query: ''
     };
   }
